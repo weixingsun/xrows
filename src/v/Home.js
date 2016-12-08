@@ -28,9 +28,9 @@ export default class Home extends React.Component {
       DocumentPicker.show({
         //filetype: ['public.data'],
       },(result) => { 
-	    //{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
+	    //{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...',path:''}
 		console.log('Home page get file:'+JSON.stringify(result))
-		if(result.type && result.type==='text/comma-separated-values') Actions.view({file:result.uri })
+		if(result.type && result.type==='text/comma-separated-values') Actions.view({file:result.path })
 		else if(result.err) alert('err='+result.err)
       });
     }

@@ -18,9 +18,7 @@ const scenes = Actions.create(
 );
 
 export default class App extends React.Component {
-	//componentDidMount() {
-	   //Actions.refresh({key: 'drawer', ref: this.refs.navigation});
-	//}
+	//componentDidMount() {}
 	render() {
 		return (
 			<Drawer

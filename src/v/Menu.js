@@ -46,17 +46,3 @@ const Menu = (props, context) => {
 }
 Menu.contextTypes = contextTypes;
 export default Menu;
-/*
-export default class Menu extends React.Component {
-	render(){
-		// {...this.props}
-		return (
-		  <View style={styles.container}>
-			<Text style={{fontSize:20}}>Menu</Text>
-			<Text style={{fontSize:20}}> </Text>
-			<Button onPress={this.showFilePicker}>Open a file</Button>
-		  </View>
-		);
-	}
-}
-*/
