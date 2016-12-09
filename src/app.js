@@ -1,25 +1,24 @@
 import React, { Component } from 'react'
-import {Actions, Scene, Router} from 'react-native-router-flux';
+import {Actions, Scene, Router, ActionConst,} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Drawer from 'react-native-drawer';
 import View from './v/View'
 import Menu from './v/Menu'
 import Home from './v/Home'
+import Group from './v/Group'
 //import Edit from './v/Edit'
-
-//    <Scene key="menu" component={Menu} title="Menu"/>
 //    <Scene key="edit" component={Edit} title="Edit"/>
-//const navToggle = (<Icon name="rocket" size={30} color="#900" />)
-const scenes = Actions.create(
-  <Scene key="root">
-    <Scene key="home" component={Home} title="Home"/>
-	<Scene key="view" component={View} title="View"/>
-  </Scene>
-);
 
 export default class App extends React.Component {
-	//componentDidMount() {}
+	constructor(props) {
+        super(props);
+        this.state={
+        }
+    }
+	componentWillMount() {
+	}
 	render() {
+		//rightButtonImage={()=> this.state.runIcon} rightTitle={'Run'} onRight={() => alert('Run button')}
 		return (
 			<Drawer
 				 type="static"
@@ -29,7 +28,13 @@ export default class App extends React.Component {
 				 tapToClose={true}
 				 ref={ (ref) => this.drawer = ref}
 			>
-				 <Router scenes={scenes}/>
+				 <Router>
+					<Scene key="root">
+						<Scene key="home" component={Home} title="Home" initial={true} />
+						<Scene key="view" component={View} title="View" />
+						<Scene key="group" component={Group} title="Group" />
+					</Scene>
+				 </Router>
 			</Drawer>
 		)
 	}
