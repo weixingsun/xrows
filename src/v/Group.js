@@ -3,8 +3,8 @@ import {View, Text, StyleSheet} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
-import SQLite from 'react-native-sqlite-storage'
-//import alasql from 'alasql';
+//import SQLite from 'react-native-sqlite-storage'
+import alasql from 'alasql';
 var styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -37,19 +37,14 @@ export default class CsvView extends React.Component {
 		//})
 	}
 	componentWillMount(){
-		//filename.replace('%3A',':').replace('%2F','/')
-		//RNFS.readFile(this.props.file)  //, 'utf8'
-		//.then((contents)=>{
-		//	this.setState({content:contents})
-		//})
-		var sql = 
-		   'SELECT participant,age,sex,region,word,time_stamp, '
-		   +'min(X_00) as Ax,max(X_00) as Bx,max(Y_00) as Cy '
-		   +'FROM csv("'+this.props.file+'",{headers:true}) '
-		   +'group by participant,age,sex,region,word,time_stamp';
-		//this.sqlCsv(sql,[],(data)=>{
-		//	alert('sqlCsv()'+data)
-		//})
+		var sql = 'SELECT people,age,sex,region,word,count(1) '
+			+'from csv(?,{headers:true,fromString:true}) '
+			+'group by people,age,sex,region,word'
+		RNFS.readFile(this.props.file).then((contents)=>{ //'utf8'
+			alasql(sql,[contents],function(result){
+				alert('alasql.count(1) = '+JSON.stringify(result))
+			})
+		})
 		let lastIdx   = this.props.file.lastIndexOf('/')
 		let title = this.props.file.substr(lastIdx)
 		let folder = this.props.file.substr(0,lastIdx)

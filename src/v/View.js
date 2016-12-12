@@ -45,61 +45,24 @@ export default class CsvView extends React.Component {
 		RNFS.readFile(this.props.file)  //, 'utf8'
 		.then((contents)=>{
 			this.setState({content:contents})
-			this.lines=contents;
+			//this.lines=contents;
 			//if(this.db!==null) 
 			//this.insertAll(fileNoExt,contents)
 			//if(this.db) this.createTable(this.db,fileNoExt,contents)
-            console.log('RNFS.readFile()'+this.props.file)
-			let sql = 'select count(1) as population from csv("'+this.props.file+'")';
-			alasql(sql,[],function(res){
-                console.log("alasql got content:",res);
-			});
+            //console.log('RNFS.readFile()'+this.props.file)
 		})
         //Actions.refresh({rightTitle:'Run',onRight:()=>Actions.group({file: this.props.file})});
-		/*Icon.getImageSource('play', 20, '#559')
-		.then(imgsource => {
+		Icon.getImageSource('play', 20, '#559').then(imgsource => {
 			//this.setState({ rightIcon: imgsource })
 			Actions.refresh({
-				key:'view',
-				title:file,
-				rightButtonImage: imgsource, 
-				rightButtonIconStyle:{width:20,height:20},
-				onRight:()=>{ Actions.group({file: this.props.file}) }
+					key:'view',
+					title:file,
+					rightButtonImage: imgsource,
+					rightButtonIconStyle:{width:20,height:20},
+					onRight:()=>{ Actions.group({file: this.props.file}) }
 			});
-		})
-		SQLite.openDatabase(
-		  {name : 'mydb', createFromLocation : 1},
-		  (db)=>{ 
-		    alert("Database open successfully")
-			//this.insertAll(tableName,line)
-			this.db=db
-			if(this.lines!=null) this.createTable(db,fileNoExt,this.lines)
-		  },
-		  (err)=>{ alert("Database open failed") });
-		  */
+        })
     }
-	/*insertAll(tableName,contents){
-		let lines = contents.split('\n')
-		let sqls = ['insert into '+tableName+' VALUES ('+lines[1]+');']
-		SQLite.sqlBatch(sqls,()=>{alert('success')},()=>{alert('error')})
-	}
-	createTable(db,tableName,contents){
-		alert('db='+JSON.stringify(db)) //+', tableName='+tableName+' lines='+contents.length
-		let lines = contents.split('\n')
-		let col_types = lines[1].split(',').map((item)=>{
-			return /^\d+$/.test(item)?' Int':' Text'
-		})
-		let cols = lines[0].split(',').map((item,i)=>{
-			return item + col_types[i]
-		})
-		let col_str = cols.join(',')
-		db.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+'( '
-            + col_str
-            + ' ); ')
-		.catch((error) => {
-            alert(JSON.stringify(error))
-		});
-	}*/
     render(){
 		//<Text>File:{this.props.file}</Text>
         return (

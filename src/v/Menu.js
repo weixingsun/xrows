@@ -10,11 +10,23 @@ const styles = StyleSheet.create({
     flex: 1,
     //justifyContent: "center",
     alignItems: "flex-start",
-    backgroundColor: "#E5ECEF",
+    backgroundColor: "#8a8989",
 	padding:20,
     //borderWidth: 2,
     //borderColor: 'gray',
-  }
+  },
+  menu: {
+    //justifyContent: "center",
+    //alignItems: "flex-start",
+    backgroundColor: "#8a8989",
+	//padding:20,
+	height:40,
+  },
+  menu_name: {
+    marginLeft:10,
+    fontSize:20,
+    color:'white',
+  },
 });
 const contextTypes = {
     drawer: React.PropTypes.object,
@@ -26,7 +38,7 @@ const showFilePicker = ()=>{
 		//{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
 		console.log('Menu page get file:'+JSON.stringify(result))
 		if(result.type && result.type==='text/comma-separated-values'){
-			Actions.view({file:result.uri })
+			Actions.view({file:result.path })
 		}else if(result.err) alert('err='+result.err)
 	});
 }
@@ -35,11 +47,14 @@ const Menu = (props, context) => {
 	//<MaterialIcon name="home" size={30} color={Colors.red} style={styles.icon}/>
     return (
         <View style={styles.container}>
+			<View style={styles.menu}>
+				<Text style={styles.menu_name}>Menu</Text>
+			</View>
 			<TouchableOpacity
-				style={styles.link}
+				style={styles.menu}
 				//underlayColor={Colors.charcoal}
 				onPress={() => { drawer.close(); showFilePicker() } }>
-				<Text style={styles.text}>Open a file</Text>
+				<Text style={styles.menu_name}>Open a CSV file</Text>
 			</TouchableOpacity>
         </View>
     )
