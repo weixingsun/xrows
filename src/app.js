@@ -18,6 +18,7 @@ export default class App extends React.Component {
 	componentWillMount() {
 	}
 	render() {
+		let _drawerIcon = <Icon name={"bars"} color={"#2a2929"} size={30}/>
 		//rightButtonImage={()=> this.state.runIcon} rightTitle={'Run'} onRight={() => alert('Run button')}
 		return (
 			<Drawer
@@ -30,7 +31,9 @@ export default class App extends React.Component {
 			>
 				 <Router>
 					<Scene key="root">
-						<Scene key="home" component={Home} title="Home" initial={true} />
+						<Scene key="home" component={Home} title="Home" initial={true} 
+						    drawerIcon={_drawerIcon}
+						/>
 						<Scene key="view" component={View} title="View" />
 						<Scene key="group" component={Group} title="Group" />
 					</Scene>

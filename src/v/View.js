@@ -37,32 +37,31 @@ export default class CsvView extends React.Component {
     }
 	
 	componentWillMount(){
-		//filename.replace('%3A',':').replace('%2F','/')
-		let lastIdx   = this.props.file.lastIndexOf('/')
-		let file = this.props.file.substr(lastIdx+1)
-		let folder = this.props.file.substr(0,lastIdx)
-		let fileNoExt = file.substr(0,file.lastIndexOf('.'))
+		let fileInfo = this.getFileInfo(this.props.file)
 		RNFS.readFile(this.props.file)  //, 'utf8'
 		.then((contents)=>{
 			this.setState({content:contents})
-			//this.lines=contents;
-			//if(this.db!==null) 
-			//this.insertAll(fileNoExt,contents)
-			//if(this.db) this.createTable(this.db,fileNoExt,contents)
-            //console.log('RNFS.readFile()'+this.props.file)
 		})
         //Actions.refresh({rightTitle:'Run',onRight:()=>Actions.group({file: this.props.file})});
 		Icon.getImageSource('play', 20, '#559').then(imgsource => {
 			//this.setState({ rightIcon: imgsource })
 			Actions.refresh({
 					key:'view',
-					title:file,
+					title:fileInfo.name,
 					rightButtonImage: imgsource,
 					rightButtonIconStyle:{width:20,height:20},
 					onRight:()=>{ Actions.group({file: this.props.file}) }
 			});
         })
     }
+	getFileInfo(filePath){
+		//filename.replace('%3A',':').replace('%2F','/')
+		let lastIdx = filePath.lastIndexOf('/')
+		let file = filePath.substr(lastIdx+1)
+		let folder = filePath.substr(0,lastIdx)
+		let fileNoExt = file.substr(0,file.lastIndexOf('.'))
+		return {dir:folder,name:file,noext:fileNoExt}
+	}
     render(){
 		//<Text>File:{this.props.file}</Text>
         return (
