@@ -5,7 +5,8 @@ import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //import SQLite from 'react-native-sqlite-storage'
-import alasql from 'alasql'
+//import alasql from 'alasql'
+import alasql from '../sql/alasql.fs';
 
 var styles = StyleSheet.create({
     container: {

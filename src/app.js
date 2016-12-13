@@ -20,20 +20,19 @@ export default class App extends React.Component {
 	render() {
 		let _drawerIcon = <Icon name={"bars"} color={"#2a2929"} size={30}/>
 		//rightButtonImage={()=> this.state.runIcon} rightTitle={'Run'} onRight={() => alert('Run button')}
+		//renderRightButton={()=> <Text>Right</Text>}
 		return (
 			<Drawer
 				 type="static"
 				 content={<Menu closeDrawer={ () => this.drawer.close() } />}
-				 openDrawerOffset={0.3}
+				 openDrawerOffset={0.5}
 				 tweenHandler={Drawer.tweenPresets.parallax}
 				 tapToClose={true}
 				 ref={ (ref) => this.drawer = ref}
 			>
 				 <Router>
 					<Scene key="root">
-						<Scene key="home" component={Home} title="Home" initial={true} 
-						    drawerIcon={_drawerIcon}
-						/>
+						<Scene key="home" component={Home} title="Home" initial={true} drawerIcon={_drawerIcon} />
 						<Scene key="view" component={View} title="View" />
 						<Scene key="group" component={Group} title="Group" />
 					</Scene>
