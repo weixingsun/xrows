@@ -2,8 +2,9 @@ import React from 'react';
 import {Platform, View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
-//import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
-const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker;
+import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
+//const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker;
+import {Icon} from './Icon'
 
 const styles = StyleSheet.create({
   container: {
@@ -32,16 +33,10 @@ const styles = StyleSheet.create({
   menu0: {
     justifyContent: "center",
     //alignItems: "flex-start",
-    backgroundColor: "#4a4949",
+    backgroundColor: "#494949",
 	height:48,
 	paddingLeft:6,
-  },
-  menu1: {
-    justifyContent: "center",
-    //alignItems: "flex-start",
-    backgroundColor: "#3a3939",
-	height:48,
-	paddingLeft:6,
+	marginTop:1,
   },
   menu_name: {
     marginLeft:10,
@@ -80,13 +75,13 @@ const Menu = (props, context) => {
 				onPress={() => { drawer.close(); showFilePicker() } }>
 				<Text style={styles.menu_name}>Open a CSV file</Text>
 			</TouchableOpacity>
-			<View style={styles.menu1}>
+			<View style={styles.menu0}>
 				<Text style={styles.menu_name}>Expert Mode</Text>
 			</View>
 			<View style={styles.menu0}>
 				<Text style={styles.menu_name}>Common Mode</Text>
 			</View>
-			<View style={styles.menu1}>
+			<View style={styles.menu0}>
 				<Text style={styles.menu_name}>About</Text>
 			</View>
 			<View style={styles.menu0}>

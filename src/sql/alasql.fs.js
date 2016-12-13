@@ -3606,7 +3606,16 @@ var loadBinaryFile = utils.loadBinaryFile = function(path, asy, success, error) 
                 success(arr.join(""));
             }
         }
-		//*/
+	} else if(utils.isReactNative) {
+        /* If ReactNative */
+		//var RNFS = require('react-native-fs');
+		var RNFetchBlob = require('react-native-fetch-blob').default
+		let dirs = RNFetchBlob.fs.dirs
+		//should use readStream instead if the file is large
+		RNFetchBlob.fs.readFile(path, 'base64').then((data) => {
+			//RNFetchBlob.base64.decode(data) //need more test on excel
+		    success(data);
+		})
     } else {
 
         if(typeof path === "string") {
@@ -3654,7 +3663,14 @@ var removeFile = utils.removeFile = function(path,cb) {
                 cb && cb(); // jshint ignore:line
             });
         });
-      	//*/
+	} else if(utils.isReactNative) {
+        /* If ReactNative */
+		var RNFS = require('react-native-fs');
+        RNFS.unlink(path).then(()=>{
+			cb && cb();
+		}).catch((err) => {
+			throw err;
+		});
     } else {
         throw new Error('You can remove files only in Node.js and Apache Cordova');
     }
@@ -3684,7 +3700,15 @@ var fileExists = utils.fileExists = function(path,cb){
                 cb(false);
             });
         });
-        //*/
+	} else if(utils.isReactNative) {
+        /* If ReactNative */
+		var RNFS = require('react-native-fs');
+        RNFS.exists(path).then((yes)=>{
+			cb && cb(yes);
+		}).catch((err) => {
+			throw err;
+		});
+		
     } else {
         // TODO Cordova, etc.
         throw new Error('You can use exists() only in Node.js or Apach Cordova');
