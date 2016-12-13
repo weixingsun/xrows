@@ -3486,11 +3486,6 @@ var loadFile = utils.loadFile = function(path, asy, success, error) {
         /* If ReactNative */
 		var RNFS = require('react-native-fs');
         RNFS.readFile(path,'utf8').then((contents)=>{
-			/*var fileReader = new FileReader();
-			fileReader.onloadend = function(e){
-				success(cutbom(contents));
-			};
-			fileReader.readAsText(file);*/
 			success(cutbom(contents));
 		}).catch((err) => {
 			//console.log(err.message, err.code);
