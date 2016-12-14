@@ -6,8 +6,7 @@ import View from './v/View'
 import Menu from './v/Menu'
 import Home from './v/Home'
 import Group from './v/Group'
-//import Edit from './v/Edit'
-//    <Scene key="edit" component={Edit} title="Edit"/>
+import Edit from './v/Edit'
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -19,8 +18,6 @@ export default class App extends React.Component {
 	}
 	render() {
 		let _drawerIcon = <Icon name={"bars"} color={"#2a2929"} size={30}/>
-		//rightButtonImage={()=> this.state.runIcon} rightTitle={'Run'} onRight={() => alert('Run button')}
-		//renderRightButton={()=> <Text>Right</Text>}
 		return (
 			<Drawer
 				 type="static"
@@ -34,6 +31,7 @@ export default class App extends React.Component {
 					<Scene key="root">
 						<Scene key="home" component={Home} title="Home" initial={true} drawerIcon={_drawerIcon} />
 						<Scene key="view" component={View} title="View" />
+						<Scene key="edit" component={Edit} title="Edit" />
 						<Scene key="group" component={Group} title="Group" />
 					</Scene>
 				 </Router>

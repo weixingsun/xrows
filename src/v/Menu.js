@@ -52,13 +52,22 @@ const showFilePicker = ()=>{
 		//filetype: ['public.data'],
 	},(result) => { 
 		//{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
-		console.log('Menu page get file:'+JSON.stringify(result))
-		if(result.type && result.type==='text/comma-separated-values'){
+		//console.log('Menu page get file:'+JSON.stringify(result))
+		if(result.type==='text/comma-separated-values'){  //csv
+			//alert('excel='+result.type)
 			Actions.refresh({
 				key:'home',
 				file:result.path,
 			});
-		}else if(result.err) alert('err='+result.err)
+		}else if(result.err){
+			alert('err='+result.err)
+		//}else if(result.type==='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){  //xlsx
+		//	alert('Excel 2010 not supported, Please use csv format')
+		//}else if(result.type==='application/vnd.ms-excel'){  //xls
+		//	alert('Excel 2007 not supported, Please use csv format')
+		}else{
+			alert('Not supported type: '+result.type)
+		}
 	});
 }
 const Menu = (props, context) => {
@@ -73,11 +82,12 @@ const Menu = (props, context) => {
 				style={styles.menu0}
 				//underlayColor={Colors.charcoal}
 				onPress={() => { drawer.close(); showFilePicker() } }>
-				<Text style={styles.menu_name}>Open a CSV file</Text>
+				<Text style={styles.menu_name}>Open a file</Text>
 			</TouchableOpacity>
-			<View style={styles.menu0}>
+			<TouchableOpacity style={styles.menu0}
+				onPress={() => { drawer.close(); Actions.edit() } }>
 				<Text style={styles.menu_name}>Expert Mode</Text>
-			</View>
+			</TouchableOpacity>
 			<View style={styles.menu0}>
 				<Text style={styles.menu_name}>Common Mode</Text>
 			</View>
