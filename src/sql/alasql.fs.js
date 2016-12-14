@@ -3608,11 +3608,9 @@ var loadBinaryFile = utils.loadBinaryFile = function(path, asy, success, error) 
         }
 	} else if(utils.isReactNative) {
         /* If ReactNative */
-		//var RNFS = require('react-native-fs');
-		var RNFetchBlob = require('react-native-fetch-blob').default
-		let dirs = RNFetchBlob.fs.dirs
-		//should use readStream instead if the file is large
-		RNFetchBlob.fs.readFile(path, 'base64').then((data) => {
+		var RNFS = require('react-native-fs');
+		//var RNFetchBlob = require('react-native-fs')
+		RNFS.readFile(path, 'base64').then((data) => {
 			//RNFetchBlob.base64.decode(data) //need more test on excel
 		    success(data);
 		})
@@ -4214,6 +4212,8 @@ var getXLSX = function(){
 		//*not-for-browser/*
 		XLSX = require('xlsx') || null;
 		//*/
+	} else if( utils.isReactNative ){
+		XLSX = require('./xlsx') || null;
 	} else {
 		XLSX = utils.global.XLSX || null;
 	}
@@ -4232,6 +4232,8 @@ var getXLS = function(){
 		//*not-for-browser/*
 		XLS = require('xlsjs') || null;
 		//*/
+	} else if( utils.isReactNative ){
+		XLS = require('./xls') || null;
 	} else {
 		XLS = utils.global.XLS || null;
 	}
@@ -15637,9 +15639,9 @@ function XLSXLSX(X,filename, opts, cb, idx, query) {
 	var res;
 
 	alasql.utils.loadBinaryFile(filename,!!cb,function(data){
-
+		//alert('after loadBinaryFile() data='+data)
 //	function processData(data) {
-		var workbook = X.read(data,{type:'binary'});
+		var workbook = X.read(data,{type:'base64'});
 
 		var sheetid;
 		if(typeof opt.sheetid === 'undefined') {

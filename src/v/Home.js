@@ -6,6 +6,7 @@ import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RNFS from 'react-native-fs';
 import alasql from '../sql/alasql.fs';
+//import xlsjs from '../sql/xls';
 
 var styles = StyleSheet.create({
     container: {
@@ -78,17 +79,14 @@ export default class Home extends React.Component {
 	readFile(filePath){
 		this.file = this.getFileInfo(filePath)
 		//alert(this.file.ext)
-		if(this.file.ext==='csv'){
-			this.readCsv(this.file)
-		}else if(this.file.ext==='xlsx'){
-			alert('xlsx')
-		}else if(this.file.ext==='xls'){
-			alert('xls')
+		if(this.file.ext==='csv'||this.file.ext==='xls'||this.file.ext==='xlsx'){
+			this.readExcel(this.file)
 		}
 	}
-	readCsv(file){
+	readExcel(file){
 		//var sql = 'SELECT * from csv("'+file.full+'",{headers:true}) '
-		var sql = 'SELECT * from csv("'+file.full+'") '
+		var sql = 'SELECT * from '+file.ext+'("'+file.full+'") '
+		//alert('sql='+sql)
 		alasql(sql,[],(result)=>{
 			//alert('alasql.select * '+JSON.stringify(result))
 			this.updateWithActionIcon()

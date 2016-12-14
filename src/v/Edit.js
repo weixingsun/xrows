@@ -31,7 +31,7 @@ var styles = StyleSheet.create({
 	},
 });
 
-export default class FormulaEdit extends React.Component {
+export default class FunctionEdit extends React.Component {
 	constructor(props) {
         super(props);
         this.state={

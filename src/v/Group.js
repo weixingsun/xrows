@@ -38,7 +38,11 @@ export default class CsvView extends React.Component {
 			+'into csv("'+this.file.dir+'/test3.csv") '
 			+'from csv("'+this.file.full+'",{headers:true}) '
 			+'group by people,age,sex,region,word'
-		alasql(sql1,[],(result)=>{
+		var sql2 = 'SELECT subject,participant,age,sex,region,word,sum(mci) '
+			+'into xls("'+this.file.dir+'/mic_o.xls") '
+			+'from xls("'+this.file.full+'",{headers:true}) '
+			+'group by subject,participant,age,sex,region,word'
+		alasql(sql2,[],(result)=>{
 			alert('success') //JSON.stringify(result)
 		})
         Actions.refresh({title:'Group by: '+this.file.name})

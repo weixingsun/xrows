@@ -53,7 +53,10 @@ const showFilePicker = ()=>{
 	},(result) => { 
 		//{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
 		//console.log('Menu page get file:'+JSON.stringify(result))
-		if(result.type==='text/comma-separated-values'){  //csv
+		if(result.type==='text/comma-separated-values' //csv
+		|| result.type==='application/vnd.ms-excel'    //xls
+		|| result.type==='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'  //xlsx
+		){
 			//alert('excel='+result.type)
 			Actions.refresh({
 				key:'home',
@@ -80,19 +83,21 @@ const Menu = (props, context) => {
 			</View>
 			<TouchableOpacity
 				style={styles.menu0}
-				//underlayColor={Colors.charcoal}
 				onPress={() => { drawer.close(); showFilePicker() } }>
-				<Text style={styles.menu_name}>Open a file</Text>
+				<Text style={styles.menu_name}>Open an Excel</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.menu0}
 				onPress={() => { drawer.close(); Actions.edit() } }>
-				<Text style={styles.menu_name}>Expert Mode</Text>
+				<Text style={styles.menu_name}>Function Editor</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.menu0}>
-				<Text style={styles.menu_name}>Common Mode</Text>
+				<Text style={styles.menu_name}>Graphic Editor</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.menu0}>
 				<Text style={styles.menu_name}>About</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.menu0}>
+				<Text style={styles.menu_name}>User Manual</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.menu0}>
 				<Text style={styles.menu_name}>Contact Me</Text>
