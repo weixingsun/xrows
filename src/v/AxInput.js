@@ -48,10 +48,10 @@ export default class AutoExpandingTextInput extends React.Component {
 var styles = StyleSheet.create({
   default: {
     height: 26,
-    borderWidth: 0.5,
-    borderColor: '#0f0f0f',
+    //borderWidth: 0.5,
+    //borderColor: '#0f0f0f',
     flex: 1,
-    fontSize: 13,
-    padding: 4,
+    fontSize: 16,
+    padding: 12,
   },
 })

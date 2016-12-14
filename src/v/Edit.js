@@ -24,7 +24,10 @@ var styles = StyleSheet.create({
 		})
 	},
 	first:{
-		height:150,
+		height:200,
+	},
+	second:{
+		height:200,
 	},
 });
 
@@ -32,7 +35,8 @@ export default class FormulaEdit extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
-			formula1:'',
+			func1:'',
+			func2:'',
         }
 		this.default_formula = 'select * from ?'
     }
@@ -47,21 +51,34 @@ export default class FormulaEdit extends React.Component {
 		});
 	}
     render(){
-		//<Text>File:{this.props.file}</Text>
         return (
             <View style={styles.container}>
 				<View style={styles.content}>
 					<View style={styles.first}>
-						<Text>Formula 1:</Text>
+						<Text style={{fontWeight:'bold'}}>Function 1:</Text>
 						<AxInput
-							ref={textInput => (this.formula_input = textInput)}
+							ref={textInput => (this.func1_input = textInput)}
 							placeholder=""
 							enablesReturnKeyAutomatically={true}
 							returnKeyType="done"
-							value={this.state.formula1}
+							value={this.state.func1}
 							onChange={(event) => {
 								let txt = event.nativeEvent.text
-								this.setState({ formula1:txt })
+								this.setState({ func1:txt })
+							}}
+						/>
+					</View>
+					<View style={styles.second}>
+						<Text style={{fontWeight:'bold'}}>Function 2:</Text>
+						<AxInput
+							ref={textInput => (this.func2_input = textInput)}
+							placeholder=""
+							enablesReturnKeyAutomatically={true}
+							returnKeyType="done"
+							value={this.state.func2}
+							onChange={(event) => {
+								let txt = event.nativeEvent.text
+								this.setState({ func2:txt })
 							}}
 						/>
 					</View>

@@ -87,7 +87,8 @@ export default class Home extends React.Component {
 		}
 	}
 	readCsv(file){
-		var sql = 'SELECT * from csv("'+file.full+'",{headers:true}) '
+		//var sql = 'SELECT * from csv("'+file.full+'",{headers:true}) '
+		var sql = 'SELECT * from csv("'+file.full+'") '
 		alasql(sql,[],(result)=>{
 			//alert('alasql.select * '+JSON.stringify(result))
 			this.updateWithActionIcon()

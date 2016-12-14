@@ -88,15 +88,15 @@ const Menu = (props, context) => {
 				onPress={() => { drawer.close(); Actions.edit() } }>
 				<Text style={styles.menu_name}>Expert Mode</Text>
 			</TouchableOpacity>
-			<View style={styles.menu0}>
+			<TouchableOpacity style={styles.menu0}>
 				<Text style={styles.menu_name}>Common Mode</Text>
-			</View>
-			<View style={styles.menu0}>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.menu0}>
 				<Text style={styles.menu_name}>About</Text>
-			</View>
-			<View style={styles.menu0}>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.menu0}>
 				<Text style={styles.menu_name}>Contact Me</Text>
-			</View>
+			</TouchableOpacity>
         </View>
     )
 }

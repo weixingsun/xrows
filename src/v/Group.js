@@ -33,19 +33,14 @@ export default class CsvView extends React.Component {
 		this.file=null
     }
 	componentWillMount(){
-		var sql = 'SELECT people,age,sex,region,word,count(1) '
-			+'from csv("'+this.props.file+'",{headers:true}) '
-			+'group by people,age,sex,region,word'
 		this.file=this.getFileInfo(this.props.file)
-		
-		//RNFS.readFile(this.props.file).then((contents)=>{ //'utf8'
-		alasql(sql,[],(result)=>{
-			alert('alasql.count(1) = '+JSON.stringify(result))
-			//let sql2 = 'SELECT * INTO csv("'+this.file.dir+'/test2.csv",{headers:true,separator:","}) FROM ?'
-			//alert('sql2='+sql2)
-			//alasql(sql2, [result]);
+		var sql1 = 'SELECT people,age,sex,region,word,count(1) '
+			+'into csv("'+this.file.dir+'/test3.csv") '
+			+'from csv("'+this.file.full+'",{headers:true}) '
+			+'group by people,age,sex,region,word'
+		alasql(sql1,[],(result)=>{
+			alert('success') //JSON.stringify(result)
 		})
-		//})
         Actions.refresh({title:'Group by: '+this.file.name})
     }
 	getFileInfo(filePath){
