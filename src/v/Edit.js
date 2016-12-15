@@ -23,7 +23,7 @@ var styles = StyleSheet.create({
 			android: 54,
 		})
 	},
-	first:{
+	section:{
 		flex: 1,
 		justifyContent: 'center',
 		//alignItems: 'center',
@@ -40,39 +40,10 @@ var styles = StyleSheet.create({
 		//paddingTop:5,
 		//paddingBottom:5,
 	},
-	second:{
-		flex: 1,
-		justifyContent: 'center',
-		//alignItems: 'center',
-		//borderWidth: 1,
-		//backgroundColor: '#fff',
-		//borderColor: 'rgba(0,0,0,0.1)',
-		//marginTop: 5,
-		//shadowColor: '#ccc',
-		//shadowOffset: { width: 2, height: 2, },
-		//shadowOpacity: 0.5,
-		//shadowRadius: 3,
-		//flexDirection:'row',
-		//padding: 15,
-		//paddingTop:5,
-		//paddingBottom:5,
-	},
-	third:{
-		flex: 1,
-		justifyContent: 'center',
-		//alignItems: 'center',
-		//borderWidth: 1,
-		//backgroundColor: '#fff',
-		//borderColor: 'rgba(0,0,0,0.1)',
-		//marginTop: 5,
-		//shadowColor: '#ccc',
-		//shadowOffset: { width: 2, height: 2, },
-		//shadowOpacity: 0.5,
-		//shadowRadius: 3,
-		//flexDirection:'row',
-		//padding: 15,
-		//paddingTop:5,
-		//paddingBottom:5,
+	title:{
+		fontWeight:'bold',
+		fontSize:20,
+		backgroundColor:'#eeeeee',
 	},
 });
 
@@ -80,78 +51,71 @@ export default class FunctionEdit extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
-			func1:'',
-			func2:'',
-			func3:'',
+			functions:{
+				func1:'',
+				func2:'',
+				func3:'',
+			},
         }
-		this.default_func1 = 'SELECT * into csv("{DIR}/function1.csv") from {SRC} '
-		this.default_func2 = 'SELECT * into csv("{DIR}/function2.csv") from {SRC} '
-		this.default_func3 = 'SELECT * into csv("{DIR}/function2.csv") from {SRC} '
+		this.default_func = 'SELECT * into csv("{DIR}/{function}.csv") from {SRC} '
     }
-	
 	componentWillMount(){
 		this.getFormula()
     }
 	getFormula(){
-		AsyncStorage.getItem("func1").then((value)=>{
-			if(value) this.setState({func1:value});
-			else this.setState({func1:this.default_func1});
+		this.getFunctionDB("func1")
+		this.getFunctionDB("func2")
+		this.getFunctionDB("func3")
+	}
+	getDefaultFunction(name){
+		return this.default_func.replace('{function}',name)
+	}
+	getFunctionDB(name){
+		AsyncStorage.getItem(name).then((value)=>{
+			if(value){
+				this.state.functions[name]=value
+				this.setState({
+					functions:this.state.functions
+				});
+			}else{
+				this.state.functions[name]=this.getDefaultFunction(name)
+				this.setState({
+					functions:this.state.functions
+				});
+			}
 		});
-		AsyncStorage.getItem("func2").then((value)=>{
-			if(value) this.setState({func2:value});
-			else this.setState({func2:this.default_func2});
-		});
-		AsyncStorage.getItem("func3").then((value)=>{
-			if(value) this.setState({func3:value});
-			else this.setState({func3:this.default_func3});
-		});
+	}
+	setFunctionDB(name,value){
+		AsyncStorage.setItem(name,value)
+	}
+	renderFunction(name){
+		return(
+		<View style={styles.section}>
+			<Text style={styles.title}>{name}</Text>
+			<AxInput
+				//ref={textInput => (this.func1_input = textInput)}
+				key={name}
+				placeholder=""
+				enablesReturnKeyAutomatically={true}
+				returnKeyType="done"
+				value={this.state.functions[name]}
+				onChange={(event) => {
+					let txt = event.nativeEvent.text
+					this.state.functions[name]=txt
+					this.setState({ functions: this.state.functions })
+					this.setFunctionDB(name,txt)
+				}}
+			/>
+		</View>
+		)
 	}
     render(){
         return (
             <View style={styles.container}>
 				<View style={styles.content}>
-					<View style={styles.first}>
-						<Text style={{fontWeight:'bold'}}>Function 1:</Text>
-						<AxInput
-							ref={textInput => (this.func1_input = textInput)}
-							placeholder=""
-							enablesReturnKeyAutomatically={true}
-							returnKeyType="done"
-							value={this.state.func1}
-							onChange={(event) => {
-								let txt = event.nativeEvent.text
-								this.setState({ func1:txt })
-							}}
-						/>
-					</View>
-					<View style={styles.second}>
-						<Text style={{fontWeight:'bold'}}>Function 2:</Text>
-						<AxInput
-							ref={textInput => (this.func2_input = textInput)}
-							placeholder=""
-							enablesReturnKeyAutomatically={true}
-							returnKeyType="done"
-							value={this.state.func2}
-							onChange={(event) => {
-								let txt = event.nativeEvent.text
-								this.setState({ func2:txt })
-							}}
-						/>
-					</View>
-					<View style={styles.third}>
-						<Text style={{fontWeight:'bold'}}>Function 3:</Text>
-						<AxInput
-							ref={textInput => (this.func3_input = textInput)}
-							placeholder=""
-							enablesReturnKeyAutomatically={true}
-							returnKeyType="done"
-							value={this.state.func3}
-							onChange={(event) => {
-								let txt = event.nativeEvent.text
-								this.setState({ func3:txt })
-							}}
-						/>
-					</View>
+					{this.renderFunction('func1')}
+					{this.renderFunction('func2')}
+					{this.renderFunction('func3')}
 				</View>
             </View>
         );

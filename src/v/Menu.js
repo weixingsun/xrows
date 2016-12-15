@@ -4,7 +4,7 @@ import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
 //const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker;
-import {Icon} from './Icon'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
     fontSize:20,
     color:'white',
   },
+  menu_link:{
+	  marginLeft:10,
+	  flexDirection:'row',
+	  justifyContent:'center',
+  },
 });
 const contextTypes = {
     drawer: React.PropTypes.object,
@@ -73,35 +78,34 @@ const showFilePicker = ()=>{
 		}
 	});
 }
+const renderOneMenu = (drawer,icon,name,func)=>{
+	return(
+		<TouchableOpacity
+			style={styles.menu0}
+			onPress={() => { drawer.close(); func() } }>
+			<View style={styles.menu_link}>
+				<View style={{width:24,justifyContent:"center",}}>
+				<Icon name={icon} size={20} color={'white'} />
+				</View>
+				<Text style={styles.menu_name}>{name}</Text>
+				<View style={{flex:1}}/>
+			</View>
+		</TouchableOpacity>
+	)
+}
 const Menu = (props, context) => {
     const drawer = context.drawer;
-	//<MaterialIcon name="home" size={30} color={Colors.red} style={styles.icon}/>
     return (
         <View style={styles.container}>
 			<View style={styles.menu_title}>
 				<Text style={styles.menu_name}>Menu</Text>
 			</View>
-			<TouchableOpacity
-				style={styles.menu0}
-				onPress={() => { drawer.close(); showFilePicker() } }>
-				<Text style={styles.menu_name}>Open an Excel</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.menu0}
-				onPress={() => { drawer.close(); Actions.edit() } }>
-				<Text style={styles.menu_name}>Function Editor</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.menu0}>
-				<Text style={styles.menu_name}>Graphic Editor</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.menu0}>
-				<Text style={styles.menu_name}>About</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.menu0}>
-				<Text style={styles.menu_name}>User Manual</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.menu0}>
-				<Text style={styles.menu_name}>Contact Me</Text>
-			</TouchableOpacity>
+			{renderOneMenu(drawer,'folder','Open an Excel',showFilePicker)}
+			{renderOneMenu(drawer,'cog','Function Editor',Actions.edit)}
+			{renderOneMenu(drawer,'mouse-pointer','Graphic Editor',Actions.gedit)}
+			{renderOneMenu(drawer,'info-circle','About',Actions.about)}
+			{renderOneMenu(drawer,'book','User Manual',Actions.book)}
+			{renderOneMenu(drawer,'envelope','Contact Me',Actions.mail)}
         </View>
     )
 }

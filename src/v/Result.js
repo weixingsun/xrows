@@ -36,7 +36,7 @@ var styles = StyleSheet.create({
 	},
 });
 
-export default class Group extends React.Component {
+export default class Result extends React.Component {
 	constructor(props) {
         super(props);
 		this.ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -44,7 +44,7 @@ export default class Group extends React.Component {
             lines:[],
         }
 		this.file=null
-		this.default_func1 = 'SELECT * into csv("{DIR}/function1.csv") from {SRC} '
+		this.default_func1 = 'SELECT * into csv("{DIR}/func1.csv") from {SRC} '
     }
 	componentWillMount(){
 		let file=this.getFileInfo(this.props.file)
@@ -55,7 +55,7 @@ export default class Group extends React.Component {
 			let sql1 = func1
 			if(!sql1) sql1 = this.default_func1
 			let sql = sql1.replace('{DIR}',file.dir).replace('{SRC}',file.ext+'("'+file.full+'") ')
-			var sql2 = 'SELECT * from csv("'+file.dir+'/function1.csv") '
+			var sql2 = 'SELECT * from csv("'+file.dir+'/func1.csv") '
 			alasql(sql,[],(result1)=>{
 				alasql(sql2,[],(result2)=>{
 					this.setState({
