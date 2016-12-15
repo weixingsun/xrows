@@ -95,6 +95,7 @@ const renderOneMenu = (drawer,icon,name,func)=>{
 }
 const Menu = (props, context) => {
     const drawer = context.drawer;
+			//{renderOneMenu(drawer,'mouse-pointer','Graphic Editor',Actions.edit)}
     return (
         <View style={styles.container}>
 			<View style={styles.menu_title}>
@@ -102,7 +103,6 @@ const Menu = (props, context) => {
 			</View>
 			{renderOneMenu(drawer,'folder','Open an Excel',showFilePicker)}
 			{renderOneMenu(drawer,'cog','Function Editor',Actions.edit)}
-			{renderOneMenu(drawer,'mouse-pointer','Graphic Editor',Actions.gedit)}
 			{renderOneMenu(drawer,'info-circle','About',Actions.about)}
 			{renderOneMenu(drawer,'book','User Manual',Actions.book)}
 			{renderOneMenu(drawer,'envelope','Contact Me',Actions.mail)}

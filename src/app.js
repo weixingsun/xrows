@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import {Actions, Scene, Router, ActionConst,} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Drawer from 'react-native-drawer';
-import View from './v/View'
+import Book from './v/Book'
 import Menu from './v/Menu'
 import Home from './v/Home'
 import Edit from './v/Edit'
-import Group  from './v/Group'
+import About  from './v/About'
 import Result from './v/Result'
 
 export default class App extends React.Component {
@@ -31,9 +31,9 @@ export default class App extends React.Component {
 				 <Router>
 					<Scene key="root">
 						<Scene key="home" component={Home} title="Home" initial={true} drawerIcon={_drawerIcon} />
-						<Scene key="view" component={View} title="View" />
 						<Scene key="edit" component={Edit} title="Edit" />
-						<Scene key="group"  component={Group}  title="Group" />
+						<Scene key="book" component={Book} title="Book" />
+						<Scene key="about" component={Acount} title="About" />
 						<Scene key="result" component={Result} title="Result"/>
 					</Scene>
 				 </Router>
