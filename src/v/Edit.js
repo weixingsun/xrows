@@ -24,10 +24,55 @@ var styles = StyleSheet.create({
 		})
 	},
 	first:{
-		height:200,
+		flex: 1,
+		justifyContent: 'center',
+		//alignItems: 'center',
+		//borderWidth: 1,
+		//backgroundColor: '#fff',
+		//borderColor: 'rgba(0,0,0,0.1)',
+		//marginTop: 5,
+		//shadowColor: '#ccc',
+		//shadowOffset: { width: 2, height: 2, },
+		//shadowOpacity: 0.5,
+		//shadowRadius: 3,
+		//flexDirection:'row',
+		//padding: 15,
+		//paddingTop:5,
+		//paddingBottom:5,
 	},
 	second:{
-		height:200,
+		flex: 1,
+		justifyContent: 'center',
+		//alignItems: 'center',
+		//borderWidth: 1,
+		//backgroundColor: '#fff',
+		//borderColor: 'rgba(0,0,0,0.1)',
+		//marginTop: 5,
+		//shadowColor: '#ccc',
+		//shadowOffset: { width: 2, height: 2, },
+		//shadowOpacity: 0.5,
+		//shadowRadius: 3,
+		//flexDirection:'row',
+		//padding: 15,
+		//paddingTop:5,
+		//paddingBottom:5,
+	},
+	third:{
+		flex: 1,
+		justifyContent: 'center',
+		//alignItems: 'center',
+		//borderWidth: 1,
+		//backgroundColor: '#fff',
+		//borderColor: 'rgba(0,0,0,0.1)',
+		//marginTop: 5,
+		//shadowColor: '#ccc',
+		//shadowOffset: { width: 2, height: 2, },
+		//shadowOpacity: 0.5,
+		//shadowRadius: 3,
+		//flexDirection:'row',
+		//padding: 15,
+		//paddingTop:5,
+		//paddingBottom:5,
 	},
 });
 
@@ -37,17 +82,28 @@ export default class FunctionEdit extends React.Component {
         this.state={
 			func1:'',
 			func2:'',
+			func3:'',
         }
-		this.default_formula = 'select * from ?'
+		this.default_func1 = 'SELECT * into csv("{DIR}/function1.csv") from {SRC} '
+		this.default_func2 = 'SELECT * into csv("{DIR}/function2.csv") from {SRC} '
+		this.default_func3 = 'SELECT * into csv("{DIR}/function2.csv") from {SRC} '
     }
 	
 	componentWillMount(){
 		this.getFormula()
     }
 	getFormula(){
-		AsyncStorage.getItem("formula1").then((value)=>{
-			if(value) this.setState({formula1:value});
-			else this.setState({formula1:this.default_formula});
+		AsyncStorage.getItem("func1").then((value)=>{
+			if(value) this.setState({func1:value});
+			else this.setState({func1:this.default_func1});
+		});
+		AsyncStorage.getItem("func2").then((value)=>{
+			if(value) this.setState({func2:value});
+			else this.setState({func2:this.default_func2});
+		});
+		AsyncStorage.getItem("func3").then((value)=>{
+			if(value) this.setState({func3:value});
+			else this.setState({func3:this.default_func3});
 		});
 	}
     render(){
@@ -79,6 +135,20 @@ export default class FunctionEdit extends React.Component {
 							onChange={(event) => {
 								let txt = event.nativeEvent.text
 								this.setState({ func2:txt })
+							}}
+						/>
+					</View>
+					<View style={styles.third}>
+						<Text style={{fontWeight:'bold'}}>Function 3:</Text>
+						<AxInput
+							ref={textInput => (this.func3_input = textInput)}
+							placeholder=""
+							enablesReturnKeyAutomatically={true}
+							returnKeyType="done"
+							value={this.state.func3}
+							onChange={(event) => {
+								let txt = event.nativeEvent.text
+								this.setState({ func3:txt })
 							}}
 						/>
 					</View>

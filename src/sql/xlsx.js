@@ -11399,12 +11399,14 @@ function readSync(data, opts) {
 }
 
 function readFileSync(data, opts) {
-	var o = opts||{}; o.type = 'file';
+	var o = opts||{}; o.type = 'base64';
 	return readSync(data, o);
 }
 function write_zip_type(wb, opts) {
 	var o = opts||{};
 	var z = write_zip(wb, o);
+	//alert('xlsx.write_zip_type() opts='+JSON.stringify(o))
+	o.type='base64'
 	switch(o.type) {
 		case "base64": return z.generate({type:"base64"});
 		case "binary": return z.generate({type:"string"});

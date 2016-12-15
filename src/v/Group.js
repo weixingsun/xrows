@@ -24,7 +24,7 @@ var styles = StyleSheet.create({
     },
 });
 
-export default class CsvView extends React.Component {
+export default class Group extends React.Component {
 	constructor(props) {
         super(props);
         this.state={ 
@@ -36,13 +36,17 @@ export default class CsvView extends React.Component {
 		this.file=this.getFileInfo(this.props.file)
 		var sql1 = 'SELECT people,age,sex,region,word,count(1) '
 			+'into csv("'+this.file.dir+'/test3.csv") '
-			+'from csv("'+this.file.full+'",{headers:true}) '
+			+'from csv("'+this.file.full+'") '
 			+'group by people,age,sex,region,word'
 		var sql2 = 'SELECT subject,participant,age,sex,region,word,sum(mci) '
-			+'into xls("'+this.file.dir+'/mic_o.xls") '
+			+'into xls("'+this.file.dir+'/mic_o.xls",{headers:true}) '
 			+'from xls("'+this.file.full+'",{headers:true}) '
 			+'group by subject,participant,age,sex,region,word'
-		alasql(sql2,[],(result)=>{
+		var sql3 = 'SELECT subject,participant,age,sex,region,word,sum(mci) '
+			+'into xlsx("'+this.file.dir+'/mic_o.xlsx") '
+			+'from xlsx("'+this.file.full+'",{headers:true}) '
+			+'group by subject,participant,age,sex,region,word'
+		alasql(sql3,[],(result)=>{
 			alert('success') //JSON.stringify(result)
 		})
         Actions.refresh({title:'Group by: '+this.file.name})

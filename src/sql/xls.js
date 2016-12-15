@@ -1684,11 +1684,16 @@ function read_date(blob, offset) {
 
 var fs;
 function readFileSync(filename, options) {
-	if(fs === undefined) fs = require('fs'); //fs = require('react-native-fs');
-	return parse(fs.readFileSync(filename), options);
+	alert('readFileSync() options='+JSON.stringify(options))
+	if(fs === undefined) fs = require('react-native-fs');  //fs = require('fs'); //
+	fs.readFile(filename).then(function(data){
+		return parse(data, options);
+	})
+	
 }
 
 function readSync(blob, options) {
+	console.log('readSync() options='+JSON.stringify(options))
 	switch(options !== undefined && options.type !== undefined ? options.type : "base64") {
 		case "file": return readFileSync(blob, options);
 		case "base64": return parse(s2a(Base64.decode(blob)), options);
@@ -7118,6 +7123,7 @@ function firstbyte(f,o) {
 function xlsread(f, o) {
 	if(!o) o = {};
 	if(!o.type) o.type = (has_buf && Buffer.isBuffer(f)) ? "buffer" : "base64";
+	//alert('xls.xlsread()'+JSON.stringify(o))
 	switch(firstbyte(f, o)) {
 		case 0xD0: return parse_xlscfb(CFB.read(f, o), o);
 		case 0x09: return parse_xlscfb(s2a(o.type === 'base64' ? Base64.decode(f) : f), o);
@@ -7126,6 +7132,7 @@ function xlsread(f, o) {
 	}
 }
 var readFile = function(f,o) {
+	//alert('xls.readFile')
 	fs.readFile(f,'base64').then(function(d){
 		if(!o) o = {};
 		switch(firstbyte(d, {type:'buffer'})) {

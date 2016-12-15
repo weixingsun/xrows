@@ -3759,7 +3759,7 @@ var saveFile = utils.saveFile = function(path, data, cb) {
 			RNFS.writeFile(path, data, 'utf8').then((success) => {
 				if(cb) res = cb(res);
 			}).catch((err) => {
-				console.log(err.message);
+				console.log('RNFS.writeFile() err='+err.message);
 			});
         } else {
         	if(isIE() === 9) {
@@ -14496,6 +14496,7 @@ alasql.into.CSV = function(filename, opts, data, columns, cb) {
 // with Excel
 
 alasql.into.XLS = function(filename, opts, data, columns, cb) {
+	//alert('alasql.XLS() opts='+opts)
 	// If filename is not defined then output to the result
 	if(typeof filename == 'object') {
 		opts = filename;
@@ -14741,7 +14742,7 @@ alasql.into.XLS = function(filename, opts, data, columns, cb) {
 						typestyle = 'mso-number-format:\"Short Date\";'; 
 					} else {
 						// FOr other types is saved
-						if( opts.types && opts.types[typeid] && opts.types[typeid].typestyle) {
+						if( opts && opts.types && opts.types[typeid] && opts.types[typeid].typestyle) {
 							typestyle = opts.types[typeid].typestyle;
 						} 
 					}
@@ -14813,7 +14814,6 @@ alasql.into.XLS = function(filename, opts, data, columns, cb) {
 
 alasql.into.XLSXML = function(filename, opts, data, columns, cb) {
 	opts = opts || {};
-
 	// If filename is not defined then output to the result
 	if(typeof filename == 'object') {
 		opts = filename;
@@ -15172,9 +15172,9 @@ alasql.into.XLSX = function(filename, opts, data, columns, cb) {
 	var wb = {SheetNames:[], Sheets:{}};
 
 	// ToDo: check if cb must be treated differently here
-	if(opts.sourcefilename) {
+	if(opts && opts.sourcefilename) {
 		alasql.utils.loadBinaryFile(opts.sourcefilename,!!cb,function(data){
-			wb = XLSX.read(data,{type:'binary'});
+			wb = XLSX.read(data,{type:'base64'});
 			doExport();
         	});
 	} else {
@@ -15313,8 +15313,9 @@ alasql.into.XLSX = function(filename, opts, data, columns, cb) {
 				}
 
 				/* the saveAs call downloads a file on the local machine */
-				if(isReactNative()) {
-					alert('React Native save xlsx')
+				if(utils.isReactNative) {
+					//alert('React Native save xlsx')
+					XLSX.writeFile(wb, filename);
 				}else if(isIE() == 9) {
 					throw new Error('Cannot save XLSX files in IE9. Please use XLS() export function');
 

@@ -1,13 +1,10 @@
 import React from 'react';
-import {Dimensions, ListView, Platform, StyleSheet, Text, TouchableHighlight, View, } from "react-native";
+import {AsyncStorage, Dimensions, ListView, Platform, StyleSheet, Text, TouchableHighlight, View, } from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
-import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
-import Icon from 'react-native-vector-icons/FontAwesome';
 import RNFS from 'react-native-fs';
+//import SQLite from 'react-native-sqlite-storage'
 import alasql from '../sql/alasql.fs';
-//import xlsjs from '../sql/xls';
-
 var styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -39,26 +36,35 @@ var styles = StyleSheet.create({
 	},
 });
 
-export default class Home extends React.Component {
+export default class Group extends React.Component {
 	constructor(props) {
         super(props);
 		this.ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state={ 
-			lines:[],
+        this.state={
+            lines:[],
         }
 		this.file=null
+		this.default_func1 = 'SELECT * into csv("{DIR}/function1.csv") from {SRC} '
     }
-	componentWillMount() {
-		//this.addRunIcon()
-	}
-	componentWillReceiveProps(nextProps) {
-		//nextProps={onNavigate,navigationState,name,sceneKey,parent,type,title,initial,drawerIcon,component,index,file,from}
-		//alert('componentWillReceiveProps: file'+JSON.stringify(nextProps.file))
-		if(nextProps.file!==null){
-			this.readFile(nextProps.file);
-		//}else if(nextProps.content){
-		//	this.setState({content:nextProps.content})
-		}
+	componentWillMount(){
+		let file=this.getFileInfo(this.props.file)
+		this.execFunc1(file)
+    }
+	execFunc1(file){
+		AsyncStorage.getItem("func1").then((func1)=>{
+			let sql1 = func1
+			if(!sql1) sql1 = this.default_func1
+			let sql = sql1.replace('{DIR}',file.dir).replace('{SRC}',file.ext+'("'+file.full+'") ')
+			var sql2 = 'SELECT * from csv("'+file.dir+'/function1.csv") '
+			alasql(sql,[],(result1)=>{
+				alasql(sql2,[],(result2)=>{
+					this.setState({
+						lines:result2,
+					})
+				})
+			})
+		});
+		
 	}
 	getFileInfo(filePath){
 		//filename.replace('%3A',':').replace('%2F','/')
@@ -68,44 +74,13 @@ export default class Home extends React.Component {
 		let dotIdx = file.lastIndexOf('.')
 		let fileNoExt = file.substr(0,dotIdx)
 		let ext = file.substr(dotIdx+1)
-		return {
+		return{
 			dir:folder,
 			name:file,
 			ext:ext,
 			noext:fileNoExt,
 			full:filePath,
 		}
-	}
-	readFile(filePath){
-		this.file = this.getFileInfo(filePath)
-		//alert(this.file.ext)
-		if(this.file.ext==='csv'||this.file.ext==='xls'||this.file.ext==='xlsx'){
-			this.readExcel(this.file)
-		}
-	}
-	readExcel(file){
-		//var sql = 'SELECT * from csv("'+file.full+'",{headers:true}) '
-		var sql = 'SELECT * from '+file.ext+'("'+file.full+'") '
-		//alert('sql='+sql)
-		alasql(sql,[],(result)=>{
-			//alert('alasql.select * '+JSON.stringify(result))
-			this.updateWithActionIcon()
-			this.setState({
-				lines:result,
-			})
-			//let sql2 = 'SELECT * INTO csv("'+this.file.dir+'/test2.csv",{headers:true,separator:","}) FROM ?'
-			//alert('sql2='+sql2)
-			//alasql(sql2, [result]);
-		})
-	}
-	updateWithActionIcon(){
-		Actions.refresh({
-			key:'home',
-			title:this.file.name,
-			renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file: this.file.full}) } />,
-			//content:content,
-			file:null,
-		});
 	}
 	_renderRowView(rowData) {
 		if(rowData==null) return
@@ -124,6 +99,7 @@ export default class Home extends React.Component {
 		);
 	}
     render(){
+		//<Text>File:{this.props.file}</Text>
         return (
 			<ListView style={styles.listContainer}
 				dataSource={this.ds.cloneWithRows(this.state.lines)}
