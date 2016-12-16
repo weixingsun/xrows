@@ -44,7 +44,7 @@ export default class Result extends React.Component {
             lines:[],
         }
 		this.file=null
-		this.default_func1 = 'SELECT * into csv("{DIR}/func1.csv") from {SRC} '
+		this.default_func1 = 'SELECT * into {DST} from {SRC} '
     }
 	componentWillMount(){
 		let file=this.getFileInfo(this.props.file)
@@ -54,8 +54,10 @@ export default class Result extends React.Component {
 		AsyncStorage.getItem("func1").then((func1)=>{
 			let sql1 = func1
 			if(!sql1) sql1 = this.default_func1
-			let sql = sql1.replace('{DIR}',file.dir).replace('{SRC}',file.ext+'("'+file.full+'") ')
+			let dst = 'csv("'+file.dir+'/func1.csv")'
+			let sql = sql1.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
 			var sql2 = 'SELECT * from csv("'+file.dir+'/func1.csv") '
+			alert('sql='+sql)
 			alasql(sql,[],(result1)=>{
 				alasql(sql2,[],(result2)=>{
 					this.setState({

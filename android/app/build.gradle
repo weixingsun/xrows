@@ -91,7 +91,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -126,6 +126,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
+    compile project(':react-native-i18n')
+    compile project(':react-native-mail')
 	compile project(':react-native-sqlite-storage')
     compile project(':react-native-fs')
     compile project(':react-native-document-picker')

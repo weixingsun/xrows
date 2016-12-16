@@ -36,6 +36,9 @@
 		43D097EE73A6483A91B93490 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BCE81C5436D48E7A3FABD83 /* Zocial.ttf */; };
 		4A029A868EC448268779002B /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF464B02B124DEDB0FEA7C3 /* libRNFS.a */; };
 		6075E905402847EDACC492E4 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE1A0DAC1EBF47529B290CCD /* libSQLite.a */; };
+		3EF012CC011847CEB3A0B964 /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3634D84D8D664A3BA3F6BA36 /* libRNMail.a */; };
+		36A1920CE68040A99BC869B0 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A3D2794FE74B24826C3B94 /* libRNI18n.a */; };
+		12C2EC83A3A54B37B44905EE /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1713B00D50BB4690B86475D5 /* libRNDeviceInfo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +175,12 @@
 		8AF464B02B124DEDB0FEA7C3 /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		C6C2E234D17F40F4A3DDB4E2 /* SQLite.xcodeproj */ = {isa = PBXFileReference; name = "SQLite.xcodeproj"; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		DE1A0DAC1EBF47529B290CCD /* libSQLite.a */ = {isa = PBXFileReference; name = "libSQLite.a"; path = "libSQLite.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		093EABD8B35E4144B7B9FAFF /* RNMail.xcodeproj */ = {isa = PBXFileReference; name = "RNMail.xcodeproj"; path = "../node_modules/react-native-mail/RNMail.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3634D84D8D664A3BA3F6BA36 /* libRNMail.a */ = {isa = PBXFileReference; name = "libRNMail.a"; path = "libRNMail.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		5F8222F78EBF411E9B6559A2 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; name = "RNI18n.xcodeproj"; path = "../node_modules/react-native-i18n/RNI18n.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B0A3D2794FE74B24826C3B94 /* libRNI18n.a */ = {isa = PBXFileReference; name = "libRNI18n.a"; path = "libRNI18n.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9DB8684BD03541A1901709BC /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1713B00D50BB4690B86475D5 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +211,9 @@
 				48F59DF35B73444DA25BD1FF /* libRNVectorIcons.a in Frameworks */,
 				4A029A868EC448268779002B /* libRNFS.a in Frameworks */,
 				6075E905402847EDACC492E4 /* libSQLite.a in Frameworks */,
+				3EF012CC011847CEB3A0B964 /* libRNMail.a in Frameworks */,
+				36A1920CE68040A99BC869B0 /* libRNI18n.a in Frameworks */,
+				12C2EC83A3A54B37B44905EE /* libRNDeviceInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +350,9 @@
 				F13FBE092BD54B29B545C33C /* RNVectorIcons.xcodeproj */,
 				27C66FD5AB464B2A9A813ED5 /* RNFS.xcodeproj */,
 				C6C2E234D17F40F4A3DDB4E2 /* SQLite.xcodeproj */,
+				093EABD8B35E4144B7B9FAFF /* RNMail.xcodeproj */,
+				5F8222F78EBF411E9B6559A2 /* RNI18n.xcodeproj */,
+				9DB8684BD03541A1901709BC /* RNDeviceInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -700,6 +715,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -716,6 +734,9 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/xrows.app/xrows";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -801,6 +822,9 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
+					"$(SRCROOT)\..\node_modules\react-native-mail\RNMail",
+					"$(SRCROOT)\..\node_modules\react-native-i18n\RNI18n",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -845,6 +869,9 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
+					"$(SRCROOT)\..\node_modules\react-native-mail\RNMail",
+					"$(SRCROOT)\..\node_modules\react-native-i18n\RNI18n",
+					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

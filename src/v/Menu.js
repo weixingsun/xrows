@@ -1,10 +1,12 @@
 import React from 'react';
-import {Platform, View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {Alert, Platform, View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
 //const DocumentPicker = require('react-native').NativeModules.RNDocumentPicker;
 import Icon from 'react-native-vector-icons/FontAwesome';
+var Mailer = require('NativeModules').RNMail;
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -78,6 +80,38 @@ const showFilePicker = ()=>{
 		}
 	});
 }
+const MailSender = ()=>{
+	Mailer.mail({
+      subject: 'Query about Xrows app',
+      recipients: ['sun.app.service@gmail.com'],
+      //ccRecipients: ['supportCC@example.com'],
+      //bccRecipients: ['supportBCC@example.com'],
+      body: '',
+      //isHTML: true, // iOS only, exclude if false
+      //attachment: {
+      //  path: '',  // The absolute path of the file from which to read data.
+      //  type: '',   // Mime Type: jpg, png, doc, ppt, html, pdf
+      //  name: '',   // Optional: Custom filename for attachment
+      //}
+    }, (error, event) => {
+        if(error) {
+          alert('Could not open mailbox. Please send manually to sun.app.service@gmail.com ');
+        }
+    });
+}
+const DoubleConfirmDialog = (title,content,func)=>{
+	Alert.alert(
+		title,   //I18n.t("feedback"),
+		content, //I18n.t("confirm_feedback"),
+		[
+			{text:I18n.t("no"), },
+			{text:I18n.t('yes'), onPress:()=>{
+				//Linking.openURL('mailto:sun.app.service@gmail.com')
+				func()
+			}},
+		]
+	);
+}
 const renderOneMenu = (drawer,icon,name,func)=>{
 	return(
 		<TouchableOpacity
@@ -105,7 +139,7 @@ const Menu = (props, context) => {
 			{renderOneMenu(drawer,'cog','Function Editor',Actions.edit)}
 			{renderOneMenu(drawer,'info-circle','About',Actions.about)}
 			{renderOneMenu(drawer,'book','User Manual',Actions.book)}
-			{renderOneMenu(drawer,'envelope','Contact Me',Actions.mail)}
+			{renderOneMenu(drawer,'envelope','Contact Me',()=>DoubleConfirmDialog(I18n.t("feedback"),I18n.t("confirm_feedback"),MailSender))}
         </View>
     )
 }

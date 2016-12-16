@@ -8,7 +8,7 @@ import Home from './v/Home'
 import Edit from './v/Edit'
 import About  from './v/About'
 import Result from './v/Result'
-
+import Langs from './lang/all';
 export default class App extends React.Component {
 	constructor(props) {
         super(props);
@@ -32,8 +32,8 @@ export default class App extends React.Component {
 					<Scene key="root">
 						<Scene key="home" component={Home} title="Home" initial={true} drawerIcon={_drawerIcon} />
 						<Scene key="edit" component={Edit} title="Edit" />
-						<Scene key="book" component={Book} title="Book" />
-						<Scene key="about" component={Acount} title="About" />
+						<Scene key="book" component={Book} title="User Manual" />
+						<Scene key="about" component={About} title="About Xrows" />
 						<Scene key="result" component={Result} title="Result"/>
 					</Scene>
 				 </Router>

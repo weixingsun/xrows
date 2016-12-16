@@ -1,27 +1,35 @@
 import React from 'react';
-import {View, Text, StyleSheet} from "react-native";
+import {Alert,Image,ListView, View, Text, StyleSheet, ScrollView, TouchableOpacity,NativeModules,Linking} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
-//import SQLite from 'react-native-sqlite-storage'
-import alasql from '../sql/alasql.fs';
+import I18n from 'react-native-i18n';
+import DeviceInfo from 'react-native-device-info'
+
 var styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F5FCFF",
+        padding: 15,
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: "center",
-        margin: 10,
-    },
-    instructions: {
-        textAlign: "center",
-        color: "#333333",
-        marginBottom: 5,
-    },
+	detail_card: {
+		justifyContent: 'center',
+		//alignItems: 'center',
+		borderWidth: 1,
+		backgroundColor: '#fff',
+		borderColor: 'rgba(0,0,0,0.1)',
+		marginTop: 5,
+		shadowColor: '#ccc',
+		//shadowOffset: { width: 2, height: 2, },
+		shadowOpacity: 0.5,
+		shadowRadius: 3,
+		//flexDirection:'row',
+		padding: 15,
+		//paddingTop:5,
+		//paddingBottom:5,
+	},
 });
 
 export default class Group extends React.Component {
@@ -32,12 +40,49 @@ export default class Group extends React.Component {
         }
 		this.file=null
     }
-
+	renderFeedback(){
+        return (
+            <View style={styles.detail_card} >
+              <View style={{flexDirection:'row'}}>
+                  <Text style={{width:80,justifyContent: 'center',alignItems:'center',fontSize:16,fontWeight:'bold',color:'black'}}> {I18n.t('feedback')}: </Text>
+                  <Text style={{marginLeft:10,justifyContent: 'center'}} onPress={this.openEmail}>sun.app.service@gmail.com</Text>
+              </View>
+            </View>
+        )
+    }
+    renderIcon(){
+		//DeviceInfo.getVersion()
+        return (
+            <View style={{flex:1,height:200,justifyContent: 'center',alignItems:'center'}}>
+                <Text style={{justifyContent:'center'}} > </Text>
+                <Text style={{justifyContent:'center'}} > </Text>
+                <Image 
+                    style={{width: 100, height: 100, backgroundColor:'white'}}
+                    source={require('../../img/xrows.png')}
+                />
+                <Text style={{justifyContent:'center'}} >{I18n.t('xrows')} {DeviceInfo.getVersion()}</Text>
+                <Text style={{justifyContent:'center'}} > </Text>
+                <Text style={{justifyContent:'center'}} > </Text>
+            </View>
+        )
+    }
+    renderCopyright(){
+        return (
+            <View style={{flex:1,height:200,justifyContent: 'center',alignItems:'center'}}>
+                <Text style={{justifyContent:'center'}} > </Text>
+                <Text style={{justifyContent:'center'}} > </Text>
+                <Text style={{justifyContent:'center'}} >Copyright @2016 {I18n.t('xrows')}</Text>
+                <Text style={{justifyContent:'center'}} > </Text>
+            </View>
+        )
+    }
     render(){
 		//<Text>File:{this.props.file}</Text>
         return (
             <View style={styles.container}>
-				<Text>{this.state.content}</Text>
+			{this.renderIcon()}
+			{this.renderFeedback()}
+			{this.renderCopyright()}
             </View>
         );
     }
@@ -54,7 +99,7 @@ import NavigationBar from 'react-native-navbar'
 import I18n from 'react-native-i18n';
 import DeviceInfo from 'react-native-device-info'
 
-export default class USBList extends React.Component {
+export default class About extends React.Component {
     constructor(props) {
       super(props);
       this.ds = new ListView.DataSource({
@@ -65,28 +110,11 @@ export default class USBList extends React.Component {
           //onesignal_id:'',
           uid:'',
       };
-      //I18n.locale = NativeModules.RNI18n.locale
       //this.openJsonAPI = this.openJsonAPI.bind(this);
       //this.openWebList = this.openWebList.bind(this);
     }
     componentWillMount() {
         //Push.getS1Id()
-    }
-    goToS(){
-        this.props.navigator.push({
-            component: ToS,
-            passProps: {navigator:this.props.navigator,},
-        })
-    }
-    renderEmail(){
-        return (
-            <View style={Style.detail_card} >
-              <View style={{flexDirection:'row'}}>
-                  <Text style={{width:60,justifyContent: 'center',alignItems:'center',fontSize:16,fontWeight:'bold',color:'black'}}> {I18n.t('s1id')}: </Text>
-                  <Text style={{marginLeft:10,justifyContent: 'center'}}> sun.app.service@gmail.com </Text>
-              </View>
-            </View>
-        )
     }
     renderPush(){
         return (
@@ -98,56 +126,8 @@ export default class USBList extends React.Component {
             </View>
         )
     }
-    renderFeedback(){
-        return (
-            <View style={Style.detail_card} >
-              <View style={{flexDirection:'row'}}>
-                  <Text style={{width:80,justifyContent: 'center',alignItems:'center',fontSize:16,fontWeight:'bold',color:'black'}}> {I18n.t('feedback')}: </Text>
-                  <Text style={{marginLeft:10,justifyContent: 'center'}} onPress={this.openEmail}>sun.app.service@gmail.com</Text>
-              </View>
-            </View>
-        )
-    }
-    openEmail(){
-        Alert.alert(
-            I18n.t("feedback"),
-            I18n.t("confirm_feedback"),
-            //"Do you want to reply this information ? \nnotify_value="+JSON.stringify(notify_value),
-            [
-                {text:I18n.t("no"), },
-                {text:I18n.t('yes'), onPress:()=>{
-                    Linking.openURL('mailto:sun.app.service@gmail.com')
-                }},
-            ]
-        );
-    }
-    renderIcon(){
-        return (
-            <View style={{flex:1,height:200,justifyContent: 'center',alignItems:'center'}}>
-                <Text style={{justifyContent:'center'}} > </Text>
-                <Text style={{justifyContent:'center'}} > </Text>
-                <Image 
-                    style={{width: 100, height: 100}}
-                    source={require('../img/icon.png')}
-                />
-                <Text style={{justifyContent:'center'}} >{I18n.t('shareplus')} {DeviceInfo.getVersion()}</Text>
-                <Text style={{justifyContent:'center'}} > </Text>
-                <Text style={{justifyContent:'center'}} > </Text>
-            </View>
-        )
-    }
-    renderCopyright(){
-        return (
-            <View style={{flex:1,height:200,justifyContent: 'center',alignItems:'center'}}>
-                <Text style={{justifyContent:'center'}} > </Text>
-                <Text style={{justifyContent:'center'}} > </Text>
-                <Text style={{color:'blue',textDecorationLine:'underline',textDecorationStyle:'solid',justifyContent:'center'}} onPress={() => this.goToS()} >{I18n.t('tos')}</Text>
-                <Text style={{justifyContent:'center'}} > </Text>
-                <Text style={{justifyContent:'center'}} >Copyright @2016 {I18n.t('shareplus')}</Text>
-                <Text style={{justifyContent:'center'}} > </Text>
-            </View>
-        )
-    }
+
+
     render(){
       let titleName = I18n.t('about')+' '+I18n.t('shareplus')
       return (

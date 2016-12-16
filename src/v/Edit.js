@@ -57,7 +57,7 @@ export default class FunctionEdit extends React.Component {
 				func3:'',
 			},
         }
-		this.default_func = 'SELECT * into csv("{DIR}/{function}.csv") from {SRC} '
+		this.default_func = 'SELECT * into {DST} from {SRC} '
     }
 	componentWillMount(){
 		this.getFormula()
@@ -68,7 +68,7 @@ export default class FunctionEdit extends React.Component {
 		this.getFunctionDB("func3")
 	}
 	getDefaultFunction(name){
-		return this.default_func.replace('{function}',name)
+		return this.default_func //.replace('{function}',name)
 	}
 	getFunctionDB(name){
 		AsyncStorage.getItem(name).then((value)=>{
@@ -78,7 +78,7 @@ export default class FunctionEdit extends React.Component {
 					functions:this.state.functions
 				});
 			}else{
-				this.state.functions[name]=this.getDefaultFunction(name)
+				this.state.functions[name]=this.default_func
 				this.setState({
 					functions:this.state.functions
 				});
