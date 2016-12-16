@@ -15,13 +15,10 @@ var styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#F5FCFF",
     },
-	listContainer: {
+    listContainer: {
         flex: 1,
         flexDirection: 'column',
-        marginTop:Platform.select({
-			ios: 64,
-			android: 54,
-		}),
+        marginTop:Platform.OS==='android'?54:64,
     },
     welcome: {
         fontSize: 20,
@@ -33,33 +30,34 @@ var styles = StyleSheet.create({
         color: "#333333",
         marginBottom: 5,
     },
-	separator: {
-		height: 1,
-		backgroundColor: '#CCCCCC',
-	},
+    separator: {
+        height: 1,
+        backgroundColor: '#CCCCCC',
+    },
 });
 
 export default class Home extends React.Component {
-	constructor(props) {
+    constructor(props) {
         super(props);
-		this.ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state={ 
-			lines:[],
+            lines:[],
         }
-		this.file=null
+        this.file=null
     }
-	componentWillMount() {
-		//this.addRunIcon()
-	}
-	componentWillReceiveProps(nextProps) {
-		//nextProps={onNavigate,navigationState,name,sceneKey,parent,type,title,initial,drawerIcon,component,index,file,from}
-		//alert('componentWillReceiveProps: file'+JSON.stringify(nextProps.file))
-		if(nextProps.file!==null){
-			this.readFile(nextProps.file);
-		//}else if(nextProps.content){
-		//	this.setState({content:nextProps.content})
-		}
-	}
+    componentWillMount() {
+        //this.addRunIcon()
+        alert('hideNavBar='+this.props.hideNavBar+' Actions='+JSON.stringify(Actions))
+    }
+    componentWillReceiveProps(nextProps) {
+        //nextProps={onNavigate,navigationState,name,sceneKey,parent,type,title,initial,drawerIcon,component,index,file,from}
+        //alert('componentWillReceiveProps: file'+JSON.stringify(nextProps.file))
+        if(nextProps.file!==null){
+            this.readFile(nextProps.file);
+        //}else if(nextProps.content){
+        //    this.setState({content:nextProps.content})
+        }
+    }
 	getFileInfo(filePath){
 		//filename.replace('%3A',':').replace('%2F','/')
 		let lastIdx = filePath.lastIndexOf('/')
@@ -125,11 +123,13 @@ export default class Home extends React.Component {
 	}
     render(){
         return (
-			<ListView style={styles.listContainer}
-				dataSource={this.ds.cloneWithRows(this.state.lines)}
-				renderRow={this._renderRowView.bind(this)}
-				enableEmptySections={true}
-			/>
+        <View>
+            <ListView style={styles.listContainer}
+                dataSource={this.ds.cloneWithRows(this.state.lines)}
+                renderRow={this._renderRowView.bind(this)}
+                enableEmptySections={true}
+            />
+        </View>
         );
     }
 }
