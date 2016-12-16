@@ -1201,7 +1201,7 @@ function read_date(blob, offset) {
 
 var fs;
 function readFileSync(filename, options) {
-	if(fs === undefined) fs = require('fs');
+	if(fs === undefined) fs = require('react-native-fs');
 	return parse(fs.readFileSync(filename), options);
 }
 

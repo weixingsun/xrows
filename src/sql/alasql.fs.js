@@ -3093,7 +3093,7 @@ exports.main = function commonjsMain(args) {
         console.log('Usage: '+args[0]+' FILE');
         process.exit(1);
     }
-    var source = require('fs').readFileSync(require('path').normalize(args[1]), "utf8");
+    var source = require('react-native-fs') //.readFileSync(require('path').normalize(args[1]), "utf8");
     return exports.parser.parse(source);
 };
 if (typeof module !== 'undefined' && require.main === module) {
@@ -3425,9 +3425,9 @@ var loadFile = utils.loadFile = function(path, asy, success, error) {
     if(utils.isNode || utils.isMeteorServer) {
     	//*not-for-browser/*
         if(utils.isMeteor) {
-            fs = Npm.require('fs');
+            fs = Npm.require('react-native-fs');
         } else {
-            fs = require('fs');
+            fs = require('react-native-fs');
         }
 
         // If path is empty, than read data from stdin (for Node) 
@@ -3445,7 +3445,7 @@ var loadFile = utils.loadFile = function(path, asy, success, error) {
             });
         } else {
             if(/^[a-z]+:\/\//i.test(path)) {
-                var request = require('request');
+                //var request = require('request');
                 request(path,function(err, response, body) {
                     if(err) {
                         throw err;
@@ -3567,13 +3567,13 @@ var loadBinaryFile = utils.loadBinaryFile = function(path, asy, success, error) 
     if(utils.isNode || utils.isMeteorServer) {
 	   	//*not-for-browser/*
         if(utils.isMeteorServer) {
-            fs = Npm.require('fs'); // For Meteor
+            fs = Npm.require('react-native-fs'); // For Meteor
         } else {
-            fs = require('fs');
+            fs = require('react-native-fs');
         }
 
         if(/^[a-z]+:\/\//i.test(path)) {
-            var request = require('request');
+            //var request = require('request');
             request({url:path,encoding:null},function(err, response, data) {
                 if(err) {
                     throw err;
@@ -3650,7 +3650,7 @@ var loadBinaryFile = utils.loadBinaryFile = function(path, asy, success, error) 
 var removeFile = utils.removeFile = function(path,cb) {
     if(utils.isNode) {
         //*not-for-browser/*
-        var fs = require('fs');
+        var fs = require('react-native-fs');
         fs.remove(path,cb);
     } else if(utils.isCordova) {
         utils.global.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
@@ -3678,7 +3678,7 @@ var removeFile = utils.removeFile = function(path,cb) {
 var deleteFile = utils.deleteFile = function(path,cb){
     //*not-for-browser/*
     if(utils.isNode) {
-        var fs = require('fs');
+        var fs = require('react-native-fs');
         fs.unlink(path, cb);
     }
     //*/
@@ -3688,7 +3688,7 @@ var deleteFile = utils.deleteFile = function(path,cb){
 var fileExists = utils.fileExists = function(path,cb){
     if(utils.isNode) {
         //*not-for-browser/*
-        var fs = require('fs');
+        var fs = require('react-native-fs');
         fs.exists(path,cb);
     } else if(utils.isCordova) {
         utils.global.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
@@ -3735,7 +3735,7 @@ var saveFile = utils.saveFile = function(path, data, cb) {
 
         if(utils.isNode) {
             //*not-for-browser/*
-            var fs = require('fs');
+            var fs = require('react-native-fs');
             data = fs.writeFileSync(path,data);
             if(cb){
                 res = cb(res);
@@ -4230,7 +4230,7 @@ var getXLS = function(){
 	/* If require() shuold be supported else take from global scope */
 	if(utils.isNode || utils.isBrowserify  || utils.isMeteorServer) {
 		//*not-for-browser/*
-		XLS = require('xlsjs') || null;
+		XLS = require('./xls') || null;
 		//*/
 	} else if( utils.isReactNative ){
 		XLS = require('./xls') || null;

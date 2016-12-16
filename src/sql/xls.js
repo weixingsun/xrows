@@ -1684,7 +1684,7 @@ function read_date(blob, offset) {
 
 var fs;
 function readFileSync(filename, options) {
-	alert('readFileSync() options='+JSON.stringify(options))
+	//alert('readFileSync() options='+JSON.stringify(options))
 	if(fs === undefined) fs = require('react-native-fs');  //fs = require('fs'); //
 	fs.readFile(filename).then(function(data){
 		return parse(data, options);
