@@ -20,7 +20,7 @@ export default class App extends Component {
         let drIcon=<Icon name={"bars"} color={"#2a2929"} size={30}/>
         return (
             <Router>
-                <Scene key="drawer" component={Drawer} open={true} type={"reset"} >
+                <Scene key="drawer" component={Drawer} open={false} type={"reset"} >
                 <Scene key="root">
                     <Scene key="home" component={Home} title="Home" initial={true} drawerIcon={drIcon}/>
                     <Scene key="edit" component={Edit} title="Edit" />

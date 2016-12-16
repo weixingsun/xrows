@@ -47,7 +47,6 @@ export default class Home extends React.Component {
     }
     componentWillMount() {
         //this.addRunIcon()
-        alert('hideNavBar='+this.props.hideNavBar+' Actions='+JSON.stringify(Actions))
     }
     componentWillReceiveProps(nextProps) {
         //nextProps={onNavigate,navigationState,name,sceneKey,parent,type,title,initial,drawerIcon,component,index,file,from}
