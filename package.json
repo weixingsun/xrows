@@ -13,6 +13,7 @@
     "react-native-device-info": "^0.9.7",
     "react-native-document-picker": "git+https://github.com/Elyx0/react-native-document-picker.git",
     "react-native-drawer": "^2.3.0",
+    "react-native-easy-grid": "^0.1.7",
     "react-native-fs": "^2.0.1-rc.2",
     "react-native-i18n": "^0.1.1",
     "react-native-mail": "^2.0.0",

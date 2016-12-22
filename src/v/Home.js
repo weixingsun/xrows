@@ -6,7 +6,7 @@ import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RNFS from 'react-native-fs';
 import alasql from '../sql/alasql.fs';
-//import xlsjs from '../sql/xls';
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 var styles = StyleSheet.create({
     container: {
@@ -107,14 +107,19 @@ export default class Home extends React.Component {
 	_renderRowView(rowData) {
 		if(rowData==null) return
 		//onPress={()=>this._onPress(rowData)}
+		alert('_renderRowView '+rowData)
 		return (
 		<TouchableHighlight underlayColor='#c8c7cc'  >
-			<View>
-				<View style={{flexDirection:'row',justifyContent:'center',height:30,}}>
+			<View style={{justifyContent:'center',height:30,}}>
+				<Grid>
 					{Object.keys(rowData).map((key,i)=>{
-						return <Text key={i} style={{fontSize:12,margin:5}}>{rowData[key]}</Text>
+						return (
+						<Col key={i}>
+							<Text key={i} style={{fontSize:12}}>{rowData[key]}</Text>
+						</Col>
+						)
 					})}
-				</View>
+				</Grid>
 				<View style={styles.separator} />
 			</View>
 		 </TouchableHighlight>
