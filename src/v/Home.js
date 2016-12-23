@@ -106,34 +106,25 @@ export default class Home extends React.Component {
 	}
 	_renderRowView(rowData) {
 		if(rowData==null) return
-		//onPress={()=>this._onPress(rowData)}
-		alert('_renderRowView '+rowData)
+		//alert('rowData='+JSON.stringify(rowData))
 		return (
-		<TouchableHighlight underlayColor='#c8c7cc'  >
-			<View style={{justifyContent:'center',height:30,}}>
-				<Grid>
+			<View style={{flexDirection:'row',justifyContent:'center',height:40}}>
+				<Grid >
 					{Object.keys(rowData).map((key,i)=>{
-						return (
-						<Col key={i}>
-							<Text key={i} style={{fontSize:12}}>{rowData[key]}</Text>
-						</Col>
-						)
+						return <Col key={i} style={{alignItems:'center',justifyContent:'center',borderWidth:0.5,borderTopWidth:0,borderLeftWidth:0}}><Text>{rowData[key]}</Text></Col>
 					})}
 				</Grid>
 				<View style={styles.separator} />
 			</View>
-		 </TouchableHighlight>
 		);
 	}
     render(){
         return (
-        <View>
             <ListView style={styles.listContainer}
                 dataSource={this.ds.cloneWithRows(this.state.lines)}
                 renderRow={this._renderRowView.bind(this)}
                 enableEmptySections={true}
             />
-        </View>
         );
     }
 }
