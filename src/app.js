@@ -10,6 +10,7 @@ import About  from './v/About'
 import Result from './v/Result'
 import Langs from './lang/all';
 import I18n from 'react-native-i18n';
+import { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 
 export default class App extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ export default class App extends Component {
     render() {
         let drIcon=<Icon name={"bars"} color={"#2a2929"} size={30}/>
         return (
+		<MenuContext style={{ flex: 1, flexDirection: 'row',}} ref={"menu"}>
             <Router>
                 <Scene key="drawer" component={Drawer} open={false} type={"reset"} >
                 <Scene key="root">
@@ -32,6 +34,7 @@ export default class App extends Component {
                 </Scene>
                 </Scene>
             </Router>
+		</MenuContext>
         )
     }
 }

@@ -8,6 +8,7 @@ import RNFS from 'react-native-fs';
 import alasql from '../sql/alasql.fs';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import I18n from 'react-native-i18n';
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 
 let styles = {
     container: {
@@ -62,6 +63,9 @@ export default class Home extends React.Component {
             lines:[],
         }
         this.file=null
+		this.renderMore=this.renderMore.bind(this)
+		this.renderMoreOption=this.renderMoreOption.bind(this)
+		this.chooseFunc=this.chooseFunc.bind(this)
     }
     componentWillMount() {
         //this.addRunIcon()
@@ -117,11 +121,49 @@ export default class Home extends React.Component {
 		Actions.refresh({
 			key:'home',
 			title:this.file.name,
-			renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file:this.file.full,func:'func1'}) } />,
+			//renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=>  } />,
+			renderRightButton: this.renderMore,
 			//content:content,
 			file:null,
 		});
 	}
+	chooseFunc(value){
+		Actions.result({file:this.file.full,func:value})
+	}
+	renderMore(){
+		let self = this
+      return (
+          <View style={{ padding: 1,  }}>
+            <Menu onSelect={(value) => this.chooseFunc(value) }>
+              <MenuTrigger>
+                <Icon name={'play'} size={22} style={{flexDirection:'row',justifyContent:'center'}} />
+              </MenuTrigger>
+              <MenuOptions>
+                {self.renderMoreOption('func1')}
+                    <View style={styles.separator} />
+                {self.renderMoreOption('func2')}
+                    <View style={styles.separator} />
+                {self.renderMoreOption('func3')}
+              </MenuOptions>
+            </Menu>
+          </View>
+      )
+    }
+renderMoreOption(value){
+	//style={{backgroundColor:'white'}}
+  return (
+	  <MenuOption value={value} >
+		  <View style={{flexDirection:'row',height:40}}>
+			  <View style={{width:30,justifyContent:'center'}}>
+				  <Icon name={'play'} color={'#ffffff'} size={16} />
+			  </View>
+			  <View style={{justifyContent:'center'}}>
+				  <Text style={{color:'black'}}> {I18n.t(value)} </Text>
+			  </View>
+		  </View>
+	  </MenuOption>
+  )
+}
 	_renderRowView(rowData) {
 		if(rowData==null) return
 		//alert('rowData='+JSON.stringify(rowData))
