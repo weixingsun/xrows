@@ -71,9 +71,9 @@ export default class Result extends React.Component {
 	execFunc1(func,file){
 		AsyncStorage.getItem(func).then((sql0)=>{
 			if(!sql0) sql0 = this.default_func
-			let dst = 'csv("'+file.dir+'/'+func+'.csv")'
+			let dst = 'csv("'+file.dir+'/'+func+'.csv",{separator:","})'
 			let sql = sql0.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
-			var sql2 = 'SELECT * from csv("'+file.dir+'/'+func+'.csv") '
+			var sql2 = 'SELECT * from csv("'+file.dir+'/'+func+'.csv",{separator:","}) '
 			//alert('sql='+sql)
 			alasql(sql,[],(result1)=>{
 				alasql(sql2,[],(result2)=>{
