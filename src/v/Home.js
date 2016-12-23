@@ -8,37 +8,48 @@ import RNFS from 'react-native-fs';
 import alasql from '../sql/alasql.fs';
 import { Col, Row, Grid } from "react-native-easy-grid";
 
-var styles = {
+let styles = {
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F5FCFF",
+        //justifyContent: "center",
+        //alignItems: "center",
+        //backgroundColor: "#F5FCFF",
+        marginTop:Platform.OS==='android'?54:64,
     },
     listContainer: {
         flex: 1,
-        flexDirection: 'column',
-        marginTop:Platform.OS==='android'?54:64,
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: "center",
-        margin: 10,
-    },
-    instructions: {
-        textAlign: "center",
-        color: "#333333",
-        marginBottom: 5,
+        //flexDirection: 'column',
     },
     separator: {
         height: 1,
         backgroundColor: '#CCCCCC',
     },
-	row1:{
-		alignItems:'center',justifyContent:'center',borderWidth:0.5,borderBottomWidth:0,borderTopWidth:0,borderRightWidth:0,height:40,
+	header:{
+		alignItems:'center',
+		justifyContent:'center',
+		borderWidth:0.5,
+		borderBottomWidth:0,
+		borderRightWidth:0,
+		height:40,
 	},
-	cell1:{
-		alignItems:'center',justifyContent:'center',borderWidth:0.5,borderTopWidth:0,borderLeftWidth:0
+	header_text:{
+		fontWeight:'bold',
+	},
+	row:{
+		alignItems:'center',
+		justifyContent:'center',
+		borderWidth:0.5,
+		borderBottomWidth:0,
+		borderTopWidth:0,
+		borderRightWidth:0,
+		height:40,
+	},
+	cell:{
+		alignItems:'center',
+		justifyContent:'center',
+		borderWidth:0.5,
+		borderTopWidth:0,
+		borderLeftWidth:0
 	},
 };
 
@@ -114,10 +125,23 @@ export default class Home extends React.Component {
 		if(rowData==null) return
 		//alert('rowData='+JSON.stringify(rowData))
 		return (
-			<View style={styles.row1}>
+			<View style={styles.row}>
 				<Grid >
 					{Object.keys(rowData).map((key,i)=>{
-						return <Col key={i} style={styles.cell1}><Text>{rowData[key]}</Text></Col>
+						return <Col key={i} style={styles.cell}><Text>{rowData[key]}</Text></Col>
+					})}
+				</Grid>
+				<View style={styles.separator} />
+			</View>
+		);
+	}
+	_renderTitleRowView(rowData) {
+		if(rowData==null) return
+		return (
+			<View style={styles.header}>
+				<Grid >
+					{Object.keys(rowData).map((key,i)=>{
+						return <Col key={i} style={styles.cell}><Text style={styles.header_text}>{key}</Text></Col>
 					})}
 				</Grid>
 				<View style={styles.separator} />
@@ -126,11 +150,14 @@ export default class Home extends React.Component {
 	}
     render(){
         return (
+		<View style={styles.container} >
+			{this._renderTitleRowView(this.state.lines[0])}
             <ListView style={styles.listContainer}
                 dataSource={this.ds.cloneWithRows(this.state.lines)}
                 renderRow={this._renderRowView.bind(this)}
                 enableEmptySections={true}
             />
+		</View>
         );
     }
 }
