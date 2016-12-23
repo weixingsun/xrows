@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import alasql from 'alasql'
 import alasql from '../sql/alasql.fs';
 import AxInput from './AxInput';
+import I18n from 'react-native-i18n';
 
 var styles = StyleSheet.create({
     container: {
@@ -91,7 +92,7 @@ export default class FunctionEdit extends React.Component {
 	renderFunction(name){
 		return(
 		<View style={styles.section}>
-			<Text style={styles.title}>{name}</Text>
+			<Text style={styles.title}>{I18n.t(name)}</Text>
 			<AxInput
 				//ref={textInput => (this.func1_input = textInput)}
 				key={name}

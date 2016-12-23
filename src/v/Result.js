@@ -6,6 +6,7 @@ import RNFS from 'react-native-fs';
 //import SQLite from 'react-native-sqlite-storage'
 import alasql from '../sql/alasql.fs';
 import { Col, Row, Grid } from "react-native-easy-grid";
+import I18n from 'react-native-i18n';
 
 let styles = {
     container: {

@@ -9,6 +9,8 @@ import Edit from './v/Edit'
 import About  from './v/About'
 import Result from './v/Result'
 import Langs from './lang/all';
+import I18n from 'react-native-i18n';
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -22,11 +24,11 @@ export default class App extends Component {
             <Router>
                 <Scene key="drawer" component={Drawer} open={false} type={"reset"} >
                 <Scene key="root">
-                    <Scene key="home" component={Home} title="Home" initial={true} drawerIcon={drIcon}/>
-                    <Scene key="edit" component={Edit} title="Edit" />
-                    <Scene key="book" component={Book} title="User Manual" />
-                    <Scene key="about" component={About} title="About Xrows" />
-                    <Scene key="result" component={Result} title="Result"/>
+                    <Scene key="home" component={Home} title={I18n.t('home')} initial={true} drawerIcon={drIcon}/>
+                    <Scene key="edit" component={Edit} title={I18n.t('editor')} />
+                    <Scene key="book" component={Book} title={I18n.t("manual")} />
+                    <Scene key="about" component={About} title={I18n.t('about')} />
+                    <Scene key="result" component={Result} title={I18n.t('result')} />
                 </Scene>
                 </Scene>
             </Router>

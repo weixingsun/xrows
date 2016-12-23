@@ -1,5 +1,12 @@
 module.exports = {
     xrows: 'Xrows',
+	func1: 'Function 1',
+	func2: 'Function 2',
+	func3: 'Function 3',
+	open_file:'Open an Excel',
+	editor:'Function Editor',
+	manual:'User Manual',
+	menu:'Menu',
     tos: 'Terms of Service',
     msgs: 'Messages',
     my: 'My',

@@ -129,17 +129,16 @@ const renderOneMenu = (drawer,icon,name,func)=>{
 }
 const Menu = (props, context) => {
     const drawer = context.drawer;
-			//{renderOneMenu(drawer,'mouse-pointer','Graphic Editor',Actions.edit)}
     return (
         <View style={styles.container}>
             <View style={styles.menu_title}>
-                <Text style={styles.menu_name}>Menu</Text>
+				<Text style={styles.menu_name}>{I18n.t('menu')}</Text>
             </View>
-            {renderOneMenu(drawer,'folder','Open an Excel',showFilePicker)}
-            {renderOneMenu(drawer,'cog','Function Editor',Actions.edit)}
-            {renderOneMenu(drawer,'info-circle','About',Actions.about)}
-            {renderOneMenu(drawer,'book','User Manual',Actions.book)}
-            {renderOneMenu(drawer,'envelope','Contact Me',()=>DoubleConfirmDialog(I18n.t("feedback"),I18n.t("confirm_feedback"),MailSender))}
+            {renderOneMenu(drawer,'folder',I18n.t("open_file"),showFilePicker)}
+            {renderOneMenu(drawer,'cog',I18n.t("editor"),Actions.edit)}
+            {renderOneMenu(drawer,'book',I18n.t("manual"),Actions.book)}
+            {renderOneMenu(drawer,'envelope',I18n.t('feedback'),()=>DoubleConfirmDialog(I18n.t("feedback"),I18n.t("confirm_feedback"),MailSender))}
+            {renderOneMenu(drawer,'info-circle',I18n.t("about"),Actions.about)}
         </View>
     )
 }

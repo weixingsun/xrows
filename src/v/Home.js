@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import RNFS from 'react-native-fs';
 import alasql from '../sql/alasql.fs';
 import { Col, Row, Grid } from "react-native-easy-grid";
+import I18n from 'react-native-i18n';
 
 let styles = {
     container: {
