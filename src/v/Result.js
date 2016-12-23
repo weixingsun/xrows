@@ -5,36 +5,52 @@ import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
 //import SQLite from 'react-native-sqlite-storage'
 import alasql from '../sql/alasql.fs';
-var styles = StyleSheet.create({
+import { Col, Row, Grid } from "react-native-easy-grid";
+
+let styles = {
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F5FCFF",
+        //justifyContent: "center",
+        //alignItems: "center",
+        //backgroundColor: "#F5FCFF",
+        marginTop:Platform.OS==='android'?54:64,
     },
-	listContainer: {
+    listContainer: {
         flex: 1,
-        flexDirection: 'column',
-        marginTop:Platform.select({
-			ios: 64,
-			android: 54,
-		}),
+        //flexDirection: 'column',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: "center",
-        margin: 10,
+    separator: {
+        height: 1,
+        backgroundColor: '#CCCCCC',
     },
-    instructions: {
-        textAlign: "center",
-        color: "#333333",
-        marginBottom: 5,
-    },
-	separator: {
-		height: 1,
-		backgroundColor: '#CCCCCC',
+	header:{
+		alignItems:'center',
+		justifyContent:'center',
+		borderWidth:0.5,
+		borderBottomWidth:0,
+		borderRightWidth:0,
+		height:40,
 	},
-});
+	header_text:{
+		fontWeight:'bold',
+	},
+	row:{
+		alignItems:'center',
+		justifyContent:'center',
+		borderWidth:0.5,
+		borderBottomWidth:0,
+		borderTopWidth:0,
+		borderRightWidth:0,
+		height:40,
+	},
+	cell:{
+		alignItems:'center',
+		justifyContent:'center',
+		borderWidth:0.5,
+		borderTopWidth:0,
+		borderLeftWidth:0
+	},
+};
 
 export default class Result extends React.Component {
 	constructor(props) {
@@ -57,7 +73,7 @@ export default class Result extends React.Component {
 			let dst = 'csv("'+file.dir+'/func1.csv")'
 			let sql = sql1.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
 			var sql2 = 'SELECT * from csv("'+file.dir+'/func1.csv") '
-			alert('sql='+sql)
+			//alert('sql='+sql)
 			alasql(sql,[],(result1)=>{
 				alasql(sql2,[],(result2)=>{
 					this.setState({
@@ -66,7 +82,6 @@ export default class Result extends React.Component {
 				})
 			})
 		});
-		
 	}
 	getFileInfo(filePath){
 		//filename.replace('%3A',':').replace('%2F','/')
@@ -86,28 +101,41 @@ export default class Result extends React.Component {
 	}
 	_renderRowView(rowData) {
 		if(rowData==null) return
-		//onPress={()=>this._onPress(rowData)}
+		//alert('rowData='+JSON.stringify(rowData))
 		return (
-		<TouchableHighlight underlayColor='#c8c7cc'  >
-			<View>
-				<View style={{flexDirection:'row',justifyContent:'center',height:30,}}>
+			<View style={styles.row}>
+				<Grid >
 					{Object.keys(rowData).map((key,i)=>{
-						return <Text key={i} style={{fontSize:12,margin:5}}>{rowData[key]}</Text>
+						return <Col key={i} style={styles.cell}><Text>{rowData[key]}</Text></Col>
 					})}
-				</View>
+				</Grid>
 				<View style={styles.separator} />
 			</View>
-		 </TouchableHighlight>
+		);
+	}
+	_renderTitleRowView(rowData) {
+		if(rowData==null) return
+		return (
+			<View style={styles.header}>
+				<Grid >
+					{Object.keys(rowData).map((key,i)=>{
+						return <Col key={i} style={styles.cell}><Text style={styles.header_text}>{key}</Text></Col>
+					})}
+				</Grid>
+				<View style={styles.separator} />
+			</View>
 		);
 	}
     render(){
-		//<Text>File:{this.props.file}</Text>
         return (
-			<ListView style={styles.listContainer}
-				dataSource={this.ds.cloneWithRows(this.state.lines)}
-				renderRow={this._renderRowView.bind(this)}
-				enableEmptySections={true}
-			/>
+		<View style={styles.container} >
+			{this._renderTitleRowView(this.state.lines[0])}
+            <ListView style={styles.listContainer}
+                dataSource={this.ds.cloneWithRows(this.state.lines)}
+                renderRow={this._renderRowView.bind(this)}
+                enableEmptySections={true}
+            />
+		</View>
         );
     }
 }
