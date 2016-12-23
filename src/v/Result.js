@@ -60,19 +60,19 @@ export default class Result extends React.Component {
             lines:[],
         }
 		this.file=null
-		this.default_func1 = 'SELECT * into {DST} from {SRC} '
+		this.default_func = 'SELECT * into {DST} from {SRC} '
     }
 	componentWillMount(){
 		let file=this.getFileInfo(this.props.file)
-		this.execFunc1(file)
+		this.execFunc1(this.props.func,file)
+		this.updateTitle()
     }
-	execFunc1(file){
-		AsyncStorage.getItem("func1").then((func1)=>{
-			let sql1 = func1
-			if(!sql1) sql1 = this.default_func1
-			let dst = 'csv("'+file.dir+'/func1.csv")'
-			let sql = sql1.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
-			var sql2 = 'SELECT * from csv("'+file.dir+'/func1.csv") '
+	execFunc1(func,file){
+		AsyncStorage.getItem(func).then((sql0)=>{
+			if(!sql0) sql0 = this.default_func
+			let dst = 'csv("'+file.dir+'/'+func+'.csv")'
+			let sql = sql0.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
+			var sql2 = 'SELECT * from csv("'+file.dir+'/'+func+'.csv") '
 			//alert('sql='+sql)
 			alasql(sql,[],(result1)=>{
 				alasql(sql2,[],(result2)=>{
@@ -98,6 +98,13 @@ export default class Result extends React.Component {
 			noext:fileNoExt,
 			full:filePath,
 		}
+	}
+	updateTitle(){
+		Actions.refresh({
+			//key:'result',
+			title:'Result '+this.props.func+'.csv',
+			//renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file:this.file.full,func:'func1'}) } />,
+		});
 	}
 	_renderRowView(rowData) {
 		if(rowData==null) return

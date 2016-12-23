@@ -116,7 +116,7 @@ export default class Home extends React.Component {
 		Actions.refresh({
 			key:'home',
 			title:this.file.name,
-			renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file: this.file.full}) } />,
+			renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file:this.file.full,func:'func1'}) } />,
 			//content:content,
 			file:null,
 		});
