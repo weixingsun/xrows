@@ -8,7 +8,7 @@ import RNFS from 'react-native-fs';
 import alasql from '../sql/alasql.fs';
 import { Col, Row, Grid } from "react-native-easy-grid";
 
-var styles = StyleSheet.create({
+var styles = {
     container: {
         flex: 1,
         justifyContent: "center",
@@ -34,7 +34,13 @@ var styles = StyleSheet.create({
         height: 1,
         backgroundColor: '#CCCCCC',
     },
-});
+	row1:{
+		alignItems:'center',justifyContent:'center',borderWidth:0.5,borderBottomWidth:0,borderTopWidth:0,borderRightWidth:0,height:40,
+	},
+	cell1:{
+		alignItems:'center',justifyContent:'center',borderWidth:0.5,borderTopWidth:0,borderLeftWidth:0
+	},
+};
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -108,10 +114,10 @@ export default class Home extends React.Component {
 		if(rowData==null) return
 		//alert('rowData='+JSON.stringify(rowData))
 		return (
-			<View style={{flexDirection:'row',justifyContent:'center',height:40}}>
+			<View style={styles.row1}>
 				<Grid >
 					{Object.keys(rowData).map((key,i)=>{
-						return <Col key={i} style={{alignItems:'center',justifyContent:'center',borderWidth:0.5,borderTopWidth:0,borderLeftWidth:0}}><Text>{rowData[key]}</Text></Col>
+						return <Col key={i} style={styles.cell1}><Text>{rowData[key]}</Text></Col>
 					})}
 				</Grid>
 				<View style={styles.separator} />
