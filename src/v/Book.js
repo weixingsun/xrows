@@ -38,9 +38,9 @@ export default class Book extends React.Component {
         super(props);
         this.state={
 			selects:['select_name','select1','select2','select3',],
-			select_name:['SELECT'],
-            select1:['TOP','DISTINCT','INTO','FROM','JOIN',],
-			select2:['GROUP BY','HAVING','ORDER BY','LIMIT','OFFSET',],
+			select_name:['SELECT','INTO','FROM',], //'JOIN',
+            select1:['DISTINCT','COUNT()','TOP','SUM()','MIN()','MAX()','FIRST()','LAST()','MEDIAN()','AGGR()','ARRAY()',],
+			select2:['GROUP BY','HAVING','ORDER BY','LIMIT','OFFSET','CUBE()','ROLLUP()','GROUPING SETS()',],
 			select3:['UNION','UNION ALL','INTERSECT','MINUS','EXCEPT'],
 			
 			operators:['operator_name','numbers','compares','includes'],
@@ -49,12 +49,11 @@ export default class Book extends React.Component {
 			compares:[' = ',' != ',' <  ',' <=  ',' > ',' >= ','BETWEEN','NOT BETWEEN'],
 			includes:['IS NULL','IS NOT NULL','IN', 'NOT IN', 'CONTAINS'],
 			
-			functions:['function_name','aggregators','functions1','functions2',], //'grouping',
-			function_name:['Functions'],
-			aggregators:['SUM()','COUNT()','MIN()','MAX()','FIRST()','LAST()','MEDIAN()','AGGR()','ARRAY()',],
-			//grouping:['CUBE()','ROLLUP()','GROUPING SETS()',],
-			functions1:['SUBSTRING()','MID()','INSTR()','TRIM()','CONVERT()','NEWID()','UUID()','GEN_RANDOM_UUID()','ROWNUM()','COALESCE()' ],
-			functions2:['ABS()', 'IIF()', 'IFNULL()', 'INSTR()', 'LOWER()', 'UPPER()', 'LCASE()', 'UCASE()', 'LEN()', 'LENGTH()','YEAR(date)', 'DAYOFWEEK(date)'],
+			functions:['function_name','func_number','func_string','func_common'],
+			function_name:['FUNCTIONS'],
+			func_number:['ABS()','ROUND()','POWER()','EXP()','CEIL()','FLOOR()','SQRT()', ],
+			func_common:['ROWNUM()','IIF()', 'IFNULL()', 'CONVERT()','NEWID()','UUID()','GEN_RANDOM_UUID()','YEAR(date)', 'DAYOFWEEK(date)' ],
+			func_string:['SUBSTRING()','INSTR()','MID()','TRIM()','LOWER()', 'UPPER()', 'LCASE()', 'UCASE()', 'LEN()', 'REGEXP_LIKE()','REPLACE()'],
         }
     }
 	
