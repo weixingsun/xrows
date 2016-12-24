@@ -54,31 +54,63 @@ const styles = StyleSheet.create({
 const contextTypes = {
     drawer: React.PropTypes.object,
 };
+const readAndoid = (result)=>{
+	//{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
+	if(result.type==='text/comma-separated-values' //csv
+	|| result.type==='application/vnd.ms-excel'    //xls
+	|| result.type==='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'  //xlsx
+	){
+		//alert('excel='+result.type)
+		Actions.refresh({
+			key:'home',
+			file:result.path,
+		});
+	}else if(result.err){
+		alert('err='+result.err)
+	}else{
+		alert('Not supported type: '+result.type)
+	}
+}
+const readIos = (result)=>{
+	//{fileName:'test.csv',fileSize:2499,uri:'file:///private/var/mobile/Containers/Data/Application/.../tmp/com.xrows-Inbox/test.csv'}
+	let fi = getFileInfoIos(result.uri)
+	if(fi.ext==='csv' || fi.ext==='xls' || fi.ext==='xlsx' ){
+		Actions.refresh({
+			key:'home',
+			file:fi.full,
+		});
+	}else if(result.err){
+		alert('err='+result.err)
+	}else{
+		alert('Not supported type: '+result.type)
+	}
+}
+const getFileInfoIos = (filePath)=>{
+	//filename.replace('%3A',':').replace('%2F','/')
+        let path = filePath
+        if(filePath.startsWith('file://')) {
+            path = filePath.substring(7)
+        }
+	let lastIdx = path.lastIndexOf('/')
+	let file = path.substr(lastIdx+1)
+	let folder = path.substr(0,lastIdx)
+	let dotIdx = file.lastIndexOf('.')
+	let fileNoExt = file.substr(0,dotIdx)
+	let ext = file.substr(dotIdx+1)
+	return{
+		dir:folder,
+		name:file,
+		ext:ext,
+		noext:fileNoExt,
+		full:path,
+	}
+}
 const showFilePicker = ()=>{
 	DocumentPicker.show({
 		filetype: [DocumentPickerUtil.allFiles()],
-	},(result) => { 
-//2016-12-17 09:15:21.302364 xrows[6723:3054691] didPickDocumentAtURL print url=file:///private/var/mobile/Containers/Data/Application/C63578F8-9810-4582-A702-A1D8B2CE5A91/tmp/com.xrows-Inbox/tshape.csv
-		//{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
-		//console.log('Menu page get file:'+JSON.stringify(result))
-		if(result.type==='text/comma-separated-values' //csv
-		|| result.type==='application/vnd.ms-excel'    //xls
-		|| result.type==='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'  //xlsx
-		){
-			//alert('excel='+result.type)
-			Actions.refresh({
-				key:'home',
-				file:result.path,
-			});
-		}else if(result.err){
-			alert('err='+result.err)
-		//}else if(result.type==='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){  //xlsx
-		//	alert('Excel 2010 not supported, Please use csv format')
-		//}else if(result.type==='application/vnd.ms-excel'){  //xls
-		//	alert('Excel 2007 not supported, Please use csv format')
-		}else{
-			alert('Not supported type: '+result.type)
-		}
+	},(err,result) => { 
+		let readFile = Platform.OS==='ios'?readIos:readAndoid
+		readFile(result)
 	});
 }
 const MailSender = ()=>{
@@ -145,3 +177,4 @@ const Menu = (props, context) => {
 }
 Menu.contextTypes = contextTypes;
 export default Menu;
+
