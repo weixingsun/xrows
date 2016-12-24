@@ -56,8 +56,9 @@ const contextTypes = {
 };
 const showFilePicker = ()=>{
 	DocumentPicker.show({
-		//filetype: ['public.data'],
+		filetype: [DocumentPickerUtil.allFiles()],
 	},(result) => { 
+//2016-12-17 09:15:21.302364 xrows[6723:3054691] didPickDocumentAtURL print url=file:///private/var/mobile/Containers/Data/Application/C63578F8-9810-4582-A702-A1D8B2CE5A91/tmp/com.xrows-Inbox/tshape.csv
 		//{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
 		//console.log('Menu page get file:'+JSON.stringify(result))
 		if(result.type==='text/comma-separated-values' //csv
