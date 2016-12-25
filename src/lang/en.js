@@ -13,7 +13,7 @@ module.exports = {
     shareplus: 'Xshare',
     home:'Home',
     uuid:'Unique ID',
-    uid:'Unique ID',
+    id:'ID',
     hi: 'Hi',
     click_more: 'Click to view more',
     list: 'List',

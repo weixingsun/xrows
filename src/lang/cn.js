@@ -14,7 +14,7 @@ module.exports = {
     shareplus: 'Xshare',
     home:'首页',
     uuid:'唯一标识',
-    uid:'唯一标识',
+    id:'标识',
     hi: '你好',
     click_more: '点击查看',
     list: '列表',

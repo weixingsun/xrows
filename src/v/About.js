@@ -36,7 +36,7 @@ export default class Group extends React.Component {
 	constructor(props) {
         super(props);
         this.state={ 
-            content:'',
+            id:'',
         }
 		this.file=null
     }
@@ -44,8 +44,8 @@ export default class Group extends React.Component {
         return (
             <View style={styles.detail_card} >
               <View style={{flexDirection:'row'}}>
-                  <Text style={{width:80,justifyContent: 'center',alignItems:'center',fontSize:16,fontWeight:'bold',color:'black'}}> {I18n.t('feedback')}: </Text>
-                  <Text style={{marginLeft:10,justifyContent: 'center'}} onPress={this.openEmail}>sun.app.service@gmail.com</Text>
+                  <Text style={{width:80,justifyContent: 'center',alignItems:'center',fontSize:16,fontWeight:'bold',color:'black'}}> {I18n.t('id')}: </Text>
+                  <Text style={{marginLeft:10,justifyContent:'center'}}>{this.state.id}</Text>
               </View>
             </View>
         )
