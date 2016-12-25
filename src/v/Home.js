@@ -36,6 +36,10 @@ let styles = {
     },
     header_text:{
         fontWeight:'bold',
+        fontSize:10,
+    },
+    value_text:{
+        fontSize:10,
     },
     row:{
         alignItems:'center',
@@ -136,7 +140,7 @@ export default class Home extends React.Component {
           <View style={{ padding: 1,  }}>
             <Menu onSelect={(value) => this.chooseFunc(value) }>
               <MenuTrigger>
-                <Icon name={'play'} size={22} style={{flexDirection:'row',justifyContent:'center'}} />
+                <Icon name={'play'} size={25} style={{width:30,alignItems:'center',justifyContent:'center'}} />
               </MenuTrigger>
               <MenuOptions>
                 {self.renderMoreOption('func1')}
@@ -171,7 +175,7 @@ export default class Home extends React.Component {
             <View style={styles.row}>
                 <Grid >
                     {Object.keys(rowData).map((key,i)=>{
-                        return <Col key={i} style={styles.cell}><Text>{rowData[key]}</Text></Col>
+                        return <Col key={i} style={styles.cell}><Text style={styles.value_text}>{rowData[key]}</Text></Col>
                     })}
                 </Grid>
                 <View style={styles.separator} />

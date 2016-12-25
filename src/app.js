@@ -12,6 +12,21 @@ import Langs from './lang/all';
 import I18n from 'react-native-i18n';
 import { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 
+const drIcon=<Icon name={"bars"} color={"#2a2929"} size={30}/>
+const scenes = Actions.create(
+    <Scene key="root">
+        <Scene key="drawer" component={Drawer} open={false} type={"reset"} >
+          <Scene key="inner">
+            <Scene key="home" component={Home} title={I18n.t('home')} initial={true} drawerIcon={drIcon}/>
+            <Scene key="edit" component={Edit} title={I18n.t('editor')} />
+            <Scene key="book" component={Book} title={I18n.t("manual")} />
+            <Scene key="about" component={About} title={I18n.t('about')} />
+            <Scene key="result" component={Result} title={I18n.t('result')} />
+          </Scene>
+        </Scene>
+    </Scene>
+);
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -20,21 +35,10 @@ export default class App extends Component {
     }
     componentWillMount() {}
     render() {
-        let drIcon=<Icon name={"bars"} color={"#2a2929"} size={30}/>
         return (
-		<MenuContext style={{ flex: 1, flexDirection: 'row',}} ref={"menu"}>
-            <Router>
-                <Scene key="drawer" component={Drawer} open={false} type={"reset"} >
-                <Scene key="root">
-                    <Scene key="home" component={Home} title={I18n.t('home')} initial={true} drawerIcon={drIcon}/>
-                    <Scene key="edit" component={Edit} title={I18n.t('editor')} />
-                    <Scene key="book" component={Book} title={I18n.t("manual")} />
-                    <Scene key="about" component={About} title={I18n.t('about')} />
-                    <Scene key="result" component={Result} title={I18n.t('result')} />
-                </Scene>
-                </Scene>
-            </Router>
-		</MenuContext>
+	<MenuContext style={{ flex: 1, flexDirection: 'row',}} ref={"menu"}>
+            <Router scenes={scenes} />
+	</MenuContext>
         )
     }
 }
