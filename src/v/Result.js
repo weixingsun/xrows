@@ -61,31 +61,30 @@ export default class Result extends React.Component {
             lines:[],
         }
         this.file=null
-        this.default_func = 'SELECT * into {DST} from {SRC} '
+        this.default_func = 'SELECT * from {SRC} '
     }
     componentWillMount(){
         this.exist(this.props.file)
     }
     exist(path){
         RNFS.exists(path).then((result) => {
-            //alert('result '+JSON.stringify(result))
             if(result) {
                 let file=this.getFileInfo(this.props.file)
                 this.execFunc1(this.props.func,file)
                 this.updateTitle()
             }else{
-                alert('File does not exist, please open again')
+                alert(I18n.t('file_expired'))
             }
         }).catch((err)=>{
             alert('err '+JSON.stringify(err))
         })
-        
     }
     execFunc1(func,file){
         AsyncStorage.getItem(func).then((sql0)=>{
             if(!sql0) sql0 = this.default_func
+            let sql00 = sql0.replace(' from ',' into {DST} from ')
             let dst = 'csv("'+file.dir+'/'+func+'.csv",{separator:","})'
-            let sql = sql0.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
+            let sql = sql00.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
             var sql2 = 'SELECT * from csv("'+file.dir+'/'+func+'.csv",{separator:","}) '
             /*alasql(sql,[],(result1)=>{
                 alasql(sql2,[],(result2)=>{

@@ -82,7 +82,7 @@ const readIos = (result)=>{
 	}else if(result.err){
 		alert('err='+result.err)
 	}else{
-		alert('Not supported type: '+result.type)
+		alert(I18n.t('file_unsupported')+fi.ext)
 	}
 }
 const getFileInfoIos = (filePath)=>{

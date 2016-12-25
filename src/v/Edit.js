@@ -4,11 +4,13 @@ import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 //import SQLite from 'react-native-sqlite-storage'
 //import alasql from 'alasql'
 import alasql from '../sql/alasql.fs';
 import AxInput from './AxInput';
 import I18n from 'react-native-i18n';
+import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
 
 var styles = StyleSheet.create({
     container: {
@@ -58,30 +60,30 @@ export default class FunctionEdit extends React.Component {
 				func3:'',
 			},
         }
-		this.default_func = 'SELECT * into {DST} from {SRC} '
+	this.default_funcs = {
+            func1:'SELECT * from {SRC} ',
+            func2:'SELECT * from {SRC} ',
+            func3:'SELECT * from {SRC} ',
+        }
     }
 	componentWillMount(){
 		this.getFormula()
     }
 	getFormula(){
-		this.getFunctionDB("func1")
-		this.getFunctionDB("func2")
-		this.getFunctionDB("func3")
+		this.getFunctionDB("functions")
 	}
 	getDefaultFunction(name){
-		return this.default_func //.replace('{function}',name)
+		return this.default_funcs //.replace('{function}',name)
 	}
 	getFunctionDB(name){
 		AsyncStorage.getItem(name).then((value)=>{
 			if(value){
-				this.state.functions[name]=value
 				this.setState({
-					functions:this.state.functions
+					functions:JSON.parse(value)
 				});
 			}else{
-				this.state.functions[name]=this.default_func
 				this.setState({
-					functions:this.state.functions
+					functions:this.default_funcs
 				});
 			}
 		});
@@ -89,35 +91,55 @@ export default class FunctionEdit extends React.Component {
 	setFunctionDB(name,value){
 		AsyncStorage.setItem(name,value)
 	}
-	renderFunction(name){
-		return(
-		<View style={styles.section}>
-			<Text style={styles.title}>{I18n.t(name)}</Text>
-			<AxInput
-				//ref={textInput => (this.func1_input = textInput)}
-				key={name}
-				placeholder=""
-				enablesReturnKeyAutomatically={true}
-				returnKeyType="done"
-				value={this.state.functions[name]}
-				onChange={(event) => {
-					let txt = event.nativeEvent.text
-					this.state.functions[name]=txt
-					this.setState({ functions: this.state.functions })
-					this.setFunctionDB(name,txt)
-				}}
-			/>
-		</View>
-		)
-	}
+    handleValueChange(values){
+         //alert('values='+JSON.stringify(values))
+         //if(values.func1){
+         //let key = Object.keys(values)[0]
+         //let txt = values[key]
+         this.setFunctionDB('functions',JSON.stringify(values))
+         //let functions = this.state.functions[key]=txt
+         this.setState({ functions:values })
+             //this.setState({form:{...this.state.form,cat:this.lastcat}})
+             //if(values.price)this.setState({validationResults:GiftedFormManager.validate(this.formName)});
+        //}
+    }
+    renderFormFunc(name){
+        return (
+            <GiftedForm.ModalWidget
+                name={name}
+                title={I18n.t(name)}
+                display={this.state.functions.func1}
+                 //scrollEnabled={true}
+                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><MIcon name={'functions'} size={20} /></View>}
+                value={this.state.functions[name]}
+                //validationResults={this.state.validationResults}
+                //displayValue='content'
+            >
+                <GiftedForm.SeparatorWidget/>
+                <GiftedForm.TextAreaWidget name={name} title={I18n.t(name)}
+                    autoFocus={true}
+                    placeholder={I18n.t(name)}
+                    //value={this.state.form.content}
+                    //style={{flex:1}}
+                />
+            </GiftedForm.ModalWidget>
+        )
+    }
     render(){
         return (
-            <View style={styles.container}>
-				<View style={styles.content}>
-					{this.renderFunction('func1')}
-					{this.renderFunction('func2')}
-					{this.renderFunction('func3')}
-				</View>
+            <View style={styles.content}>
+                <GiftedForm
+                    formName={this.formName}
+                    style={{flex:1,marginLeft:10,marginRight:10}}  //height:form_height
+                    openModal={(route) => { Actions.formModal({ ...route, title:route.getTitle() }) }}
+                    onValueChange={this.handleValueChange.bind(this)}
+                    //validators={ this.validators }
+                    defaults={this.state.form}
+                    >
+                        {this.renderFormFunc('func1')}
+                        {this.renderFormFunc('func2')}
+                        {this.renderFormFunc('func3')}
+                </GiftedForm>
             </View>
         );
     }
