@@ -19,6 +19,7 @@
 		0389D2651E038CAD0076044C /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D2641E038CAD0076044C /* libz.1.2.5.tbd */; };
 		0389D2661E038DBF0076044C /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D2641E038CAD0076044C /* libz.1.2.5.tbd */; };
 		0389D2671E038DC80076044C /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0389D2621E038C210076044C /* libstdc++.tbd */; };
+		0397CC451E128DA6008858EA /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 0397CC441E128DA6008858EA /* main.jsbundle */; };
 		03AF55531E0E76A400748AB6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AF55521E0E76A400748AB6 /* CloudKit.framework */; };
 		12C2EC83A3A54B37B44905EE /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1713B00D50BB4690B86475D5 /* libRNDeviceInfo.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
@@ -255,7 +256,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -268,6 +268,7 @@
 		0389D2301E037FC80076044C /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		0389D2621E038C210076044C /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		0389D2641E038CAD0076044C /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		0397CC441E128DA6008858EA /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = xrows/main.jsbundle; sourceTree = "<group>"; };
 		03AF55351E0E6A2300748AB6 /* xrows.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = xrows.entitlements; path = xrows/xrows.entitlements; sourceTree = "<group>"; };
 		03AF55521E0E76A400748AB6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		093EABD8B35E4144B7B9FAFF /* RNMail.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNMail.xcodeproj; path = "../node_modules/react-native-mail/RNMail.xcodeproj"; sourceTree = "<group>"; };
@@ -499,8 +500,8 @@
 		13B07FAE1A68108700A75B9A /* xrows */ = {
 			isa = PBXGroup;
 			children = (
+				0397CC441E128DA6008858EA /* main.jsbundle */,
 				03AF55351E0E6A2300748AB6 /* xrows.entitlements */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -984,6 +985,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				A80762D8500845F2A2C758F3 /* Entypo.ttf in Resources */,
+				0397CC451E128DA6008858EA /* main.jsbundle in Resources */,
 				E52C8CF93D5944DDB6621259 /* EvilIcons.ttf in Resources */,
 				64B3084E9AB64E54853CD2C3 /* FontAwesome.ttf in Resources */,
 				E7B7ED7AAA7443B3B2AE18BC /* Foundation.ttf in Resources */,
