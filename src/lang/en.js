@@ -10,6 +10,7 @@ module.exports = {
         file_expired:'File has been expired, please re-open it',
         result:'Result',
         file_unsupported:'Not supported type: ',
+        invalid_sql:'Invalid SQL statement',
     tos: 'Terms of Service',
     msgs: 'Messages',
     my: 'My',

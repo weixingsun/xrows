@@ -10,6 +10,7 @@ module.exports = {
 	file_expired:'文件过期，请重新打开',
         result:'结果',
         file_unsupported:'不支持的文件类型：',
+        invalid_sql:'不正确的SQL语句',
     share: '分享',
     tos: '服务条款',
     msgs: '消息',

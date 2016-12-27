@@ -62,6 +62,11 @@ export default class Result extends React.Component {
         }
         this.file=null
         this.default_func = 'SELECT * from {SRC} '
+        this.default_funcs = {
+            func1:this.default_func,
+            func2:this.default_func,
+            func3:this.default_func,
+        }
     }
     componentWillMount(){
         this.exist(this.props.file)
@@ -79,26 +84,31 @@ export default class Result extends React.Component {
             alert('err '+JSON.stringify(err))
         })
     }
-    execFunc1(func,file){
-        AsyncStorage.getItem(func).then((sql0)=>{
-            if(!sql0) sql0 = this.default_func
-            let sql00 = sql0.replace(' from ',' into {DST} from ')
-            let dst = 'csv("'+file.dir+'/'+func+'.csv",{separator:","})'
-            let sql = sql00.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
-            var sql2 = 'SELECT * from csv("'+file.dir+'/'+func+'.csv",{separator:","}) '
-            /*alasql(sql,[],(result1)=>{
-                alasql(sql2,[],(result2)=>{
-                    this.setState({
-                        lines:result2,
-                    })
-                })
-            })*/
-            alasql.promise(sql).then((res)=>{
-                alasql.promise(sql2).then((result)=>{
+    processSql(func,txt,file){
+        let sql0 = txt
+        if(txt==null) sql0 = this.default_func
+        let sql1 = sql0.replace(' from ',' into {DST} from ')
+        let dst = 'csv("'+file.dir+'/'+func+'.csv",{separator:","})'
+        let insert = sql1.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
+        var select = 'SELECT * from csv("'+file.dir+'/'+func+'.csv",{separator:","}) '
+        return {insert,select}
+    }
+    findFunc(funcs_txt,name){
+        let json = typeof funcs_txt==='object'?funcs_txt:JSON.parse(funcs_txt)
+        return json[name]
+    }
+    execFunc1(name,file){
+        AsyncStorage.getItem('functions').then((funcs)=>{
+            let sql = this.default_func
+            let funcs_txt = funcs==null?this.default_funcs:funcs
+            let func_txt = this.findFunc(funcs_txt,name)
+            let sqls = this.processSql(name,func_txt,file)
+            alasql.promise(sqls.insert).then((res)=>{
+                alasql.promise(sqls.select).then((result)=>{
                     this.setState({ lines:result })
                 }).catch((err)=>{})
             }).catch((err)=>{
-                alert('error='+JSON.stringify(err))
+                alert(I18n.t('invalid_sql'))
             })
         });
     }
