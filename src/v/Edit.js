@@ -65,6 +65,7 @@ export default class FunctionEdit extends React.Component {
             func2:'SELECT * from {SRC} ',
             func3:'SELECT * from {SRC} ',
         }
+        this.renderBackIcon = this.renderBackIcon.bind(this)
     }
 	componentWillMount(){
 		this.getFormula()
@@ -125,13 +126,16 @@ export default class FunctionEdit extends React.Component {
             </GiftedForm.ModalWidget>
         )
     }
+    renderBackIcon(){
+        return (<Icon name={"chevron-left"} color={"#2a2929"} size={24} onPress={Actions.pop} />)
+    }
     render(){
         return (
             <View style={styles.content}>
                 <GiftedForm
                     formName={this.formName}
                     style={{flex:1,marginLeft:10,marginRight:10}}  //height:form_height
-                    openModal={(route) => { Actions.formModal({ ...route, title:route.getTitle() }) }}
+                    openModal={(route) => { Actions.formModal({ ...route, title:route.getTitle(), renderLeftButton:this.renderBackIcon }) }}
                     onValueChange={this.handleValueChange.bind(this)}
                     //validators={ this.validators }
                     defaults={this.state.form}

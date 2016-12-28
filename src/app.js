@@ -14,16 +14,20 @@ import I18n from 'react-native-i18n';
 import { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 
 const drIcon=<Icon name={"bars"} color={"#2a2929"} size={30}/>
+const renderBackIcon=function(){
+  return (<Icon name={"chevron-left"} color={"#2a2929"} size={24} onPress={Actions.pop} />)
+}
+//renderLeftButton={renderBackIcon}
 const scenes = Actions.create(
     <Scene key="root">
         <Scene key="drawer" component={Drawer} open={false} type={"reset"} >
           <Scene key="inner">
             <Scene key="home" component={Home} title={I18n.t('home')} initial={true} drawerIcon={drIcon}/>
-            <Scene key="edit" component={Edit} title={I18n.t('editor')} />
-            <Scene key="book" component={Book} title={I18n.t("manual")} />
-            <Scene key="formModal" component={FormModal} title={I18n.t("form")} />
-            <Scene key="about" component={About} title={I18n.t('about')} />
-            <Scene key="result" component={Result} title={I18n.t('result')} />
+            <Scene key="edit" component={Edit} title={I18n.t('editor')} renderLeftButton={renderBackIcon} />
+            <Scene key="book" component={Book} title={I18n.t("manual")} renderLeftButton={renderBackIcon} />
+            <Scene key="formModal" component={FormModal} title={I18n.t("form")} renderLeftButton={renderBackIcon} />
+            <Scene key="about" component={About} title={I18n.t('about')} renderLeftButton={renderBackIcon} />
+            <Scene key="result" component={Result} title={I18n.t('result')} renderLeftButton={renderBackIcon} />
           </Scene>
         </Scene>
     </Scene>
