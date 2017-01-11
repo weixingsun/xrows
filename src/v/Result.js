@@ -34,6 +34,10 @@ let styles = {
     },
     header_text:{
         fontWeight:'bold',
+        fontSize:10,
+    },
+    value_text:{
+        fontSize:10,
     },
     row:{
         alignItems:'center',
@@ -61,11 +65,11 @@ export default class Result extends React.Component {
             lines:[],
         }
         this.file=null
-        this.default_func = 'SELECT * from {SRC} '
-        this.default_funcs = {
-            func1:this.default_func,
-            func2:this.default_func,
-            func3:this.default_func,
+        this.default_sql = 'SELECT * from {SRC} '
+        this.default_sqls = {
+            sql1:this.default_sql,
+            sql2:this.default_sql,
+            sql3:this.default_sql,
         }
     }
     componentWillMount(){
@@ -75,7 +79,7 @@ export default class Result extends React.Component {
         RNFS.exists(path).then((result) => {
             if(result) {
                 let file=this.getFileInfo(this.props.file)
-                this.execFunc1(this.props.func,file)
+                this.execFunc1(this.props.sql,file)
                 this.updateTitle()
             }else{
                 alert(I18n.t('file_expired'))
@@ -86,10 +90,11 @@ export default class Result extends React.Component {
     }
     processSql(func,txt,file){
         let sql0 = txt
-        if(txt==null) sql0 = this.default_func
-        let sql1 = sql0.replace(' from ',' into {DST} from ')
+        if(txt==null) sql0 = this.default_sql
+        let sql1 = sql0.replace('from',' into {DST} from ')
         let dst = 'csv("'+file.dir+'/'+func+'.csv",{separator:","})'
         let insert = sql1.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
+        //alert('insert='+insert+'\nsql0='+sql0+'\nsql1='+sql1)
         var select = 'SELECT * from csv("'+file.dir+'/'+func+'.csv",{separator:","}) '
         return {insert,select}
     }
@@ -98,11 +103,12 @@ export default class Result extends React.Component {
         return json[name]
     }
     execFunc1(name,file){
-        AsyncStorage.getItem('functions').then((funcs)=>{
-            let sql = this.default_func
-            let funcs_txt = funcs==null?this.default_funcs:funcs
-            let func_txt = this.findFunc(funcs_txt,name)
-            let sqls = this.processSql(name,func_txt,file)
+        AsyncStorage.getItem('sqls').then((sqls_result)=>{
+            let sql = this.default_sql
+            let sqls_txt = sqls_result==null?this.default_sqls:sqls_result
+            let sql_txt = this.findFunc(sqls_txt,name)
+            let sqls = this.processSql(name,sql_txt,file)
+            //alert('sqls='+JSON.stringify(sqls))
             alasql.promise(sqls.insert).then((res)=>{
                 alasql.promise(sqls.select).then((result)=>{
                     this.setState({ lines:result })
@@ -131,8 +137,8 @@ export default class Result extends React.Component {
     updateTitle(){
         Actions.refresh({
             //key:'result',
-            title:'Result '+this.props.func+'.csv',
-            //renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file:this.file.full,func:'func1'}) } />,
+            title:'Result '+this.props.sql+'.csv',
+            //renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file:this.file.full,sql:'sql1'}) } />,
         });
     }
     _renderRowView(rowData) {
@@ -142,7 +148,7 @@ export default class Result extends React.Component {
             <View style={styles.row}>
                 <Grid >
                     {Object.keys(rowData).map((key,i)=>{
-                        return <Col key={i} style={styles.cell}><Text>{rowData[key]}</Text></Col>
+                        return <Col key={i} style={styles.cell}><Text style={styles.value_text}>{rowData[key]}</Text></Col>
                     })}
                 </Grid>
                 <View style={styles.separator} />

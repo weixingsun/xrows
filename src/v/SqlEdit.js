@@ -1,5 +1,5 @@
 import React from 'react';
-import {AsyncStorage, Platform, View, Text, TextInput, StyleSheet} from "react-native";
+import {AsyncStorage, Platform, View, Text, TextInput, StyleSheet,TouchableHighlight} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
@@ -19,51 +19,58 @@ var styles = StyleSheet.create({
         //alignItems: "center",
         backgroundColor: "#F5FCFF",
     },
-	content:{
+    content:{
         flex: 1,
-		marginTop:Platform.select({
-			ios: 64,
-			android: 54,
-		})
-	},
-	section:{
-		flex: 1,
-		justifyContent: 'center',
-		//alignItems: 'center',
-		//borderWidth: 1,
-		//backgroundColor: '#fff',
-		//borderColor: 'rgba(0,0,0,0.1)',
-		//marginTop: 5,
-		//shadowColor: '#ccc',
-		//shadowOffset: { width: 2, height: 2, },
-		//shadowOpacity: 0.5,
-		//shadowRadius: 3,
-		//flexDirection:'row',
-		//padding: 15,
-		//paddingTop:5,
-		//paddingBottom:5,
-	},
-	title:{
-		fontWeight:'bold',
-		fontSize:20,
-		backgroundColor:'#eeeeee',
-	},
+	marginTop:Platform.select({
+		ios: 64,
+		android: 54,
+	})
+    },
+    section:{
+	flex: 1,
+	justifyContent: 'center',
+	//alignItems: 'center',
+	//borderWidth: 1,
+	//backgroundColor: '#fff',
+	//borderColor: 'rgba(0,0,0,0.1)',
+	//marginTop: 5,
+	//shadowColor: '#ccc',
+	//shadowOffset: { width: 2, height: 2, },
+	//shadowOpacity: 0.5,
+	//shadowRadius: 3,
+	//flexDirection:'row',
+	//padding: 15,
+	//paddingTop:5,
+	//paddingBottom:5,
+    },
+    title:{
+	fontWeight:'bold',
+	fontSize:20,
+	backgroundColor:'#eeeeee',
+    },
+    bk:{
+        marginLeft:5,
+        marginRight:20,
+        //alignItems:'center',
+        //marginTop:5,
+        //marginBottom:5,
+    },
 });
 
 export default class FunctionEdit extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
-			functions:{
-				func1:'',
-				func2:'',
-				func3:'',
-			},
+            sqls:{
+                sql1:'',
+                sql2:'',
+                sql3:'',
+            },
         }
-	this.default_funcs = {
-            func1:'SELECT * from {SRC} ',
-            func2:'SELECT * from {SRC} ',
-            func3:'SELECT * from {SRC} ',
+	this.default_sqls = {
+            sql1:'SELECT * from {SRC} ',
+            sql2:'SELECT * from {SRC} ',
+            sql3:'SELECT * from {SRC} ',
         }
         this.renderBackIcon = this.renderBackIcon.bind(this)
     }
@@ -71,20 +78,20 @@ export default class FunctionEdit extends React.Component {
 		this.getFormula()
     }
 	getFormula(){
-		this.getFunctionDB("functions")
+		this.getFunctionDB("sqls")
 	}
 	getDefaultFunction(name){
-		return this.default_funcs //.replace('{function}',name)
+		return this.default_sqls
 	}
 	getFunctionDB(name){
 		AsyncStorage.getItem(name).then((value)=>{
 			if(value){
 				this.setState({
-					functions:JSON.parse(value)
+					sqls:JSON.parse(value)
 				});
 			}else{
 				this.setState({
-					functions:this.default_funcs
+					sqls:this.default_sqls
 				});
 			}
 		});
@@ -94,12 +101,10 @@ export default class FunctionEdit extends React.Component {
 	}
     handleValueChange(values){
          //alert('values='+JSON.stringify(values))
-         //if(values.func1){
          //let key = Object.keys(values)[0]
          //let txt = values[key]
-         this.setFunctionDB('functions',JSON.stringify(values))
-         //let functions = this.state.functions[key]=txt
-         this.setState({ functions:values })
+         this.setFunctionDB('sqls',JSON.stringify(values))
+         this.setState({ sqls:values })
              //this.setState({form:{...this.state.form,cat:this.lastcat}})
              //if(values.price)this.setState({validationResults:GiftedFormManager.validate(this.formName)});
         //}
@@ -109,10 +114,10 @@ export default class FunctionEdit extends React.Component {
             <GiftedForm.ModalWidget
                 name={name}
                 title={I18n.t(name)}
-                display={this.state.functions.func1}
+                //display={this.state.sqls.sql1}
                  //scrollEnabled={true}
-                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><MIcon name={'functions'} size={20} /></View>}
-                value={this.state.functions[name]}
+                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'calculator'} size={20} /></View>}
+                value={this.state.sqls[name]}
                 //validationResults={this.state.validationResults}
                 //displayValue='content'
             >
@@ -127,7 +132,11 @@ export default class FunctionEdit extends React.Component {
         )
     }
     renderBackIcon(){
-        return (<Icon name={"chevron-left"} color={"#2a2929"} size={24} onPress={Actions.pop} />)
+        return (
+        <TouchableHighlight onPress={Actions.pop}>
+            <Icon name={"chevron-left"} color={"#2a2929"} size={24} style={styles.bk} />
+        </TouchableHighlight>
+        )
     }
     render(){
         return (
@@ -140,9 +149,9 @@ export default class FunctionEdit extends React.Component {
                     //validators={ this.validators }
                     defaults={this.state.form}
                     >
-                        {this.renderFormFunc('func1')}
-                        {this.renderFormFunc('func2')}
-                        {this.renderFormFunc('func3')}
+                        {this.renderFormFunc('sql1')}
+                        {this.renderFormFunc('sql2')}
+                        {this.renderFormFunc('sql3')}
                 </GiftedForm>
             </View>
         );

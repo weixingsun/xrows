@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import {TouchableHighlight} from 'react-native'
 import {Actions, Scene, Router, ActionConst,} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Drawer from './v/Drawer';
 import Book from './v/Book'
 import Menu from './v/Menu'
 import Home from './v/Home'
-import Edit from './v/Edit'
+import SqlEdit from './v/SqlEdit'
+import FuncEdit from './v/FuncEdit'
 import About  from './v/About'
 import Result from './v/Result'
 import FormModal from './v/FormModal'
@@ -13,17 +15,37 @@ import Langs from './lang/all';
 import I18n from 'react-native-i18n';
 import { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 
+const styles = {
+    bk:{
+        marginLeft:5,
+        marginRight:20,
+        //alignItems:'center',
+        //marginTop:5,
+        //marginBottom:5,
+    },
+    act:{
+        marginLeft:20,
+        marginRight:10,
+        //alignItems:'center',
+        //marginTop:5,
+        //marginBottom:5,
+    },
+}
 const drIcon=<Icon name={"bars"} color={"#2a2929"} size={30}/>
 const renderBackIcon=function(){
-  return (<Icon name={"chevron-left"} color={"#2a2929"} size={24} onPress={Actions.pop} />)
+    return (
+    <TouchableHighlight onPress={Actions.pop}>
+        <Icon name={"chevron-left"} color={"#2a2929"} size={24} style={styles.bk} />
+    </TouchableHighlight>
+    )
 }
-//renderLeftButton={renderBackIcon}
 const scenes = Actions.create(
     <Scene key="root">
         <Scene key="drawer" component={Drawer} open={false} type={"reset"} >
           <Scene key="inner">
             <Scene key="home" component={Home} title={I18n.t('home')} initial={true} drawerIcon={drIcon}/>
-            <Scene key="edit" component={Edit} title={I18n.t('editor')} renderLeftButton={renderBackIcon} />
+            <Scene key="sql_edit" component={SqlEdit} title={I18n.t('sql_editor')} renderLeftButton={renderBackIcon} />
+            <Scene key="func_edit" component={FuncEdit} title={I18n.t('func_editor')} renderLeftButton={renderBackIcon} />
             <Scene key="book" component={Book} title={I18n.t("manual")} renderLeftButton={renderBackIcon} />
             <Scene key="formModal" component={FormModal} title={I18n.t("form")} renderLeftButton={renderBackIcon} />
             <Scene key="about" component={About} title={I18n.t('about')} renderLeftButton={renderBackIcon} />

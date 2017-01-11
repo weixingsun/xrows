@@ -57,6 +57,14 @@ let styles = {
         borderTopWidth:0,
         borderLeftWidth:0
     },
+    right_icon:{
+        //paddingTop:3,
+        //paddingBottom:3,
+        paddingLeft:20,
+        paddingRight:10,
+        //alignItems:'center',
+        //justifyContent:'center',
+    },
 };
 
 export default class Home extends React.Component {
@@ -110,9 +118,10 @@ export default class Home extends React.Component {
         //var sql = 'SELECT * from csv("'+file.full+'",{headers:true}) '
         var sql = 'SELECT * from '+file.ext+'("'+file.full+'") '
         //alert('sql='+sql)
+        this.updateWithActionIcon()
         alasql(sql,[],(result)=>{
             //alert('alasql.select * '+JSON.stringify(result))
-            this.updateWithActionIcon()
+            //this.updateWithActionIcon()
             this.setState({
                 lines:result,
             })
@@ -132,22 +141,22 @@ export default class Home extends React.Component {
         });
     }
     chooseFunc(value){
-        Actions.result({file:this.file.full,func:value})
+        Actions.result({file:this.file.full,sql:value})
     }
     renderMore(){
         let self = this
         return (
-          <View style={{ padding: 1,  }}>
+          <View style={{ flex:1 }}>
             <Menu onSelect={(value) => this.chooseFunc(value) }>
               <MenuTrigger>
-                <Icon name={'play'} size={25} style={{width:30,alignItems:'center',justifyContent:'center'}} />
+                <Icon name={'play'} size={23} style={styles.right_icon} />
               </MenuTrigger>
               <MenuOptions>
-                {self.renderMoreOption('func1')}
+                {self.renderMoreOption('sql1')}
                     <View style={styles.separator} />
-                {self.renderMoreOption('func2')}
+                {self.renderMoreOption('sql2')}
                     <View style={styles.separator} />
-                {self.renderMoreOption('func3')}
+                {self.renderMoreOption('sql3')}
               </MenuOptions>
             </Menu>
           </View>
