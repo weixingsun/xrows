@@ -11,51 +11,7 @@ import alasql from '../sql/alasql.fs';
 import AxInput from './AxInput';
 import I18n from 'react-native-i18n';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        //justifyContent: "center",
-        //alignItems: "center",
-        backgroundColor: "#F5FCFF",
-    },
-    content:{
-        flex: 1,
-	marginTop:Platform.select({
-		ios: 64,
-		android: 54,
-	})
-    },
-    section:{
-	flex: 1,
-	justifyContent: 'center',
-	//alignItems: 'center',
-	//borderWidth: 1,
-	//backgroundColor: '#fff',
-	//borderColor: 'rgba(0,0,0,0.1)',
-	//marginTop: 5,
-	//shadowColor: '#ccc',
-	//shadowOffset: { width: 2, height: 2, },
-	//shadowOpacity: 0.5,
-	//shadowRadius: 3,
-	//flexDirection:'row',
-	//padding: 15,
-	//paddingTop:5,
-	//paddingBottom:5,
-    },
-    title:{
-	fontWeight:'bold',
-	fontSize:20,
-	backgroundColor:'#eeeeee',
-    },
-    bk:{
-        marginLeft:5,
-        marginRight:20,
-        //alignItems:'center',
-        //marginTop:5,
-        //marginBottom:5,
-    },
-});
+import styles from '../style'
 
 export default class FunctionEdit extends React.Component {
 	constructor(props) {

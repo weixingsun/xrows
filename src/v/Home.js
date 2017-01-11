@@ -9,63 +9,7 @@ import alasql from '../sql/alasql.fs';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import I18n from 'react-native-i18n';
 import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
-
-let styles = {
-    container: {
-        flex: 1,
-        //justifyContent: "center",
-        //alignItems: "center",
-        //backgroundColor: "#F5FCFF",
-        marginTop:Platform.OS==='android'?54:64,
-    },
-    listContainer: {
-        flex: 1,
-        //flexDirection: 'column',
-    },
-    separator: {
-        height: 1,
-        backgroundColor: '#CCCCCC',
-    },
-    header:{
-        alignItems:'center',
-        justifyContent:'center',
-        borderWidth:0.5,
-        borderBottomWidth:0,
-        borderRightWidth:0,
-        height:40,
-    },
-    header_text:{
-        fontWeight:'bold',
-        fontSize:10,
-    },
-    value_text:{
-        fontSize:10,
-    },
-    row:{
-        alignItems:'center',
-        justifyContent:'center',
-        borderWidth:0.5,
-        borderBottomWidth:0,
-        borderTopWidth:0,
-        borderRightWidth:0,
-        height:40,
-    },
-    cell:{
-        alignItems:'center',
-        justifyContent:'center',
-        borderWidth:0.5,
-        borderTopWidth:0,
-        borderLeftWidth:0
-    },
-    right_icon:{
-        //paddingTop:3,
-        //paddingBottom:3,
-        paddingLeft:20,
-        paddingRight:10,
-        //alignItems:'center',
-        //justifyContent:'center',
-    },
-};
+import styles from '../style'
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -206,7 +150,7 @@ export default class Home extends React.Component {
     }
     render(){
         return (
-        <View style={styles.container} >
+        <View style={styles.content} >
             {this._renderTitleRowView(this.state.lines[0])}
             <ListView style={styles.listContainer}
                 dataSource={this.ds.cloneWithRows(this.state.lines)}

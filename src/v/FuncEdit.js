@@ -50,7 +50,7 @@ var styles = StyleSheet.create({
 	},
     bk:{
         marginLeft:5,
-        marginRight:20,
+        marginRight:40,
         //alignItems:'center',
         //marginTop:5,
         //marginBottom:5,

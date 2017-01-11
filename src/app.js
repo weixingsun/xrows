@@ -14,23 +14,7 @@ import FormModal from './v/FormModal'
 import Langs from './lang/all';
 import I18n from 'react-native-i18n';
 import { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
-
-const styles = {
-    bk:{
-        marginLeft:5,
-        marginRight:20,
-        //alignItems:'center',
-        //marginTop:5,
-        //marginBottom:5,
-    },
-    act:{
-        marginLeft:20,
-        marginRight:10,
-        //alignItems:'center',
-        //marginTop:5,
-        //marginBottom:5,
-    },
-}
+import styles from './style'
 const drIcon=<Icon name={"bars"} color={"#2a2929"} size={30}/>
 const renderBackIcon=function(){
     return (

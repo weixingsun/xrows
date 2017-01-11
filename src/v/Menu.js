@@ -7,50 +7,8 @@ import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
 import Icon from 'react-native-vector-icons/FontAwesome';
 var Mailer = require('NativeModules').RNMail;
 import I18n from 'react-native-i18n';
+import styles from '../style'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    //justifyContent: "center",
-    //alignItems: "flex-start",
-    backgroundColor: "#2a2929",
-	//padding:20,
-    //borderWidth: 2,
-    //borderColor: 'gray',
-  },
-  menu_title: {
-    justifyContent: "center",
-    //alignItems: "flex-start",
-    backgroundColor: "#2a2929",
-	//padding:20,
-	...Platform.select({
-      ios: {
-        height: 64,
-      },
-      android: {
-        height: 54,
-      },
-    }),
-  },
-  menu0: {
-    justifyContent: "center",
-    //alignItems: "flex-start",
-    backgroundColor: "#494949",
-    height:48,
-    paddingLeft:6,
-    marginTop:1,
-  },
-  menu_name: {
-    marginLeft:10,
-    fontSize:14,
-    color:'white',
-  },
-  menu_link:{
-    marginLeft:10,
-    flexDirection:'row',
-    justifyContent:'center',
-  },
-});
 const contextTypes = {
     drawer: React.PropTypes.object,
 };
@@ -164,7 +122,7 @@ const renderOneMenu = (drawer,icon,name,func)=>{
 const Menu = (props, context) => {
     const drawer = context.drawer;
     return (
-        <View style={styles.container}>
+        <View style={styles.menu_container}>
             <View style={styles.menu_title}>
 				<Text style={styles.menu_name}>{I18n.t('menu')}</Text>
             </View>
