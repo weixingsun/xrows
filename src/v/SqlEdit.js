@@ -72,7 +72,7 @@ export default class FunctionEdit extends React.Component {
                 title={I18n.t(name)}
                 //display={this.state.sqls.sql1}
                  //scrollEnabled={true}
-                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'calculator'} size={20} /></View>}
+                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'search'} size={20} /></View>}
                 value={this.state.sqls[name]}
                 //validationResults={this.state.validationResults}
                 //displayValue='content'

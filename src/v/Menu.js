@@ -127,7 +127,7 @@ const Menu = (props, context) => {
 				<Text style={styles.menu_name}>{I18n.t('menu')}</Text>
             </View>
             {renderOneMenu(drawer,'folder',I18n.t("open_file"),showFilePicker)}
-            {renderOneMenu(drawer,'calculator',I18n.t("sql_editor"),Actions.sql_edit)}
+            {renderOneMenu(drawer,'search',I18n.t("sql_editor"),Actions.sql_edit)}
             {renderOneMenu(drawer,'slack',I18n.t("func_editor"),Actions.func_edit)}
             {renderOneMenu(drawer,'book',I18n.t("manual"),Actions.book)}
             {renderOneMenu(drawer,'envelope',I18n.t('feedback'),()=>DoubleConfirmDialog(I18n.t("feedback"),I18n.t("confirm_feedback"),MailSender))}

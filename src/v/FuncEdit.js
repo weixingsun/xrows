@@ -1,104 +1,52 @@
 import React from 'react';
 import {AsyncStorage, Platform, View, Text, TextInput, StyleSheet,TouchableHighlight} from "react-native";
-import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
-import RNFS from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+//import RNFS from 'react-native-fs';
+//import Button from "react-native-button";
+//import MIcon from 'react-native-vector-icons/MaterialIcons';
 //import SQLite from 'react-native-sqlite-storage'
 //import alasql from 'alasql'
-import alasql from '../sql/alasql.fs';
-import AxInput from './AxInput';
+//import alasql from '../sql/alasql.fs';
+//import AxInput from './AxInput';
 import I18n from 'react-native-i18n';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        //justifyContent: "center",
-        //alignItems: "center",
-        backgroundColor: "#F5FCFF",
-    },
-	content:{
-        flex: 1,
-		marginTop:Platform.select({
-			ios: 64,
-			android: 54,
-		})
-	},
-	section:{
-		flex: 1,
-		justifyContent: 'center',
-		//alignItems: 'center',
-		//borderWidth: 1,
-		//backgroundColor: '#fff',
-		//borderColor: 'rgba(0,0,0,0.1)',
-		//marginTop: 5,
-		//shadowColor: '#ccc',
-		//shadowOffset: { width: 2, height: 2, },
-		//shadowOpacity: 0.5,
-		//shadowRadius: 3,
-		//flexDirection:'row',
-		//padding: 15,
-		//paddingTop:5,
-		//paddingBottom:5,
-	},
-	title:{
-		fontWeight:'bold',
-		fontSize:20,
-		backgroundColor:'#eeeeee',
-	},
-    bk:{
-        marginLeft:5,
-        marginRight:40,
-        //alignItems:'center',
-        //marginTop:5,
-        //marginBottom:5,
-    },
-});
+import styles from '../style'
 
 export default class FunctionEdit extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
-		functions:{
-			func1:'',
-			func2:'',
-			func3:'',
-		},
+            functions:{},
         }
-	this.default_funcs = {
-            func1:'SELECT * from {SRC} ',
-            func2:'SELECT * from {SRC} ',
-            func3:'SELECT * from {SRC} ',
-        }
+	this.default_funcs = {}
         this.renderBackIcon = this.renderBackIcon.bind(this)
     }
-	componentWillMount(){
-		this.getFormula()
+    componentWillMount(){
+        //AsyncStorage.removeItem("functions")
+        this.getFunctionDB("functions")
+        this.default_funcs['sqrt'] = 'function(x){\n  return Math.sqrt(x)\n}'
+        this.default_funcs['inc'] = 'function(x){\n  return x+1\n}'
     }
-	getFormula(){
-		this.getFunctionDB("functions")
-	}
-	getDefaultFunction(name){
-		return this.default_funcs //.replace('{function}',name)
-	}
-	getFunctionDB(name){
-		AsyncStorage.getItem(name).then((value)=>{
-			if(value){
-				this.setState({
-					functions:JSON.parse(value)
-				});
-			}else{
-				this.setState({
-					functions:this.default_funcs
-				});
-			}
-		});
-	}
-	setFunctionDB(name,value){
-		AsyncStorage.setItem(name,value)
-	}
+    getDefaultFunction(name){
+        return this.default_funcs //.replace('{function}',name)
+    }
+    getFunctionDB(name){
+        AsyncStorage.getItem(name).then((value)=>{
+            if(value){
+                this.setState({
+                    functions:JSON.parse(value)
+                });
+            }else{
+                this.setState({
+                    functions:this.default_funcs
+                });
+            }
+        });
+    }
+    setFunctionDB(name,value){
+        AsyncStorage.setItem(name,value)
+    }
     handleValueChange(values){
          //alert('values='+JSON.stringify(values))
          //if(values.func1){
@@ -115,9 +63,10 @@ export default class FunctionEdit extends React.Component {
         return (
             <GiftedForm.ModalWidget
                 name={name}
-                title={I18n.t(name)}
-                display={this.state.functions.func1}
-                 //scrollEnabled={true}
+                title={name}
+                //display={this.state.functions.func1}
+                key={name}
+                //scrollEnabled={true}
                 image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'slack'} size={20} /></View>}
                 value={this.state.functions[name]}
                 //validationResults={this.state.validationResults}
@@ -126,7 +75,7 @@ export default class FunctionEdit extends React.Component {
                 <GiftedForm.SeparatorWidget/>
                 <GiftedForm.TextAreaWidget name={name} title={I18n.t(name)}
                     autoFocus={true}
-                    placeholder={I18n.t(name)}
+                    placeholder={'function(x){\n  return x+1\n}'}
                     //value={this.state.form.content}
                     //style={{flex:1}}
                 />
@@ -141,6 +90,7 @@ export default class FunctionEdit extends React.Component {
         )
     }
     render(){
+        //alert(JSON.stringify(this.state.functions))
         return (
             <View style={styles.content}>
                 <GiftedForm
@@ -151,9 +101,9 @@ export default class FunctionEdit extends React.Component {
                     //validators={ this.validators }
                     defaults={this.state.form}
                     >
-                        {this.renderFormFunc('func1')}
-                        {this.renderFormFunc('func2')}
-                        {this.renderFormFunc('func3')}
+                    {Object.keys(this.state.functions).map((k,i)=>{
+                        return this.renderFormFunc(k)
+                    })}
                 </GiftedForm>
             </View>
         );
