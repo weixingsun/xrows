@@ -25,13 +25,14 @@ export default class Result extends React.Component {
         }
     }
     componentWillMount(){
+        this.findFuncs()
         this.exist(this.props.file)
     }
     exist(path){
         RNFS.exists(path).then((result) => {
             if(result) {
                 let file=this.getFileInfo(this.props.file)
-                this.execFunc1(this.props.sql,file)
+                this.execSql(this.props.sql,file)
                 this.updateTitle()
             }else{
                 alert(I18n.t('file_expired'))
@@ -40,25 +41,35 @@ export default class Result extends React.Component {
             alert('err '+JSON.stringify(err))
         })
     }
-    processSql(func,txt,file){
+    processSql(name,txt,file){
         let sql0 = txt
         if(txt==null) sql0 = this.default_sql
         let sql1 = sql0.replace('from',' into {DST} from ')
-        let dst = 'csv("'+file.dir+'/'+func+'.csv",{separator:","})'
+        let dst = 'csv("'+file.dir+'/'+name+'.csv",{separator:","})'
         let insert = sql1.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
         //alert('insert='+insert+'\nsql0='+sql0+'\nsql1='+sql1)
-        var select = 'SELECT * from csv("'+file.dir+'/'+func+'.csv",{separator:","}) '
+        var select = 'SELECT * from csv("'+file.dir+'/'+name+'.csv",{separator:","}) '
         return {insert,select}
     }
-    findFunc(funcs_txt,name){
-        let json = typeof funcs_txt==='object'?funcs_txt:JSON.parse(funcs_txt)
+    findFuncs(){
+        AsyncStorage.getItem('functions').then((funcs_result)=>{
+            if(funcs_result!=null){
+                let json = JSON.parse(funcs_result)
+                Object.keys(json).map((k,i)=>{
+                    alasql.fn[k] = eval('('+json[k]+')')
+                })
+            }
+        });
+    }
+    findSql(sqls_txt,name){
+        let json = typeof sqls_txt==='object'?sqls_txt:JSON.parse(sqls_txt)
         return json[name]
     }
-    execFunc1(name,file){
+    execSql(name,file){
         AsyncStorage.getItem('sqls').then((sqls_result)=>{
             let sql = this.default_sql
             let sqls_txt = sqls_result==null?this.default_sqls:sqls_result
-            let sql_txt = this.findFunc(sqls_txt,name)
+            let sql_txt = this.findSql(sqls_txt,name)
             let sqls = this.processSql(name,sql_txt,file)
             //alert('sqls='+JSON.stringify(sqls))
             alasql.promise(sqls.insert).then((res)=>{
