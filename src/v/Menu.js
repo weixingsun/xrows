@@ -56,7 +56,8 @@ const contextTypes = {
 };
 const readAndoid = (result)=>{
 	//{type:'text/comma-separated-values',fileName:'test.csv',fileSize:2499,uri:'content://...'}
-	if(result.type==='text/comma-separated-values' //csv
+	if(result==null){
+    }else if(result.type==='text/comma-separated-values' //csv
 	|| result.type==='application/vnd.ms-excel'    //xls
 	|| result.type==='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'  //xlsx
 	){
@@ -108,7 +109,7 @@ const getFileInfoIos = (filePath)=>{
 const showFilePicker = ()=>{
 	DocumentPicker.show({
 		filetype: [DocumentPickerUtil.allFiles()],
-	},(err,result) => { 
+	},(err,result) => {
 		let readFile = Platform.OS==='ios'?readIos:readAndoid
 		readFile(result)
 	});
