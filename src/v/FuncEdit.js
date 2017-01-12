@@ -1,5 +1,5 @@
 import React from 'react';
-import {AsyncStorage, Platform, View, Text, TextInput, StyleSheet,TouchableHighlight} from "react-native";
+import {Alert,AsyncStorage, Platform, View, Text, TextInput, StyleSheet,TouchableHighlight} from "react-native";
 import {Actions} from "react-native-router-flux";
 import Icon from 'react-native-vector-icons/FontAwesome';
 //import RNFS from 'react-native-fs';
@@ -11,22 +11,92 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import AxInput from './AxInput';
 import I18n from 'react-native-i18n';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import styles from '../style'
 
 export default class FunctionEdit extends React.Component {
-	constructor(props) {
+    constructor(props) {
         super(props);
         this.state={
             functions:{},
         }
-	this.default_funcs = {}
+        this.default_funcs = {}
         this.renderBackIcon = this.renderBackIcon.bind(this)
+        this.renderMore=this.renderMore.bind(this)
+        this.renderMoreOption=this.renderMoreOption.bind(this)
+        this.chooseAction=this.chooseAction.bind(this)
     }
     componentWillMount(){
         //AsyncStorage.removeItem("functions")
         this.getFunctionDB("functions")
         this.default_funcs['sqrt'] = 'function(x){\n  return Math.sqrt(x)\n}'
         this.default_funcs['inc'] = 'function(x){\n  return x+1\n}'
+        Actions.refresh({
+            renderRightButton: this.renderMore,
+        });
+    }
+    chooseAction(str_value){
+        let value = JSON.parse(str_value)
+        if(value.act==='add'){
+            Actions.func_add({})
+        }else if(value.act==='del'){
+            Alert.alert(
+                I18n.t("del"),
+                I18n.t("del")+' '+I18n.t("func"),
+                [
+                    {text:I18n.t("no"), },
+                    {text:I18n.t('yes'), onPress:()=>{
+                        this.deleteFunc(value.func)
+                    }},
+                ]
+            );
+        }
+    }
+    deleteFunc(name){
+        var funcs = this.state.functions //[value.func]
+        delete funcs[name]
+        this.setState({
+            functions:funcs
+        })
+        this.setFunctionDB('functions',JSON.stringify(funcs))
+    }
+    renderMore(){
+        let self = this
+        //add func2
+        //delete func1
+        return (
+          <View style={{ flex:1 }}>
+            <Menu onSelect={(value) => this.chooseAction(value) }>
+              <MenuTrigger>
+                <Icon name={'ellipsis-v'} size={24} style={styles.right_icon} color={'black'} />
+              </MenuTrigger>
+              <MenuOptions>
+                {self.renderMoreOption('add','plus',null)}
+                {Object.keys(this.state.functions).map((k,i)=>{
+                    return self.renderMoreOption('del','trash',k)
+                })}
+              </MenuOptions>
+            </Menu>
+          </View>
+        )
+    }
+    renderMoreOption(act,icon,func){
+        //style={{backgroundColor:'white'}}
+        let json = {act,func}
+        let title = func==null?I18n.t(act):I18n.t(act)+' '+func
+        return (
+            <MenuOption value={JSON.stringify(json)} key={act+func}>
+                <View style={{flexDirection:'row',height:40}}>
+                    <View style={{width:40,justifyContent:'center'}}>
+                        <Icon name={icon} size={16} style={{marginLeft:10}}/>
+                    </View>
+                    <View style={{justifyContent:'center'}}>
+                        <Text style={{color:'black'}}>{title}</Text>
+                    </View>
+                </View>
+                <View style={styles.separator} />
+            </MenuOption>
+        )
     }
     getDefaultFunction(name){
         return this.default_funcs //.replace('{function}',name)
@@ -41,6 +111,7 @@ export default class FunctionEdit extends React.Component {
                 this.setState({
                     functions:this.default_funcs
                 });
+                this.setFunctionDB('functions',this.default_funcs)
             }
         });
     }

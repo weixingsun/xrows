@@ -60,9 +60,9 @@ module.exports = {
         borderLeftWidth:0
     },
     right_icon:{
-        //paddingTop:3,
-        //paddingBottom:3,
-        paddingLeft:20,
+        //paddingTop:1,
+        //paddingBottom:5,
+        paddingLeft:40,
         paddingRight:10,
         //alignItems:'center',
         //justifyContent:'center',
@@ -75,7 +75,7 @@ module.exports = {
         //marginBottom:5,
     },
     act:{
-        marginLeft:20,
+        marginLeft:40,
         marginRight:10,
         //alignItems:'center',
         //marginTop:5,

@@ -1,5 +1,8 @@
 module.exports = {
     xrows: 'Xrows',
+    add: '新建',
+    del: '删除',
+    func: '函数',
 	func1: '函数1',
 	func2: '函数2',
 	func3: '函数3',
@@ -9,7 +12,7 @@ module.exports = {
 	open_file:'打开一个表格',
 	sql_editor:'查询编辑器',
 	func_editor:'函数编辑器',
-	manual:'用户手册',
+	manual:'语法手册',
 	menu:'菜单',
 	file_expired:'文件过期，请重新打开',
         result:'结果',

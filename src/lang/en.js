@@ -1,5 +1,8 @@
 module.exports = {
     xrows: 'Xrows',
+    add: 'Add',
+    del: 'Delete',
+    func: 'Function',
 	func1: 'Function 1',
 	func2: 'Function 2',
 	func3: 'Function 3',
@@ -9,7 +12,7 @@ module.exports = {
 	open_file:'Open an Excel',
 	sql_editor:'SQL Editor',
 	func_editor:'Function Editor',
-	manual:'User Manual',
+	manual:'Syntax Manual',
 	menu:'Menu',
         file_expired:'File has been expired, please re-open it',
         result:'Result',
