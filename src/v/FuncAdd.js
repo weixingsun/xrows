@@ -64,7 +64,7 @@ export default class SqlEdit extends React.Component {
                 key={name}
                 name={name}
                 title={I18n.t(name)}
-                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'search'} size={20} /></View>}
+                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><MIcon name={'title'} size={20} /></View>}
                 value={this.state.values[name]}
                 //validationResults={this.state.validationResults}
                 //displayValue='content'
@@ -78,7 +78,7 @@ export default class SqlEdit extends React.Component {
                 title={I18n.t(name)}
                 //display={this.state.sqls.sql1}
                  //scrollEnabled={true}
-                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'search'} size={20} /></View>}
+                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><MIcon name={'functions'} size={20} /></View>}
                 value={this.state.values[name]}
                 //validationResults={this.state.validationResults}
                 //displayValue='content'
@@ -142,9 +142,27 @@ export default class SqlEdit extends React.Component {
         )
     }
     onSubmit(values){
-        var funcs = this.state.functions
-        funcs[values.name] = values.func
-        this.setFunctionDB('functions',funcs)
-        Actions.pop({ refresh: {add:true} });
+        if(values.name.length<1){
+            alert(I18n.t('no_name'))
+        }else if(values.func.length<1){
+            alert(I18n.t('no_func'))
+        }else if(this.errorSyntax(values.func)){
+            alert(I18n.t('invalid_func'))
+        }else{
+            var funcs = this.state.functions
+            funcs[values.name] = values.func
+            this.setFunctionDB('functions',funcs)
+            Actions.pop({ refresh: {add:true} });
+        }
+    }
+    errorSyntax(code){
+        try {
+            eval('('+code+')'); 
+        } catch (e) {
+            if (e instanceof SyntaxError) {
+                return true
+            }
+        }
+        return false
     }
 }
