@@ -29,7 +29,7 @@ export default class FunctionEdit extends React.Component {
     }
     componentWillMount(){
         //AsyncStorage.removeItem("functions")
-        this.init()
+        if(typeof this.props.add==='undefined') this.init()
     }
     componentWillReceiveProps(nextProps) {
         if(nextProps.add) this.init()

@@ -1,75 +1,136 @@
 import React from 'react';
-import {AsyncStorage, Platform, View, Text, TextInput, StyleSheet,TouchableHighlight} from "react-native";
-import Button from "react-native-button";
+import {Alert,AsyncStorage, Platform, View, Text, TextInput, StyleSheet,TouchableHighlight} from "react-native";
+//import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
-import RNFS from 'react-native-fs';
+//import RNFS from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+//import MIcon from 'react-native-vector-icons/MaterialIcons';
 //import SQLite from 'react-native-sqlite-storage'
 //import alasql from 'alasql'
-import alasql from '../sql/alasql.fs';
-import AxInput from './AxInput';
+//import alasql from '../sql/alasql.fs';
+//import AxInput from './AxInput';
 import I18n from 'react-native-i18n';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import styles from '../style'
 
 export default class SqlEdit extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
-            sqls:{
-                sql1:'',
-                sql2:'',
-                sql3:'',
-            },
+            sqls:{},
         }
-	this.default_sqls = {
-            sql1:'SELECT * from {SRC} ',
-            sql2:'SELECT * from {SRC} ',
-            sql3:'SELECT * from {SRC} ',
-        }
+        this.formName="sql_list"
+	this.default_sqls = {}
+        //    sql1:'SELECT * from {SRC} ',
         this.renderBackIcon = this.renderBackIcon.bind(this)
+        this.renderMore=this.renderMore.bind(this)
+        this.renderMoreOption=this.renderMoreOption.bind(this)
+        this.chooseAction=this.chooseAction.bind(this)
     }
-	componentWillMount(){
-		this.getFormula()
+    componentWillMount(){
+        if(typeof this.props.add==='undefined') this.init()
     }
-	getFormula(){
-		this.getFunctionDB("sqls")
-	}
-	getDefaultFunction(name){
-		return this.default_sqls
-	}
-	getFunctionDB(name){
-		AsyncStorage.getItem(name).then((value)=>{
-			if(value){
-				this.setState({
-					sqls:JSON.parse(value)
-				});
-			}else{
-				this.setState({
-					sqls:this.default_sqls
-				});
-			}
-		});
-	}
-	setFunctionDB(name,value){
-		AsyncStorage.setItem(name,value)
-	}
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.add) this.init()
+    }
+    init(){
+        this.getSqlDB("sqls")
+        Actions.refresh({
+            renderRightButton: this.renderMore,
+            add:false,
+        });
+        
+    }
+    chooseAction(str_value){
+        let value = JSON.parse(str_value)
+        if(value.act==='add'){
+            Actions.sql_add({})
+        }else if(value.act==='del'){
+            Alert.alert(
+                I18n.t("del"),
+                I18n.t("del")+' '+value.sql,
+                [
+                    {text:I18n.t("no"), },
+                    {text:I18n.t('yes'), onPress:()=>{
+                        this.deleteSql(value.sql)
+                    }},
+                ]
+            );
+        }
+    }
+    deleteSql(name){
+        var sqls = this.state.sqls //[value.sql]
+        delete sqls[name]
+        this.setState({
+            sqls
+        })
+        this.setSqlDB('sqls',JSON.stringify(sqls))
+    }
+    renderMore(){
+        let self = this
+        return (
+          <View style={{ flex:1 }}>
+            <Menu onSelect={(value) => this.chooseAction(value) }>
+              <MenuTrigger>
+                <Icon name={'ellipsis-v'} size={24} style={styles.right_icon} color={'black'} />
+              </MenuTrigger>
+              <MenuOptions>
+                {self.renderMoreOption('add','plus',null)}
+                {Object.keys(this.state.sqls).map((k,i)=>{
+                    return self.renderMoreOption('del','trash',k)
+                })}
+              </MenuOptions>
+            </Menu>
+          </View>
+        )
+    }
+    renderMoreOption(act,icon,sql){
+        //style={{backgroundColor:'white'}}
+        let json = {act,sql}
+        let title = sql==null?I18n.t(act):I18n.t(act)+' '+sql
+        return (
+            <MenuOption value={JSON.stringify(json)} key={act+sql}>
+                <View style={{flexDirection:'row',height:40}}>
+                    <View style={{width:40,justifyContent:'center'}}>
+                        <Icon name={icon} size={16} style={{marginLeft:10}}/>
+                    </View>
+                    <View style={{justifyContent:'center'}}>
+                        <Text style={{color:'black'}}>{title}</Text>
+                    </View>
+                </View>
+                <View style={styles.separator} />
+            </MenuOption>
+        )
+    }
+    getSqlDB(name){
+        AsyncStorage.getItem(name).then((value)=>{
+            if(value){
+                this.setState({
+                    sqls:JSON.parse(value)
+                });
+            }
+        });
+    }
+    setSqlDB(name,value){
+        AsyncStorage.setItem(name,value)
+    }
     handleValueChange(values){
          //alert('values='+JSON.stringify(values))
          //let key = Object.keys(values)[0]
          //let txt = values[key]
-         this.setFunctionDB('sqls',JSON.stringify(values))
+         this.setSqlDB('sqls',JSON.stringify(values))
          this.setState({ sqls:values })
              //this.setState({form:{...this.state.form,cat:this.lastcat}})
              //if(values.price)this.setState({validationResults:GiftedFormManager.validate(this.formName)});
         //}
     }
-    renderFormFunc(name){
+    renderFormModal(name){
         return (
             <GiftedForm.ModalWidget
+                key={name}
                 name={name}
-                title={I18n.t(name)}
+                title={name}
                 //display={this.state.sqls.sql1}
                  //scrollEnabled={true}
                 image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'search'} size={20} /></View>}
@@ -80,7 +141,7 @@ export default class SqlEdit extends React.Component {
                 <GiftedForm.SeparatorWidget/>
                 <GiftedForm.TextAreaWidget name={name} title={I18n.t(name)}
                     autoFocus={true}
-                    placeholder={I18n.t(name)}
+                    //placeholder={I18n.t(name)}
                     //value={this.state.form.content}
                     //style={{flex:1}}
                 />
@@ -103,11 +164,11 @@ export default class SqlEdit extends React.Component {
                     openModal={(route) => { Actions.formModal({ ...route, title:route.getTitle(), renderLeftButton:this.renderBackIcon }) }}
                     onValueChange={this.handleValueChange.bind(this)}
                     //validators={ this.validators }
-                    defaults={this.state.form}
+                    //defaults={this.state.form}
                     >
-                        {this.renderFormFunc('sql1')}
-                        {this.renderFormFunc('sql2')}
-                        {this.renderFormFunc('sql3')}
+                    {Object.keys(this.state.sqls).map((k,i)=>{
+                        return this.renderFormModal(k)
+                    })}
                 </GiftedForm>
             </View>
         );
