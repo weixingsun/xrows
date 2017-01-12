@@ -17,55 +17,61 @@ export default class SqlEdit extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
-            sqls:{
-                sql1:'',
-                sql2:'',
-                sql3:'',
+            functions:{},
+            values:{
+                name:'',
+                func:'',
             },
         }
-	this.default_sqls = {
-            sql1:'SELECT * from {SRC} ',
-            sql2:'SELECT * from {SRC} ',
-            sql3:'SELECT * from {SRC} ',
+	this.default_values = {
+            name:'power',
+            func:'function(x){\n  return x*x\n} ',
         }
+        this.formName="func_add"
         this.renderBackIcon = this.renderBackIcon.bind(this)
     }
-	componentWillMount(){
-		this.getFormula()
+    componentWillMount(){
+        this.getFunctionDB("functions")
     }
-	getFormula(){
-		this.getFunctionDB("sqls")
-	}
-	getDefaultFunction(name){
-		return this.default_sqls
-	}
-	getFunctionDB(name){
-		AsyncStorage.getItem(name).then((value)=>{
-			if(value){
-				this.setState({
-					sqls:JSON.parse(value)
-				});
-			}else{
-				this.setState({
-					sqls:this.default_sqls
-				});
-			}
-		});
-	}
-	setFunctionDB(name,value){
-		AsyncStorage.setItem(name,value)
-	}
+    getFunctionDB(name){
+        AsyncStorage.getItem(name).then((value)=>{
+            if(value){
+                this.setState({
+                    functions:JSON.parse(value)
+                });
+            }
+        });
+    }
+    setFunctionDB(name,value){
+        if(typeof value==='object') value=JSON.stringify(value)
+        AsyncStorage.setItem(name,value)
+    }
     handleValueChange(values){
-         //alert('values='+JSON.stringify(values))
-         //let key = Object.keys(values)[0]
-         //let txt = values[key]
-         this.setFunctionDB('sqls',JSON.stringify(values))
-         this.setState({ sqls:values })
-             //this.setState({form:{...this.state.form,cat:this.lastcat}})
-             //if(values.price)this.setState({validationResults:GiftedFormManager.validate(this.formName)});
+        //alert('values='+JSON.stringify(values))
+        if(values.name && values.func){
+            //alert(values.name+values.func)
+        }
+        //let key = Object.keys(values)[0]
+        //let txt = values[key]
+        //this.setState({ sqls:values })
+        //this.setState({form:{...this.state.form,cat:this.lastcat}})
+        //if(values.price)this.setState({validationResults:GiftedFormManager.validate(this.formName)});
         //}
     }
-    renderFormFunc(name){
+    renderFormInput(name){
+        return (
+            <GiftedForm.TextInputWidget
+                key={name}
+                name={name}
+                title={I18n.t(name)}
+                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'search'} size={20} /></View>}
+                value={this.state.values[name]}
+                //validationResults={this.state.validationResults}
+                //displayValue='content'
+            />
+        )
+    }
+    renderFormModal(name){
         return (
             <GiftedForm.ModalWidget
                 name={name}
@@ -73,7 +79,7 @@ export default class SqlEdit extends React.Component {
                 //display={this.state.sqls.sql1}
                  //scrollEnabled={true}
                 image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'search'} size={20} /></View>}
-                value={this.state.sqls[name]}
+                value={this.state.values[name]}
                 //validationResults={this.state.validationResults}
                 //displayValue='content'
             >
@@ -105,11 +111,40 @@ export default class SqlEdit extends React.Component {
                     //validators={ this.validators }
                     defaults={this.state.form}
                     >
-                        {this.renderFormFunc('sql1')}
-                        {this.renderFormFunc('sql2')}
-                        {this.renderFormFunc('sql3')}
+                        {this.renderFormInput('name')}
+                        {this.renderFormModal('func')}
+                        {this.renderSubmit()}
                 </GiftedForm>
             </View>
         );
+    }
+    renderSubmit(){
+        return(
+            <GiftedForm.SubmitWidget
+                title={I18n.t('add')}
+                widgetStyles={{
+                    submitButton: {
+                        backgroundColor: '#2255aa',
+                    }
+                }}
+                onSubmit={(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
+                    //alert('validators='+JSON.stringify(this.validators))
+                    //this.setState({ validationResults:validationResults.results })
+                    if (isValid === true) {
+                        this.onSubmit(values)
+                        //alert('values='+JSON.stringify(values))
+                        postSubmit();
+                    }else{
+                        alert(JSON.stringify(values))
+                    }
+                }}
+            />
+        )
+    }
+    onSubmit(values){
+        var funcs = this.state.functions
+        funcs[values.name] = values.func
+        this.setFunctionDB('functions',funcs)
+        Actions.pop({ refresh: {add:true} });
     }
 }

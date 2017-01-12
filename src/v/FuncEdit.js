@@ -20,6 +20,7 @@ export default class FunctionEdit extends React.Component {
         this.state={
             functions:{},
         }
+        this.formName="func_list"
         this.default_funcs = {}
         this.renderBackIcon = this.renderBackIcon.bind(this)
         this.renderMore=this.renderMore.bind(this)
@@ -28,11 +29,18 @@ export default class FunctionEdit extends React.Component {
     }
     componentWillMount(){
         //AsyncStorage.removeItem("functions")
+        this.init()
+    }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.add) this.init()
+    }
+    init(){
         this.getFunctionDB("functions")
-        this.default_funcs['sqrt'] = 'function(x){\n  return Math.sqrt(x)\n}'
-        this.default_funcs['inc'] = 'function(x){\n  return x+1\n}'
+        //this.default_funcs['sqrt'] = 'function(x){\n  return Math.sqrt(x)\n}'
+        //this.default_funcs['inc'] = 'function(x){\n  return x+1\n}'
         Actions.refresh({
             renderRightButton: this.renderMore,
+            add:false,
         });
     }
     chooseAction(str_value){
@@ -124,7 +132,6 @@ export default class FunctionEdit extends React.Component {
          //let key = Object.keys(values)[0]
          //let txt = values[key]
          this.setFunctionDB('functions',JSON.stringify(values))
-         //let functions = this.state.functions[key]=txt
          this.setState({ functions:values })
              //this.setState({form:{...this.state.form,cat:this.lastcat}})
              //if(values.price)this.setState({validationResults:GiftedFormManager.validate(this.formName)});
@@ -147,7 +154,7 @@ export default class FunctionEdit extends React.Component {
                 <GiftedForm.TextAreaWidget name={name} title={I18n.t(name)}
                     autoFocus={true}
                     placeholder={'function(x){\n  return x+1\n}'}
-                    //value={this.state.form.content}
+                    value={this.state.functions[name]}
                     //style={{flex:1}}
                 />
             </GiftedForm.ModalWidget>

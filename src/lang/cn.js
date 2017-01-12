@@ -3,6 +3,7 @@ module.exports = {
     add: '新建',
     del: '删除',
     func: '函数',
+    func_add: '新建函数',
 	func1: '函数1',
 	func2: '函数2',
 	func3: '函数3',

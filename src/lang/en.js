@@ -3,6 +3,7 @@ module.exports = {
     add: 'Add',
     del: 'Delete',
     func: 'Function',
+    func_add: 'Create a Function',
 	func1: 'Function 1',
 	func2: 'Function 2',
 	func3: 'Function 3',
