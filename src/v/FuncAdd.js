@@ -124,7 +124,7 @@ export default class FuncAdd extends React.Component {
                 title={I18n.t('add')}
                 widgetStyles={{
                     submitButton: {
-                        backgroundColor: '#2255aa',
+                        backgroundColor: '#494949',
                     }
                 }}
                 onSubmit={(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
