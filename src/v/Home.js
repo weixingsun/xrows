@@ -32,8 +32,11 @@ export default class Home extends React.Component {
         //alert('componentWillReceiveProps: file'+JSON.stringify(nextProps.file))
         if(nextProps.file!==null){
             this.readFile(nextProps.file);
+            this.getSqlDB()
         //}else if(nextProps.content){
         //    this.setState({content:nextProps.content})
+        }else if(nextProps.add){
+            this.getSqlDB()
         }
     }
     getSqlDB(){
@@ -72,10 +75,10 @@ export default class Home extends React.Component {
         //var sql = 'SELECT * from csv("'+file.full+'",{headers:true}) '
         var sql = 'SELECT * from '+file.ext+'("'+file.full+'") '
         //alert('sql='+sql)
-        this.updateWithActionIcon()
+        //this.updateWithActionIcon()
         alasql(sql,[],(result)=>{
             //alert('alasql.select * '+JSON.stringify(result))
-            //this.updateWithActionIcon()
+            this.updateWithActionIcon()
             this.setState({
                 lines:result,
             })
@@ -95,35 +98,38 @@ export default class Home extends React.Component {
         });
     }
     chooseSql(value){
-        Actions.result({file:this.file.full,sql:value})
+        if(value==='') Actions.sql_add({})
+        else Actions.result({file:this.file.full,sql:value})
     }
     renderMore(){
-        let self = this
         return (
           <View style={{ flex:1 }}>
             <Menu onSelect={(value) => this.chooseSql(value) }>
               <MenuTrigger>
-                <Icon name={'play'} size={23} style={styles.right_icon} />
+                <Icon name={'play'} size={24} style={styles.right_icon} color={'black'} />
               </MenuTrigger>
               <MenuOptions>
+                {this.renderMoreOption('add','','plus')}
                 {Object.keys(this.state.sqls).map((k,i)=>{
-                        return self.renderMoreOption(k)
+                        return this.renderMoreOption('',k,'play')
                 })}
               </MenuOptions>
             </Menu>
           </View>
         )
     }
-    renderMoreOption(value){
+    renderMoreOption(act,value,icon){
         //style={{backgroundColor:'white'}}
+        let title=I18n.t('sql')+' '+value
+        if(act==='add') title=I18n.t('add')+I18n.t('sql')
         return (
             <MenuOption value={value} key={value} style={{padding:1}}>
                 <View style={{flexDirection:'row',height:40,backgroundColor:'#494949'}}>
                     <View style={{width:40,justifyContent:'center'}}>
-                        <Icon name={'play'} color={'white'} size={16} style={{marginLeft:10}}/>
+                        <Icon name={icon} color={'white'} size={16} style={{marginLeft:10}}/>
                     </View>
                     <View style={{justifyContent:'center'}}>
-                        <Text style={{color:'white'}}>{I18n.t('sql')+' '+value}</Text>
+                        <Text style={{color:'white'}}>{title}</Text>
                     </View>
                 </View>
             </MenuOption>

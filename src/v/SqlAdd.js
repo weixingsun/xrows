@@ -142,7 +142,7 @@ export default class SqlAdd extends React.Component {
         )
     }
     onSubmit(values){
-        alert(JSON.stringify(values))
+        //alert(JSON.stringify(values))
         if(values.name.length<1){
             alert(I18n.t('no_name'))
         }else if(values.sql.length<1){
