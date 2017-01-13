@@ -90,16 +90,15 @@ export default class SqlEdit extends React.Component {
         let json = {act,sql}
         let title = sql==null?I18n.t(act):I18n.t(act)+' '+sql
         return (
-            <MenuOption value={JSON.stringify(json)} key={act+sql}>
-                <View style={{flexDirection:'row',height:40}}>
+            <MenuOption value={JSON.stringify(json)} key={act+sql} style={{padding:1}}>
+                <View style={{flexDirection:'row',height:40,backgroundColor:'#494949'}}>
                     <View style={{width:40,justifyContent:'center'}}>
-                        <Icon name={icon} size={16} style={{marginLeft:10}}/>
+                        <Icon name={icon} color={'white'} size={16} style={{marginLeft:10}}/>
                     </View>
                     <View style={{justifyContent:'center'}}>
-                        <Text style={{color:'black'}}>{title}</Text>
+                        <Text style={{color:'white'}}>{title}</Text>
                     </View>
                 </View>
-                <View style={styles.separator} />
             </MenuOption>
         )
     }

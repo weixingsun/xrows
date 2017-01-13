@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, ListView, Platform, StyleSheet, Text, TouchableHighlight, View, } from "react-native";
+import {AsyncStorage,Dimensions, ListView, Platform, StyleSheet, Text, TouchableHighlight, View, } from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import {DocumentPickerUtil,DocumentPicker} from "react-native-document-picker";
@@ -16,15 +16,16 @@ export default class Home extends React.Component {
         super(props);
         this.ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state={ 
+            sqls:{},
             lines:[],
         }
         this.file=null
         this.renderMore=this.renderMore.bind(this)
         this.renderMoreOption=this.renderMoreOption.bind(this)
-        this.chooseFunc=this.chooseFunc.bind(this)
+        this.chooseSql=this.chooseSql.bind(this)
     }
     componentWillMount() {
-        //this.addRunIcon()
+        this.getSqlDB()
     }
     componentWillReceiveProps(nextProps) {
         //nextProps={onNavigate,navigationState,name,sceneKey,parent,type,title,initial,drawerIcon,component,index,file,from}
@@ -34,6 +35,15 @@ export default class Home extends React.Component {
         //}else if(nextProps.content){
         //    this.setState({content:nextProps.content})
         }
+    }
+    getSqlDB(){
+        AsyncStorage.getItem('sqls').then((value)=>{
+            if(value){
+                this.setState({
+                    sqls:JSON.parse(value)
+                });
+            }
+        });
     }
     getFileInfo(filePath){
         //filename.replace('%3A',':').replace('%2F','/')
@@ -84,23 +94,21 @@ export default class Home extends React.Component {
             file:null,
         });
     }
-    chooseFunc(value){
+    chooseSql(value){
         Actions.result({file:this.file.full,sql:value})
     }
     renderMore(){
         let self = this
         return (
           <View style={{ flex:1 }}>
-            <Menu onSelect={(value) => this.chooseFunc(value) }>
+            <Menu onSelect={(value) => this.chooseSql(value) }>
               <MenuTrigger>
                 <Icon name={'play'} size={23} style={styles.right_icon} />
               </MenuTrigger>
               <MenuOptions>
-                {self.renderMoreOption('sql1')}
-                    <View style={styles.separator} />
-                {self.renderMoreOption('sql2')}
-                    <View style={styles.separator} />
-                {self.renderMoreOption('sql3')}
+                {Object.keys(this.state.sqls).map((k,i)=>{
+                        return self.renderMoreOption(k)
+                })}
               </MenuOptions>
             </Menu>
           </View>
@@ -109,13 +117,13 @@ export default class Home extends React.Component {
     renderMoreOption(value){
         //style={{backgroundColor:'white'}}
         return (
-            <MenuOption value={value} >
-                <View style={{flexDirection:'row',height:40}}>
+            <MenuOption value={value} key={value} style={{padding:1}}>
+                <View style={{flexDirection:'row',height:40,backgroundColor:'#494949'}}>
                     <View style={{width:40,justifyContent:'center'}}>
-                        <Icon name={'play'} size={16} style={{marginLeft:10}}/>
+                        <Icon name={'play'} color={'white'} size={16} style={{marginLeft:10}}/>
                     </View>
                     <View style={{justifyContent:'center'}}>
-                        <Text style={{color:'black'}}>{I18n.t(value)}</Text>
+                        <Text style={{color:'white'}}>{I18n.t('sql')+' '+value}</Text>
                     </View>
                 </View>
             </MenuOption>

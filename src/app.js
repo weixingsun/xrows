@@ -6,6 +6,7 @@ import Drawer from './v/Drawer';
 import Book from './v/Book'
 import Menu from './v/Menu'
 import Home from './v/Home'
+import SqlAdd from './v/SqlAdd'
 import SqlEdit from './v/SqlEdit'
 import FuncAdd from './v/FuncAdd'
 import FuncEdit from './v/FuncEdit'
@@ -30,6 +31,7 @@ const scenes = Actions.create(
           <Scene key="inner">
             <Scene key="home" component={Home} title={I18n.t('home')} initial={true} drawerIcon={drIcon}/>
             <Scene key="sql_edit" component={SqlEdit} title={I18n.t('sql_editor')} renderLeftButton={renderBackIcon} />
+            <Scene key="sql_add" component={SqlAdd} title={I18n.t('sql_add')} renderLeftButton={renderBackIcon} />
             <Scene key="func_edit" component={FuncEdit} title={I18n.t('func_editor')} renderLeftButton={renderBackIcon} />
             <Scene key="func_add" component={FuncAdd} title={I18n.t('func_add')} renderLeftButton={renderBackIcon} />
             <Scene key="book" component={Book} title={I18n.t("manual")} renderLeftButton={renderBackIcon} />

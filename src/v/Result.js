@@ -17,7 +17,7 @@ export default class Result extends React.Component {
             lines:[],
         }
         this.file=null
-        this.default_sql = 'SELECT * from {SRC} '
+        this.default_sql = 'select * from {src} '
         this.default_sqls = {
             sql1:this.default_sql,
             sql2:this.default_sql,
@@ -42,11 +42,11 @@ export default class Result extends React.Component {
         })
     }
     processSql(name,txt,file){
-        let sql0 = txt
+        let sql0 = txt.toLowerCase()
         if(txt==null) sql0 = this.default_sql
         let sql1 = sql0.replace('from',' into {DST} from ')
         let dst = 'csv("'+file.dir+'/'+name+'.csv",{separator:","})'
-        let insert = sql1.replace('{DST}',dst).replace('{SRC}',file.ext+'("'+file.full+'") ')
+        let insert = sql1.replace('{DST}',dst).replace('{src}',file.ext+'("'+file.full+'") ')
         //alert('insert='+insert+'\nsql0='+sql0+'\nsql1='+sql1)
         var select = 'SELECT * from csv("'+file.dir+'/'+name+'.csv",{separator:","}) '
         return {insert,select}

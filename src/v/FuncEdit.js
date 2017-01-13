@@ -93,16 +93,15 @@ export default class FunctionEdit extends React.Component {
         let json = {act,func}
         let title = func==null?I18n.t(act):I18n.t(act)+' '+func
         return (
-            <MenuOption value={JSON.stringify(json)} key={act+func}>
-                <View style={{flexDirection:'row',height:40}}>
+            <MenuOption value={JSON.stringify(json)} key={act+func} style={{padding:1}}>
+                <View style={{flexDirection:'row',height:40,backgroundColor:'#494949'}}>
                     <View style={{width:40,justifyContent:'center'}}>
-                        <Icon name={icon} size={16} style={{marginLeft:10}}/>
+                        <Icon name={icon} color={'white'} size={16} style={{marginLeft:10}}/>
                     </View>
                     <View style={{justifyContent:'center'}}>
-                        <Text style={{color:'black'}}>{title}</Text>
+                        <Text style={{color:'white'}}>{title}</Text>
                     </View>
                 </View>
-                <View style={styles.separator} />
             </MenuOption>
         )
     }

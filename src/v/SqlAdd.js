@@ -13,36 +13,36 @@ import I18n from 'react-native-i18n';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
 import styles from '../style'
 
-export default class FuncAdd extends React.Component {
+export default class SqlAdd extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
-            functions:{},
+            sqls:{},
             values:{
                 name:'',
-                func:'',
+                sql:'',
             },
         }
 	this.default_values = {
             name:'power',
-            func:'function(x){\n  return x*x\n} ',
+            sql:'select * \nfrom {SRC} ',
         }
-        this.formName="func_add"
+        this.formName="sql_add"
         this.renderBackIcon = this.renderBackIcon.bind(this)
     }
     componentWillMount(){
-        this.getFunctionDB("functions")
+        this.getSqlDB("sqls")
     }
-    getFunctionDB(name){
+    getSqlDB(name){
         AsyncStorage.getItem(name).then((value)=>{
             if(value){
                 this.setState({
-                    functions:JSON.parse(value)
+                    sqls:JSON.parse(value)
                 });
             }
         });
     }
-    setFunctionDB(name,value){
+    setSqlDB(name,value){
         if(typeof value==='object') value=JSON.stringify(value)
         AsyncStorage.setItem(name,value)
     }
@@ -78,7 +78,7 @@ export default class FuncAdd extends React.Component {
                 title={I18n.t(name)}
                 //display={this.state.sqls.sql1}
                  //scrollEnabled={true}
-                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><MIcon name={'functions'} size={20} /></View>}
+                image={<View style={{marginLeft:8,width:20,alignItems:'center'}}><Icon name={'search'} size={20} /></View>}
                 value={this.state.values[name]}
                 //validationResults={this.state.validationResults}
                 //displayValue='content'
@@ -86,7 +86,7 @@ export default class FuncAdd extends React.Component {
                 <GiftedForm.SeparatorWidget/>
                 <GiftedForm.TextAreaWidget name={name} title={I18n.t(name)}
                     autoFocus={true}
-                    placeholder={this.default_values.func}
+                    placeholder={this.default_values.sql}
                     //value={this.state.form.content}
                     //style={{flex:1}}
                 />
@@ -112,7 +112,7 @@ export default class FuncAdd extends React.Component {
                     defaults={this.state.form}
                     >
                         {this.renderFormInput('name')}
-                        {this.renderFormModal('func')}
+                        {this.renderFormModal('sql')}
                         {this.renderSubmit()}
                 </GiftedForm>
             </View>
@@ -142,27 +142,29 @@ export default class FuncAdd extends React.Component {
         )
     }
     onSubmit(values){
+        alert(JSON.stringify(values))
         if(values.name.length<1){
             alert(I18n.t('no_name'))
-        }else if(values.func.length<1){
-            alert(I18n.t('no_func'))
-        }else if(this.errorSyntax(values.func)){
-            alert(I18n.t('invalid_func'))
+        }else if(values.sql.length<1){
+            alert(I18n.t('no_sql'))
+        }else if(this.errorSyntax(values.sql)){
+            alert(I18n.t('invalid_sql'))
         }else{
-            var funcs = this.state.functions
-            funcs[values.name] = values.func
-            this.setFunctionDB('functions',funcs)
+            var sqls = this.state.sqls
+            sqls[values.name] = values.sql
+            this.setSqlDB('sqls',sqls)
             Actions.pop({ refresh: {add:true} });
         }
     }
     errorSyntax(code){
-        try {
-            eval('('+code+')'); 
-        } catch (e) {
-            if (e instanceof SyntaxError) {
-                return true
-            }
+        let lower = code.toLowerCase()
+        let n1 = lower.indexOf('select')
+        let n2 = lower.indexOf('from')
+        let n3 = lower.indexOf('{src}')
+        if( n1>-1 && n2>-1 && n3>-1 ){
+            return false
+        }else{
+            return true
         }
-        return false
     }
 }
