@@ -3,7 +3,7 @@ package com.xrows;
 import android.app.Application;
 import android.util.Log;
 
-import org.pgsqlite.SQLitePluginPackage;
+//import org.pgsqlite.SQLitePluginPackage;
 import com.rnfs.RNFSPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -36,7 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNDeviceInfo(),
             new ReactNativeI18n(),
             new RNMail(),
-		    new SQLitePluginPackage(),
+            //new SQLitePluginPackage(),
             new RNFSPackage(),
             new ReactNativeDocumentPicker(),
             new VectorIconsPackage()

@@ -1,5 +1,7 @@
 module.exports = {
     xrows: 'Xrows',
+    via: 'Via',
+    email: 'Email',
     add: 'Add',
     del: 'Delete',
     sql: 'SQL',
@@ -26,9 +28,11 @@ module.exports = {
     no_func:'No function',
     invalid_sql:'Syntax error in SQL statement',
     invalid_func:'Syntax error in function body',
+
     tos: 'Terms of Service',
     msgs: 'Messages',
     my: 'My',
+    share: 'Share',
     shareplus: 'Xshare',
     home:'Home',
     uuid:'Unique ID',

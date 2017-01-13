@@ -1,5 +1,8 @@
 module.exports = {
     xrows: 'Xrows',
+    via: '使用',
+    email: '邮件',
+    share: '分享',
     add: '新建',
     del: '删除',
     sql: '查询',

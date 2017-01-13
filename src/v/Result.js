@@ -1,28 +1,36 @@
 import React from 'react';
 import {AsyncStorage, Dimensions, ListView, Platform, StyleSheet, Text, TouchableHighlight, View, } from "react-native";
-import Button from "react-native-button";
+//import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
+import IIcon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 //import SQLite from 'react-native-sqlite-storage'
 import alasql from '../sql/alasql.fs';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import I18n from 'react-native-i18n';
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import styles from '../style'
+var Mailer = require('NativeModules').RNMail;
 
 export default class Result extends React.Component {
     constructor(props) {
         super(props);
         this.ds= new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state={
+            //actions:['email'], //'icloud'
             lines:[],
         }
-        this.file=null
+        this.result_file=null
         this.default_sql = 'select * from {src} '
         this.default_sqls = {
             sql1:this.default_sql,
             sql2:this.default_sql,
             sql3:this.default_sql,
         }
+        //this.shareResult=this.shareResult.bind(this)
+        this.renderMore=this.renderMore.bind(this)
+        this.renderMoreOption=this.renderMoreOption.bind(this)
     }
     componentWillMount(){
         this.findFuncs()
@@ -43,12 +51,12 @@ export default class Result extends React.Component {
     }
     processSql(name,txt,file){
         let sql0 = txt.toLowerCase()
-        if(txt==null) sql0 = this.default_sql
         let sql1 = sql0.replace('from',' into {DST} from ')
         let dst = 'csv("'+file.dir+'/'+name+'.csv",{separator:","})'
         let insert = sql1.replace('{DST}',dst).replace('{src}',file.ext+'("'+file.full+'") ')
         //alert('insert='+insert+'\nsql0='+sql0+'\nsql1='+sql1)
-        var select = 'SELECT * from csv("'+file.dir+'/'+name+'.csv",{separator:","}) '
+        this.result_file = file.dir+'/'+name+'.csv'
+        var select = 'SELECT * from csv("'+this.result_file+'",{separator:","}) '
         return {insert,select}
     }
     findFuncs(){
@@ -66,9 +74,8 @@ export default class Result extends React.Component {
         return json[name]
     }
     execSql(name,file){
-        AsyncStorage.getItem('sqls').then((sqls_result)=>{
+        AsyncStorage.getItem('sqls').then((sqls_txt)=>{
             let sql = this.default_sql
-            let sqls_txt = sqls_result==null?this.default_sqls:sqls_result
             let sql_txt = this.findSql(sqls_txt,name)
             let sqls = this.processSql(name,sql_txt,file)
             //alert('sqls='+JSON.stringify(sqls))
@@ -97,12 +104,67 @@ export default class Result extends React.Component {
             full:filePath,
         }
     }
+    //shareResult(){
+    //    alert(this.result_file)
+    //}
     updateTitle(){
         Actions.refresh({
-            //key:'result',
             title:'Result '+this.props.sql+'.csv',
-            //renderRightButton: ()=> <Icon name={'play'} size={20} color={'#333'} onPress={()=> Actions.result({file:this.file.full,sql:'sql1'}) } />,
+            //renderRightButton: ()=> <IIcon name={'ios-share-outline'} size={26} color={'#333'} onPress={ this.shareResult } />,
+            renderRightButton: this.renderMore,
         });
+    }
+    chooseShare(value){
+        if(value==='email') this.mailer()
+    }
+    mailer(){
+        Mailer.mail({
+          subject: 'Xrows result of '+this.props.sql+'.csv',
+          recipients: [],
+          //ccRecipients: ['supportCC@example.com'],
+          //bccRecipients: ['supportBCC@example.com'],
+          body: '',
+          //isHTML: true, // iOS only, exclude if false
+          attachment: {
+            path: this.result_file,  // The absolute path of the file from which to read data.
+            type: 'csv',   // Mime Type: jpg, png, doc, ppt, html, pdf
+          //  name: '',   // Optional: Custom filename for attachment
+          }
+        }, (error, event) => {
+          if(error) {
+            alert('Could not open mailbox. '+JSON.stringify(error));
+          }
+        });
+    }
+    renderMore(){
+        let self = this
+        return (
+          <View style={{ flex:1 }}>
+            <Menu onSelect={(value) => this.chooseShare(value) }>
+              <MenuTrigger>
+                <Icon name={'ellipsis-v'} size={23} style={styles.right_icon} />
+              </MenuTrigger>
+              <MenuOptions>
+                  {self.renderMoreOption('email','envelope')}
+              </MenuOptions>
+            </Menu>
+          </View>
+        )
+    }
+    renderMoreOption(value,icon){
+        //style={{backgroundColor:'white'}}
+        return (
+            <MenuOption value={value} key={value} style={{padding:1}}>
+                <View style={{flexDirection:'row',height:40,backgroundColor:'#494949'}}>
+                    <View style={{width:40,justifyContent:'center'}}>
+                        <Icon name={icon} color={'white'} size={16} style={{marginLeft:10}}/>
+                    </View>
+                    <View style={{justifyContent:'center'}}>
+                        <Text style={{color:'white'}}>{I18n.t('via')+' '+I18n.t(value)+I18n.t('share')}</Text>
+                    </View>
+                </View>
+            </MenuOption>
+        )
     }
     _renderRowView(rowData) {
         if(rowData==null) return
