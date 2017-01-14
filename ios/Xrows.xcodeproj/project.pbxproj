@@ -1116,6 +1116,32 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 8NZCFB3GNR;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-document-pickerRNDocumentPicker",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-fs/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-sqlite-storagesrcios",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-mailRNMail",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-i18nRNI18n",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-device-infoRNDeviceInfo",
+				);
 				INFOPLIST_FILE = xrows/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1137,6 +1163,32 @@
 				CODE_SIGN_ENTITLEMENTS = xrows/xrows.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8NZCFB3GNR;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-document-pickerRNDocumentPicker",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-fs/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-sqlite-storagesrcios",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-mailRNMail",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-i18nRNI18n",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-device-infoRNDeviceInfo",
+				);
 				INFOPLIST_FILE = xrows/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
