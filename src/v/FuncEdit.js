@@ -114,15 +114,11 @@ export default class FunctionEdit extends React.Component {
                 this.setState({
                     functions:JSON.parse(value)
                 });
-            }else{
-                this.setState({
-                    functions:this.default_funcs
-                });
-                this.setFunctionDB('functions',this.default_funcs)
             }
         });
     }
     setFunctionDB(name,value){
+        if(typeof value==='object') value=JSON.stringify(value)
         AsyncStorage.setItem(name,value)
     }
     handleValueChange(values){
