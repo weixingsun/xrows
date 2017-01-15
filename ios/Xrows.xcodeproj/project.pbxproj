@@ -31,6 +31,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		315429951E2C230B0051504D /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 315429941E2C230B0051504D /* assets */; };
 		36A1920CE68040A99BC869B0 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A3D2794FE74B24826C3B94 /* libRNI18n.a */; };
 		3EF012CC011847CEB3A0B964 /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3634D84D8D664A3BA3F6BA36 /* libRNMail.a */; };
 		43D097EE73A6483A91B93490 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BCE81C5436D48E7A3FABD83 /* Zocial.ttf */; };
@@ -176,13 +177,6 @@
 			remoteGlobalIDString = 46FEDE7F1AFF192F00D3261C;
 			remoteInfo = RNMail;
 		};
-		0389D2211E03790B0076044C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 093EABD8B35E4144B7B9FAFF /* RNMail.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 46FEDE8A1AFF192F00D3261C;
-			remoteInfo = RNMailTests;
-		};
 		0389D2241E03790B0076044C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F13FBE092BD54B29B545C33C /* RNVectorIcons.xcodeproj */;
@@ -286,6 +280,7 @@
 		1713B00D50BB4690B86475D5 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		21007F1CDF7445DD9BD4A850 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		27C66FD5AB464B2A9A813ED5 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
+		315429941E2C230B0051504D /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = xrows/assets; sourceTree = "<group>"; };
 		3634D84D8D664A3BA3F6BA36 /* libRNMail.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNMail.a; sourceTree = "<group>"; };
 		425497806C5F4319A23A77DE /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		5962228BDEF442FB91A47986 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -438,7 +433,6 @@
 			isa = PBXGroup;
 			children = (
 				0389D2201E03790B0076044C /* libRNMail.a */,
-				0389D2221E03790B0076044C /* RNMailTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -500,6 +494,7 @@
 		13B07FAE1A68108700A75B9A /* xrows */ = {
 			isa = PBXGroup;
 			children = (
+				315429941E2C230B0051504D /* assets */,
 				0397CC441E128DA6008858EA /* main.jsbundle */,
 				03AF55351E0E6A2300748AB6 /* xrows.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -891,13 +886,6 @@
 			remoteRef = 0389D21F1E03790B0076044C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0389D2221E03790B0076044C /* RNMailTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RNMailTests.xctest;
-			remoteRef = 0389D2211E03790B0076044C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		0389D2251E03790B0076044C /* libRNVectorIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -982,6 +970,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				315429951E2C230B0051504D /* assets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				A80762D8500845F2A2C758F3 /* Entypo.ttf in Resources */,
