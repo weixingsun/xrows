@@ -67,11 +67,12 @@ export default class Group extends React.Component {
         )
     }
     renderCopyright(){
+        let date = new Date()
         return (
             <View style={{flex:1,height:200,justifyContent: 'center',alignItems:'center'}}>
                 <Text style={{justifyContent:'center'}} > </Text>
                 <Text style={{justifyContent:'center'}} > </Text>
-                <Text style={{justifyContent:'center'}} >Copyright @2016 {I18n.t('xrows')}</Text>
+                <Text style={{justifyContent:'center'}} >Copyright @{date.getYear()+' '+I18n.t('xrows')}</Text>
                 <Text style={{justifyContent:'center'}} > </Text>
             </View>
         )

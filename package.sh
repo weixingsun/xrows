@@ -25,7 +25,7 @@ ssh nzmesse1@nzmessengers.co.nz "cd /home1/nzmesse1/www/share && rm -f xrows.apk
 
 
 #ios
-#build Share project for simulator
+#rm -rf ~/Library/Developer/Xcode/DerivedData/xrows*
 #find build folder:  ios/build/Build/Products/Debug-iphonesimulator
 #drag folder into iTunes
 #drag app to desktop: ipa 
