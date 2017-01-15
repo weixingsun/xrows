@@ -51,13 +51,15 @@ module.exports = {
         borderTopWidth:0,
         borderRightWidth:0,
         height:40,
+        backgroundColor:'white',
     },
     cell:{
         alignItems:'center',
         justifyContent:'center',
         borderWidth:0.5,
         borderTopWidth:0,
-        borderLeftWidth:0
+        borderLeftWidth:0,
+        backgroundColor:'white',
     },
     right_icon:{
         //paddingTop:1,

@@ -5,36 +5,7 @@ import {Actions} from "react-native-router-flux";
 import RNFS from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Col, Row, Grid } from "react-native-easy-grid";
-
-var styles = {
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F5FCFF",
-        marginTop:Platform.OS==='android'?54:64,
-    },
-    col:{
-        alignItems:'center',
-        justifyContent:'center',
-        borderWidth:0.5,
-        //borderBottomWidth:0,
-        //borderTopWidth:0,
-        //borderRightWidth:0,
-        //height:360,
-    },
-    cell:{
-        alignItems:'center',
-        justifyContent:'center',
-        //borderWidth:0.5,
-        //borderTopWidth:0,
-        //borderLeftWidth:0
-        //height:60,
-    },
-    value:{
-        fontSize:10,
-    },
-};
+import styles from '../style'
 
 export default class Book extends React.Component {
 	constructor(props) {
@@ -76,14 +47,14 @@ export default class Book extends React.Component {
 	renderRows(rows){
 		return (
 		    rows.map((key,i)=>{
-                return (<Row key={i} style={styles.cell}><Text style={styles.value}>{key}</Text></Row>)
+                return (<Row key={i} style={styles.cell}><Text style={styles.value_text}>{key}</Text></Row>)
             })
 		)
 	}
     render(){
         //<View style={styles.separator} />
         return (
-            <View style={styles.container}>
+            <View style={styles.content}>
                 <Grid size={25}>
 					{this.renderCols(this.state.selects)}
                 </Grid>

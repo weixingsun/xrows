@@ -14,7 +14,9 @@ export default class extends React.Component {
                 drawerIcon={<Icon name={"bars"} color={"#2a2929"} size={30}/>}
                 onOpen={()=>Actions.refresh({key:state.key, open: true})}
                 onClose={()=>Actions.refresh({key:state.key, open: false})}
+                //type="static"
                 //type="displace"
+                type="overlay"
                 content={<Menu />}
                 tapToClose={true}
                 openDrawerOffset={0.3}
