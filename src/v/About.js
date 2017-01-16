@@ -55,7 +55,6 @@ export default class Group extends React.Component {
         return (
             <View style={styles.container}>
 			{this.renderIcon()}
-			{this.renderFeedback()}
 			{this.renderCopyright()}
             </View>
         );
