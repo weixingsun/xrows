@@ -31,6 +31,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		312539341E39DE63003E410B /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 312539321E39DE63003E410B /* libBPush.a */; };
+		312539351E39DE63003E410B /* test.caf in Resources */ = {isa = PBXBuildFile; fileRef = 312539331E39DE63003E410B /* test.caf */; };
+		3125393C1E39DE72003E410B /* BaiDuPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312539371E39DE72003E410B /* BaiDuPush.swift */; };
+		3125393D1E39DE72003E410B /* BaiDuPushBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 312539391E39DE72003E410B /* BaiDuPushBridge.m */; };
+		3125393E1E39DE72003E410B /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3125393B1E39DE72003E410B /* SwiftyJSON.swift */; };
 		315429951E2C230B0051504D /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 315429941E2C230B0051504D /* assets */; };
 		36A1920CE68040A99BC869B0 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A3D2794FE74B24826C3B94 /* libRNI18n.a */; };
 		3EF012CC011847CEB3A0B964 /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3634D84D8D664A3BA3F6BA36 /* libRNMail.a */; };
@@ -280,6 +285,14 @@
 		1713B00D50BB4690B86475D5 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		21007F1CDF7445DD9BD4A850 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		27C66FD5AB464B2A9A813ED5 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
+		312539311E39DE63003E410B /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
+		312539321E39DE63003E410B /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
+		312539331E39DE63003E410B /* test.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.caf; sourceTree = "<group>"; };
+		312539371E39DE72003E410B /* BaiDuPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaiDuPush.swift; sourceTree = "<group>"; };
+		312539381E39DE72003E410B /* BaiDuPushBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiDuPushBridge.h; sourceTree = "<group>"; };
+		312539391E39DE72003E410B /* BaiDuPushBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiDuPushBridge.m; sourceTree = "<group>"; };
+		3125393A1E39DE72003E410B /* Push-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Push-Bridging-Header.h"; sourceTree = "<group>"; };
+		3125393B1E39DE72003E410B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		315429941E2C230B0051504D /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = xrows/assets; sourceTree = "<group>"; };
 		3634D84D8D664A3BA3F6BA36 /* libRNMail.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNMail.a; sourceTree = "<group>"; };
 		425497806C5F4319A23A77DE /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -322,6 +335,7 @@
 				0389D2631E038C210076044C /* libstdc++.tbd in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				312539341E39DE63003E410B /* libBPush.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -516,6 +530,30 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		312539301E39DE63003E410B /* normalversion */ = {
+			isa = PBXGroup;
+			children = (
+				312539311E39DE63003E410B /* BPush.h */,
+				312539321E39DE63003E410B /* libBPush.a */,
+				312539331E39DE63003E410B /* test.caf */,
+			);
+			name = normalversion;
+			path = "../node_modules/react-native-bdpush/ios/normalversion";
+			sourceTree = "<group>";
+		};
+		312539361E39DE72003E410B /* baidupush */ = {
+			isa = PBXGroup;
+			children = (
+				312539371E39DE72003E410B /* BaiDuPush.swift */,
+				312539381E39DE72003E410B /* BaiDuPushBridge.h */,
+				312539391E39DE72003E410B /* BaiDuPushBridge.m */,
+				3125393A1E39DE72003E410B /* Push-Bridging-Header.h */,
+				3125393B1E39DE72003E410B /* SwiftyJSON.swift */,
+			);
+			name = baidupush;
+			path = "../node_modules/react-native-bdpush/ios/baidupush";
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +609,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				312539361E39DE72003E410B /* baidupush */,
+				312539301E39DE63003E410B /* normalversion */,
 				13B07FAE1A68108700A75B9A /* xrows */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* xrowsTests */,
@@ -663,6 +703,9 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 8NZCFB3GNR;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -970,6 +1013,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				312539351E39DE63003E410B /* test.caf in Resources */,
 				315429951E2C230B0051504D /* assets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
@@ -1020,6 +1064,9 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				3125393D1E39DE72003E410B /* BaiDuPushBridge.m in Sources */,
+				3125393E1E39DE72003E410B /* SwiftyJSON.swift in Sources */,
+				3125393C1E39DE72003E410B /* BaiDuPush.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1049,6 +1096,7 @@
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 8NZCFB3GNR;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1076,6 +1124,7 @@
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 8NZCFB3GNR;
@@ -1104,6 +1153,7 @@
 				CODE_SIGN_ENTITLEMENTS = xrows/xrows.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = 8NZCFB3GNR;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1118,6 +1168,7 @@
 				);
 				INFOPLIST_FILE = xrows/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "../node_modules/react-native-bdpush/ios/normalversion";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1125,6 +1176,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xrows;
 				PRODUCT_NAME = Xrows;
+				SWIFT_OBJC_BRIDGING_HEADER = "../node_modules/react-native-bdpush/ios/baidupush/Push-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1136,6 +1189,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = xrows/xrows.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = 8NZCFB3GNR;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1150,6 +1204,7 @@
 				);
 				INFOPLIST_FILE = xrows/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "../node_modules/react-native-bdpush/ios/normalversion";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1157,6 +1212,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xrows;
 				PRODUCT_NAME = Xrows;
+				SWIFT_OBJC_BRIDGING_HEADER = "../node_modules/react-native-bdpush/ios/baidupush/Push-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
