@@ -28,9 +28,7 @@
 {
   // register APNS for push
   [self registerUserNotification];
-  [BaiDuPush registerChannel:launchOptions
-                      apiKey:APPKEY
-                    pushMode:BPushModeProduction];//BPushModeDevelopment
+  [BaiDuPush registerChannel:launchOptions apiKey:APPKEY pushMode:BPushModeDevelopment];
   [BaiDuPush disableLbs];
   NSMutableDictionary *appProperties = [NSMutableDictionary dictionary];
   if (launchOptions != nil) {
